@@ -1,0 +1,2 @@
+#!/bin/sh
+java -classpath ../source -d game
