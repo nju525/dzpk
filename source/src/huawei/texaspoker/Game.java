@@ -59,7 +59,7 @@ public class Game {
 		dsnju.mypid=666;*/
 		dsnju.initialize();
 		//发送注册信息
-		dsnju.player2server.println("reg: "+dsnju.mypid+" DSNJU");
+		dsnju.player2server.println("reg: "+dsnju.mypid+" DSNJU ");
 		dsnju.player2server.flush();
 		//牌局计数
 		int count=0;
@@ -377,7 +377,7 @@ public class Game {
 		while(!(temp=reader.readLine()).equals(head)){
 			msgbody.append(temp);	
 		}
-		player2server.println("call");
+		player2server.println("call ");
 		player2server.flush();
 	}
 	private String getOpponentAction(String curRoundAction ){
