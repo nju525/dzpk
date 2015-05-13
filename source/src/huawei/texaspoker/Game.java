@@ -125,46 +125,53 @@ public class Game {
 			return;
 		int label=MsgHeadHanlder.map.get(msghead);
 		String head="/"+msghead;
-		switch (label) {
+	switch (label) {
 		case 1:
 			//调用处理座次信息方法
 			//System.out.println("……处理座次信息……");
-			HanldeSeat(reader, head);
+			//HanldeSeat(reader, head);
+			HandlePot_Win(reader, head);
 			break;
 		case 2:
 			//调用处理盲注信息方法
 			//System.out.println("……处理盲注信息……");
-			HandleBlind(reader, head);
+			//HandleBlind(reader, head);
+			HandlePot_Win(reader, head);
 			break;
 		case 3:
 			//调用处理手牌信息方法
 			//System.out.println("……处理手牌信息……");
-			HanldeHoldCards(reader, head);
+			//HanldeHoldCards(reader, head);
+			HandlePot_Win(reader, head);
 			break;
 		case 4:
 			//调用处理询问信息方法
 			//System.out.println("……处理询问信息……");
-			HanldeInquire(reader, head);
+			//HanldeInquire(reader, head);
+			HanldeInquireTest(reader, head);
 			break;
 		case 5:
 			//调用处理公牌信息方法
 			//System.out.println("……处理公牌信息……");
-			HandleFlop(reader, head);
+			//HandleFlop(reader, head);
+			HandlePot_Win(reader, head);
 			break;
 		case 6:
 			//调用处理转牌信息方法
 			//System.out.println("……处理转牌信息……");
-			HandleTurn(reader, head);
+			//HandleTurn(reader, head);
+			HandlePot_Win(reader, head);
 			break;
 		case 7:
 			//调用处理河牌信息方法
 			//System.out.println("……处理河牌信息……");
-			HandleRiver(reader, head);
+			//HandleRiver(reader, head);
+			HandlePot_Win(reader, head);
 			break;
 		case 8:
 			//调用处理摊牌信息方法
 			//System.out.println("……处理摊牌信息……");
-			HandleShutdown(reader, head);
+			HandleShutdown(reader, head);			
 			break;
 		case 9:
 			//调用处理奖池信息方法
@@ -362,6 +369,15 @@ public class Game {
 					desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton);
 			player2server.println(mActionDecision.actionSendToServer());
 		}
+		player2server.flush();
+	}
+	private void HanldeInquireTest(BufferedReader reader, String head) throws IOException{
+		String temp="";
+		StringBuffer msgbody=new StringBuffer();
+		while(!(temp=reader.readLine()).equals(head)){
+			msgbody.append(temp);	
+		}
+		player2server.println("call");
 		player2server.flush();
 	}
 	private String getOpponentAction(String curRoundAction ){
