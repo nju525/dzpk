@@ -29,10 +29,10 @@ public class Game {
     int serverport,myport;
     
     int myorder;
-	private boolean isDiscard;//¼ÇÂ¼×Ô¼ºÊÇ·ñÆúÅÆ
-	private List<Card> holdCards;//×Ô¼ºÊÖÅÆ
-	private int mymoney=10000,myjetton=2000;//×Ô¼ºµÄ³ïÂëºÍ½ğ¶î
-	Map<Integer, Opponent> Pid_Opponent;//¸ù¾İpid´¢´æÒ»¸ö¶ÔÊÖÊµÀı¡£
+	private boolean isDiscard;//è®°å½•è‡ªå·±æ˜¯å¦å¼ƒç‰Œ
+	private List<Card> holdCards;//è‡ªå·±æ‰‹ç‰Œ
+	private int mymoney=10000,myjetton=2000;//è‡ªå·±çš„ç­¹ç å’Œé‡‘é¢
+	Map<Integer, Opponent> Pid_Opponent;//æ ¹æ®pidå‚¨å­˜ä¸€ä¸ªå¯¹æ‰‹å®ä¾‹ã€‚
 	public Game(){
 		isDiscard=false;
 		holdCards=new ArrayList<Card>(2);
@@ -45,7 +45,7 @@ public class Game {
 	 */
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		// TODO Auto-generated method stub	
-		//³õÊ¼»¯
+		//åˆå§‹åŒ–
 		Game dsnju=new Game();
 		dsnju.serverip=args[0];
 		dsnju.serverport=new Integer(args[1]);
@@ -58,57 +58,61 @@ public class Game {
 		dsnju.myport=8889;
 		dsnju.mypid=666;*/
 		dsnju.initialize();
-		//·¢ËÍ×¢²áĞÅÏ¢
-		dsnju.player2server.println("reg:"+dsnju.mypid+" DSNJU");
+		//å‘é€æ³¨å†Œä¿¡æ¯
+		dsnju.player2server.println("reg: "+dsnju.mypid+" DSNJU");
 		dsnju.player2server.flush();
-		//ÅÆ¾Ö¼ÆÊı
+		//ç‰Œå±€è®¡æ•°
 		int count=0;
-		while(count<2&&dsnju.mymoney>0){//½áÊøÒ»³¡Ëù¹æ¶¨¾ÖÊı»òÕßĞû²¼½áÊø
+		start:while(true){//æŒç»­è¿›è¡Œï¼Œç›´åˆ°æ”¶åˆ°game-overæ¶ˆæ¯
 			do{
 				dsnju.getAllMsg(dsnju.reader);
-			}while(!dsnju.MsgHead.equals("pot-win"));
-			//¶ÔÒ»Ğ©±äÁ¿Çå¿Õ
-			dsnju.holdCards.clear();//Çå¿Õ×Ô¼ºµÄÊÖÅÆÁĞ±í
-			//Çå¿ÕÃ¿¸ö¶ÔÊÖ¶ÔÏóµÄ¶¯×÷Map
+				
+			}while(!dsnju.MsgHead.equals("pot-win")&&!dsnju.MsgHead.equals("game-over"));
+			if(dsnju.MsgHead.equals("game-over"))
+				break start;
+			//å¯¹ä¸€äº›å˜é‡æ¸…ç©º
+			dsnju.holdCards.clear();//æ¸…ç©ºè‡ªå·±çš„æ‰‹ç‰Œåˆ—è¡¨
+			//æ¸…ç©ºæ¯ä¸ªå¯¹æ‰‹å¯¹è±¡çš„åŠ¨ä½œMap
 			for(Entry<Integer, Opponent> entry:dsnju.Pid_Opponent.entrySet()){
 				entry.getValue().action.clear();
 			}
-			//System.out.println("µÚ"+(count+1)+"¾Ö½áÊø");
+			//System.out.println("ç¬¬"+(count+1)+"å±€ç»“æŸ");
 			count++;
 		}
-		if(dsnju.reader.readLine().equals("game-over")){
-			dsnju.reader.close();
-			dsnju.player2server.close();
-			dsnju.player.close();
-			//System.out.println("±¾³¡±ÈÈü½áÊø");
-		}
+		dsnju.reader.close();
+		dsnju.player2server.close();
+		dsnju.player.close();
 	}
 	private void initialize() throws UnknownHostException, IOException{
 		player = new Socket();
-		player.bind(new InetSocketAddress(myip, myport));//°ó¶¨¿Í»§¶Ëµ½Ö¸¶¨IPºÍ¶Ë¿ÚºÅ
-		player.connect(new InetSocketAddress(serverip, serverport));//Á¬½Óserver
+		player.bind(new InetSocketAddress(myip, myport));//ç»‘å®šå®¢æˆ·ç«¯åˆ°æŒ‡å®šIPå’Œç«¯å£å·
+		player.connect(new InetSocketAddress(serverip, serverport));//è¿æ¥server
 		/*player=new Socket(serverip, serverport);*/
 		player2server=new PrintWriter(player.getOutputStream());
 		reader=new BufferedReader(new InputStreamReader(player.getInputStream()));
 		MsgHeadHanlder=new MessageHead();
-		//System.out.println("ÒÑ³õÊ¼»¯");
+		//System.out.println("å·²åˆå§‹åŒ–");
 	}
 	/**
-	 * »ñÈ¡ÏûÏ¢Ìå ²¢¶ÔMsgHead¸³Öµ
+	 * è·å–æ¶ˆæ¯ä½“ å¹¶å¯¹MsgHeadèµ‹å€¼
 	 * @param reader
 	 * @param msghead
 	 * @return
 	 * @throws IOException
 	 */
 	public  void getAllMsg(BufferedReader reader) throws IOException{
-		//²»ÄÜ½«MsgHead×÷Îª²ÎÊı´øÈëÊ¹ÆäÖ¸ÏòĞÂµÄ¶ÔÏó¡£ÒòÎª¶ÔÏó´«²ÎÒ²ÊÇ´«µÄ±¸·İ£¬Ö¸ÏòĞÂ¶ÔÏóºó¾Í²»ÊÇÔ­À´µÄÒıÓÃ
+		//ä¸èƒ½å°†MsgHeadä½œä¸ºå‚æ•°å¸¦å…¥ä½¿å…¶æŒ‡å‘æ–°çš„å¯¹è±¡ã€‚å› ä¸ºå¯¹è±¡ä¼ å‚ä¹Ÿæ˜¯ä¼ çš„å¤‡ä»½ï¼ŒæŒ‡å‘æ–°å¯¹è±¡åå°±ä¸æ˜¯åŸæ¥çš„å¼•ç”¨
 		//msghead=new String(result.substring(0, head.indexOf("/")));
 
-		String head=reader.readLine();//»ñÈ¡ÏûÏ¢Í·
+		String head=reader.readLine();//è·å–æ¶ˆæ¯å¤´
+		if(head.equals("game-over")){//game-overæ¶ˆæ¯ä¸å¸¦/
+			this.setMsgHead(head);
+			return;
+		}
 		StringBuffer result=new StringBuffer(head);	
-		head=result.substring(0, head.indexOf("/"));//È¥³ı¡°/¡±
+		head=result.substring(0, head.indexOf("/"));//å»é™¤â€œ/â€
 		/*result.insert(0, "/");
-		head=result.substring(0, head.length());//ÔÚheadÇ°²åÈë/£¬È¥µôÎ²²¿µÄ/£¬Èô/ºóÓĞ¿Õ¸ñÓÃ´Ë·½·¨*/
+		head=result.substring(0, head.length());//åœ¨headå‰æ’å…¥/ï¼Œå»æ‰å°¾éƒ¨çš„/ï¼Œè‹¥/åæœ‰ç©ºæ ¼ç”¨æ­¤æ–¹æ³•*/
 		
 		this.setMsgHead(head);
 		this.HandleMsg(MsgHead);
@@ -123,52 +127,52 @@ public class Game {
 		String head="/"+msghead;
 		switch (label) {
 		case 1:
-			//µ÷ÓÃ´¦Àí×ù´ÎĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦Àí×ù´ÎĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†åº§æ¬¡ä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†åº§æ¬¡ä¿¡æ¯â€¦â€¦");
 			HanldeSeat(reader, head);
 			break;
 		case 2:
-			//µ÷ÓÃ´¦ÀíÃ¤×¢ĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦ÀíÃ¤×¢ĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†ç›²æ³¨ä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†ç›²æ³¨ä¿¡æ¯â€¦â€¦");
 			HandleBlind(reader, head);
 			break;
 		case 3:
-			//µ÷ÓÃ´¦ÀíÊÖÅÆĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦ÀíÊÖÅÆĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†æ‰‹ç‰Œä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†æ‰‹ç‰Œä¿¡æ¯â€¦â€¦");
 			HanldeHoldCards(reader, head);
 			break;
 		case 4:
-			//µ÷ÓÃ´¦ÀíÑ¯ÎÊĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦ÀíÑ¯ÎÊĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†è¯¢é—®ä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†è¯¢é—®ä¿¡æ¯â€¦â€¦");
 			HanldeInquire(reader, head);
 			break;
 		case 5:
-			//µ÷ÓÃ´¦Àí¹«ÅÆĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦Àí¹«ÅÆĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†å…¬ç‰Œä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†å…¬ç‰Œä¿¡æ¯â€¦â€¦");
 			HandleFlop(reader, head);
 			break;
 		case 6:
-			//µ÷ÓÃ´¦Àí×ªÅÆĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦Àí×ªÅÆĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†è½¬ç‰Œä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†è½¬ç‰Œä¿¡æ¯â€¦â€¦");
 			HandleTurn(reader, head);
 			break;
 		case 7:
-			//µ÷ÓÃ´¦ÀíºÓÅÆĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦ÀíºÓÅÆĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†æ²³ç‰Œä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†æ²³ç‰Œä¿¡æ¯â€¦â€¦");
 			HandleRiver(reader, head);
 			break;
 		case 8:
-			//µ÷ÓÃ´¦ÀíÌ¯ÅÆĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦ÀíÌ¯ÅÆĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†æ‘Šç‰Œä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†æ‘Šç‰Œä¿¡æ¯â€¦â€¦");
 			HandleShutdown(reader, head);
 			break;
 		case 9:
-			//µ÷ÓÃ´¦Àí½±³ØĞÅÏ¢·½·¨
-			//System.out.println("¡­¡­´¦Àí½±³ØĞÅÏ¢¡­¡­");
+			//è°ƒç”¨å¤„ç†å¥–æ± ä¿¡æ¯æ–¹æ³•
+			//System.out.println("â€¦â€¦å¤„ç†å¥–æ± ä¿¡æ¯â€¦â€¦");
 			HandlePot_Win(reader, head);
 			break;
 		case 10:
-			//µ÷ÓÃ´¦Àí½áÊøĞÅÏ¢·½·¨
+			//è°ƒç”¨å¤„ç†ç»“æŸä¿¡æ¯æ–¹æ³•
 			break;
 		default:
 			break;
@@ -176,54 +180,54 @@ public class Game {
 	}
 		
 	/**
-	 * ´¦Àí×ù´ÎĞÅÏ¢£¬¼ÇÂ¼´óĞ¡Ã¤µÈ
-	 * ¸ù¾İ´«ÈëµÄÏûÏ¢ÌåÌáÈ¡ĞÅÏ¢
-	 * ´´½¨¶ÔÊÖ¶ÔÏó´æÈëMap
-	 * ¼ÇÂ¼Ö´ĞĞË³Ğò
+	 * å¤„ç†åº§æ¬¡ä¿¡æ¯ï¼Œè®°å½•å¤§å°ç›²ç­‰
+	 * æ ¹æ®ä¼ å…¥çš„æ¶ˆæ¯ä½“æå–ä¿¡æ¯
+	 * åˆ›å»ºå¯¹æ‰‹å¯¹è±¡å­˜å…¥Map
+	 * è®°å½•æ‰§è¡Œé¡ºåº
 	 * @throws IOException 
 	 */
 	public void HanldeSeat(BufferedReader reader,String head) throws IOException{
-		int smallblind=0,bigblind=0,button=0;//¼ÇÂ¼pid
-		int money,jetton,pid;//¼ÇÂ¼Ã¿Ò»Î»Íæ¼ÒµÄ³ïÂëºÍ½ğ±ÒÊı		
-		desk=new Desk(smallblind, bigblind, button);//³õÊ¼»¯desk
-		desk.playercount=0;//¼ÇÂ¼×ù´ÎÏûÏ¢µÄµÚ¼¸ĞĞ
+		int smallblind=0,bigblind=0,button=0;//è®°å½•pid
+		int money,jetton,pid;//è®°å½•æ¯ä¸€ä½ç©å®¶çš„ç­¹ç å’Œé‡‘å¸æ•°		
+		desk=new Desk(smallblind, bigblind, button);//åˆå§‹åŒ–desk
+		desk.playercount=0;//è®°å½•åº§æ¬¡æ¶ˆæ¯çš„ç¬¬å‡ è¡Œ
 		StringBuffer msgbody=new StringBuffer();
 		String temp="";
 		while(!(temp=reader.readLine()).equals(head)){
-			msgbody.append(temp);//½ÓÊÕÕâÒ»ĞĞµÄÏûÏ¢
-			String splittemp[]=temp.split(" ");//²¢ÒÔ¿Õ¸ñÎª·Ö¸ô·û·Ö³ÉÊı×é
+			msgbody.append(temp);//æ¥æ”¶è¿™ä¸€è¡Œçš„æ¶ˆæ¯
+			String splittemp[]=temp.split(" ");//å¹¶ä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦åˆ†æˆæ•°ç»„
 			if(splittemp[0].contains("button")){
 				button=getSeat(splittemp[0]);
-				jetton=new Integer(splittemp[1]).intValue();//»ñµÃ¸ÃÍæ¼Òjetton
+				jetton=new Integer(splittemp[1]).intValue();//è·å¾—è¯¥ç©å®¶jetton
 				money=new Integer(splittemp[2]).intValue();
 				desk.setButton(button);
-				desk.Order_Pid.put(desk.playercount, button);//¼ÓÈëË³ĞòMap
-				//¼ÓÈë¶ÔÊÖMap£¬ÓÉÓÚkeyÊÇÖØ¸´µÄ¶ÔÊÖ¶ÔÏóÃ¿´Î¶¼ÊÇĞÂ½¨µÄ
+				desk.Order_Pid.put(desk.playercount, button);//åŠ å…¥é¡ºåºMap
+				//åŠ å…¥å¯¹æ‰‹Mapï¼Œç”±äºkeyæ˜¯é‡å¤çš„å¯¹æ‰‹å¯¹è±¡æ¯æ¬¡éƒ½æ˜¯æ–°å»ºçš„
 				this.Pid_Opponent.put(button, new Opponent(button, jetton, money));
 			}
 			else if(splittemp[0].equals("small")){
 				smallblind=getSeat(splittemp[1]);
 				desk.setSmallBlind(smallblind);
-				jetton=new Integer(splittemp[2]).intValue();//»ñµÃ¸ÃÍæ¼Òjetton
+				jetton=new Integer(splittemp[2]).intValue();//è·å¾—è¯¥ç©å®¶jetton
 				money=new Integer(splittemp[3]).intValue();
-				desk.Order_Pid.put(desk.playercount, smallblind);//¼ÓÈëË³ĞòMap
-				this.Pid_Opponent.put(smallblind, new Opponent(smallblind, jetton, money));//¼ÓÈë¶ÔÊÖMap
+				desk.Order_Pid.put(desk.playercount, smallblind);//åŠ å…¥é¡ºåºMap
+				this.Pid_Opponent.put(smallblind, new Opponent(smallblind, jetton, money));//åŠ å…¥å¯¹æ‰‹Map
 			}
 			else if(splittemp[0].equals("big")){
 				bigblind=getSeat(splittemp[1]);
 				desk.setBigBlind(bigblind);
-				jetton=new Integer(splittemp[2]).intValue();//»ñµÃ¸ÃÍæ¼Òjetton
+				jetton=new Integer(splittemp[2]).intValue();//è·å¾—è¯¥ç©å®¶jetton
 				money=new Integer(splittemp[3]).intValue();
-				desk.Order_Pid.put(desk.playercount, bigblind);//¼ÓÈëË³ĞòMap
-				this.Pid_Opponent.put(bigblind, new Opponent(bigblind, jetton, money));//¼ÓÈë¶ÔÊÖMap
+				desk.Order_Pid.put(desk.playercount, bigblind);//åŠ å…¥é¡ºåºMap
+				this.Pid_Opponent.put(bigblind, new Opponent(bigblind, jetton, money));//åŠ å…¥å¯¹æ‰‹Map
 			}
 			else{
 				pid=new Integer(splittemp[0]).intValue();
-				jetton=new Integer(splittemp[1]).intValue();//»ñµÃ¸ÃÍæ¼Òjetton
+				jetton=new Integer(splittemp[1]).intValue();//è·å¾—è¯¥ç©å®¶jetton
 				money=new Integer(splittemp[2]).intValue();
-				desk.Order_Pid.put(desk.playercount, pid);//¼ÓÈëË³ĞòMap
+				desk.Order_Pid.put(desk.playercount, pid);//åŠ å…¥é¡ºåºMap
 				if(pid!=mypid)
-					this.Pid_Opponent.put(pid, new Opponent(pid, jetton, money));//¼ÓÈë¶ÔÊÖMap
+					this.Pid_Opponent.put(pid, new Opponent(pid, jetton, money));//åŠ å…¥å¯¹æ‰‹Map
 				else{
 					this.myjetton=jetton;
 					this.mymoney=money;
@@ -231,19 +235,19 @@ public class Game {
 				}
 			}		
 			desk.playercount++;
-			desk.setcardStatus(0);//ÉèÖÃÅÆ¾Ö×´Ì¬
+			desk.setcardStatus(0);//è®¾ç½®ç‰Œå±€çŠ¶æ€
 		}
-		if(mypid==button)//buttonÊÇµÚ0ĞĞµÄ
+		if(mypid==button)//buttonæ˜¯ç¬¬0è¡Œçš„
 			this.myorder=desk.playercount;
 		
 		/*System.out.println("button:"+desk.getButton()+",smallblind:"+desk.getSmallBlind()+",bigblind:"+desk.getBigBlind());
-		System.out.println("µ±Ç°×Ô¼ºµÄ³ïÂë¡¢½ğ¶î¼°×ù´Î£º"+myjetton+","+mymoney+","+myorder);
-		System.out.println("µ±Ç°ÅÆÊÖÈËÊı:"+desk.playercount);
-		System.out.println("ÒÑ¼ÓÈëµÄĞĞ¶¯Ë³ĞòMap£º");
+		System.out.println("å½“å‰è‡ªå·±çš„ç­¹ç ã€é‡‘é¢åŠåº§æ¬¡ï¼š"+myjetton+","+mymoney+","+myorder);
+		System.out.println("å½“å‰ç‰Œæ‰‹äººæ•°:"+desk.playercount);
+		System.out.println("å·²åŠ å…¥çš„è¡ŒåŠ¨é¡ºåºMapï¼š");
 		for(Map.Entry<Integer, Integer> entry:desk.Order_Pid.entrySet()){    
 		     System.out.print(entry.getKey()+"-->"+entry.getValue()+" ");    
 		}
-		System.out.println("\nÒÑ¼ÓÈëµÄ¶ÔÊÖMap£º");
+		System.out.println("\nå·²åŠ å…¥çš„å¯¹æ‰‹Mapï¼š");
 		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){    
 		     System.out.println(entry.getKey()+"-->"+entry.getValue().getPID()+" "+entry.getValue().getJetton()+" "+entry.getValue().getMoney());    
 		}*/
@@ -255,7 +259,7 @@ public class Game {
 		return result;
 	}
 	/**
-	 * Ã¤×¢ÏûÏ¢´¦Àí£º¼ÇÂ¼´óÃ¤×¢½ğ¶î
+	 * ç›²æ³¨æ¶ˆæ¯å¤„ç†ï¼šè®°å½•å¤§ç›²æ³¨é‡‘é¢
 	 * @param reader
 	 * @param head
 	 * @throws IOException
@@ -269,15 +273,15 @@ public class Game {
 			if(linecount==1){
 				String splittemp[]=temp.split(" ");
 				int bb=new Integer(splittemp[1]).intValue();
-				desk.setBB(bb);//¼ÇÂ¼´óÃ¤×¢½ğ¶î
+				desk.setBB(bb);//è®°å½•å¤§ç›²æ³¨é‡‘é¢
 			}
 			++linecount;
 		}
 		
-		//System.out.println("´óÃ¤½ğ¶î£º"+desk.getBB());
+		//System.out.println("å¤§ç›²é‡‘é¢ï¼š"+desk.getBB());
 	}
 	/**
-	 * ½ÓÊÕÁ½ÕÅÊÖÅÆ
+	 * æ¥æ”¶ä¸¤å¼ æ‰‹ç‰Œ
 	 * @param reader
 	 * @param head
 	 * @throws IOException
@@ -293,13 +297,13 @@ public class Game {
 			holdCards.add(c);
 		}
 		
-		/*System.out.println("×Ô¼ºµÄÊÖÅÆ£º");
+		/*System.out.println("è‡ªå·±çš„æ‰‹ç‰Œï¼š");
 		for(Card c:holdCards){
 			System.out.println(c.getSuit()+" "+c.getNumber());
 		}*/
 	}
 	/**
-	 * ¶Ô·¢À´µÄÑ¯ÎÊÏûÏ¢¼ÇÂ¼¶ÔÊÖµÄ¶¯×÷£¬²¢ÇÒ×ö³ö×Ô¼ºµÄ¶¯×÷
+	 * å¯¹å‘æ¥çš„è¯¢é—®æ¶ˆæ¯è®°å½•å¯¹æ‰‹çš„åŠ¨ä½œï¼Œå¹¶ä¸”åšå‡ºè‡ªå·±çš„åŠ¨ä½œ
 	 * @param reader
 	 * @param head
 	 * @throws IOException 
@@ -317,20 +321,20 @@ public class Game {
 				int pid=new Integer(splittemp[0]);
 				int bettemp=new Integer(splittemp[action_index-1]);
 				bet=(bettemp>bet?bettemp:bet);
-				String action=splittemp[action_index];//»ñÈ¡¶¯×÷
-				curRoundAction.append(action);//½«ÒÑÖª¶¯×÷¼ÓÈëbuffer
-				if(!action.equals("blind")){//¶ÔÃ¤×¢ĞÅÏ¢²»´¦Àí					
-					Opponent opp=Pid_Opponent.get(pid);//»ñÈ¡ÏàÓ¦¶ÔÊÖ¶ÔÏó
+				String action=splittemp[action_index];//è·å–åŠ¨ä½œ
+				curRoundAction.append(action);//å°†å·²çŸ¥åŠ¨ä½œåŠ å…¥buffer
+				if(!action.equals("blind")){//å¯¹ç›²æ³¨ä¿¡æ¯ä¸å¤„ç†					
+					Opponent opp=Pid_Opponent.get(pid);//è·å–ç›¸åº”å¯¹æ‰‹å¯¹è±¡
 					if(action.equals("raise"))
-						opp.raise_money=new Integer(splittemp[action_index-1]);//¼ÇÂ¼¶ÔÊÖ¼Ó×¢½ğ¶î
-					if(!opp.action.containsKey(desk.getcardStatus())){//Î´¶Ô¸Ã×´Ì¬¼ÇÂ¼
+						opp.raise_money=new Integer(splittemp[action_index-1]);//è®°å½•å¯¹æ‰‹åŠ æ³¨é‡‘é¢
+					if(!opp.action.containsKey(desk.getcardStatus())){//æœªå¯¹è¯¥çŠ¶æ€è®°å½•
 						List<String> action_list=new ArrayList<String>();
 						action_list.add(action);
-						opp.action.put(desk.getcardStatus(), action_list);//½«¶¯×÷¼ÓÈë¶¯×÷Map
+						opp.action.put(desk.getcardStatus(), action_list);//å°†åŠ¨ä½œåŠ å…¥åŠ¨ä½œMap
 					}
 					else{
-						List<String> action_list=opp.action.get(desk.getcardStatus());//»ñÈ¡¶ÔÓ¦ÁĞ±í
-						action_list.add(action);//ÔÚÁĞ±íÖĞÌí¼Ó
+						List<String> action_list=opp.action.get(desk.getcardStatus());//è·å–å¯¹åº”åˆ—è¡¨
+						action_list.add(action);//åœ¨åˆ—è¡¨ä¸­æ·»åŠ 
 					}
 				}
 			}
@@ -338,16 +342,16 @@ public class Game {
 				desk.totalpot=new Integer(splittemp[action_index]);
 			}
 		}
-		/*for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//»ñÈ¡Ã¿¸ö¶ÔÊÖ¶ÔÏó  
+		/*for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//è·å–æ¯ä¸ªå¯¹æ‰‹å¯¹è±¡  
 			System.out.println(entry.getKey()+":");
-			for(Map.Entry<Integer, List<String>> e: entry.getValue().action.entrySet()){//Ã¿¸ö¶ÔÏóµÄ¶¯×÷
+			for(Map.Entry<Integer, List<String>> e: entry.getValue().action.entrySet()){//æ¯ä¸ªå¯¹è±¡çš„åŠ¨ä½œ
 				System.out.println(e.getKey()+"-->"+e.getValue());
 			}
 		}
-		System.out.println("µ±Ç°×ÜÍ¶×¢£º"+desk.totalpot);
-		System.out.println("Ç°ÃæÍæ¼Ò×î´óbet£º"+bet);
-		System.out.println("Ç°ÃæÍæ¼ÒĞĞ¶¯ÏûÏ¢£º"+curRoundAction.toString());
-		System.out.println("Ïòsever·¢ËÍ×Ô¼ºµÄaction¡­¡­");*/
+		System.out.println("å½“å‰æ€»æŠ•æ³¨ï¼š"+desk.totalpot);
+		System.out.println("å‰é¢ç©å®¶æœ€å¤§betï¼š"+bet);
+		System.out.println("å‰é¢ç©å®¶è¡ŒåŠ¨æ¶ˆæ¯ï¼š"+curRoundAction.toString());
+		System.out.println("å‘severå‘é€è‡ªå·±çš„actionâ€¦â€¦");*/
 		if(desk.getcardStatus()==0){
 			preFlopAction pre=new preFlopAction(holdCards, myorder, bet, desk.getBB(), 
 					desk.totalpot, desk.playercount, myjetton);
@@ -361,9 +365,9 @@ public class Game {
 		player2server.flush();
 	}
 	private String getOpponentAction(String curRoundAction ){
-		if(curRoundAction.contains("all_in"))//°üº¬all_in
+		if(curRoundAction.contains("all_in"))//åŒ…å«all_in
 			return "all_in";
-		else if(curRoundAction.contains("raise"))//°üº¬raise
+		else if(curRoundAction.contains("raise"))//åŒ…å«raise
 			return "raise";
 		else if(curRoundAction.contains("call"))//
 			return "call";
@@ -373,7 +377,7 @@ public class Game {
 			return "fold";
 	}
 	/**
-	 * ¼ÇÂ¼¹«¹²ÅÆ
+	 * è®°å½•å…¬å…±ç‰Œ
 	 * @param reader2
 	 * @param head
 	 * @throws IOException
@@ -385,14 +389,14 @@ public class Game {
 			String[] splittemp=temp.split(" ");
 			desk.sharedCards.add(new Card(Card.NumeralSuit.get(splittemp[0]), card2number(splittemp[1])));
 		}
-		desk.setcardStatus(1);//ÅÆ¾Ö×´Ì¬Îªflop
-		/*System.out.println("ÏÖÓĞ¹«¹²ÅÆ£º");
+		desk.setcardStatus(1);//ç‰Œå±€çŠ¶æ€ä¸ºflop
+		/*System.out.println("ç°æœ‰å…¬å…±ç‰Œï¼š");
 		for(Card c:desk.sharedCards)
 			System.out.println(c.getSuit()+","+c.getNumber());*/
 	}
 	
 	/**
-	 * ¼ÇÂ¼TurnÅÆ
+	 * è®°å½•Turnç‰Œ
 	 * @param reader2
 	 * @param head
 	 * @throws IOException
@@ -404,7 +408,7 @@ public class Game {
 			String[] splittemp=temp.split(" ");
 			desk.sharedCards.add(new Card(Card.NumeralSuit.get(splittemp[0]), card2number(splittemp[1])));
 		}
-		/*System.out.println("ÏÖÓĞ¹«¹²ÅÆ£º");
+		/*System.out.println("ç°æœ‰å…¬å…±ç‰Œï¼š");
 		for(Card c:desk.sharedCards)
 			System.out.println(c.getSuit()+","+c.getNumber());*/
 	}
@@ -416,12 +420,12 @@ public class Game {
 			String[] splittemp=temp.split(" ");
 			desk.sharedCards.add(new Card(Card.NumeralSuit.get(splittemp[0]), card2number(splittemp[1])));
 		}
-		/*System.out.println("ÏÖÓĞ¹«¹²ÅÆ£º");
+		/*System.out.println("ç°æœ‰å…¬å…±ç‰Œï¼š");
 		for(Card c:desk.sharedCards)
 			System.out.println(c.getSuit()+","+c.getNumber());*/
 	}
 	/**
-	 * Ì¯ÅÆ
+	 * æ‘Šç‰Œ
 	 * @param reader
 	 * @param head
 	 * @throws IOException
@@ -433,7 +437,7 @@ public class Game {
 		while(!(temp=reader.readLine()).equals(head)){
 			msgbody.append(temp);	
 		}
-		//System.out.println("shutdownÏûÏ¢Ìå"+msgbody);
+		//System.out.println("shutdownæ¶ˆæ¯ä½“"+msgbody);
 	}
 	
 	public void HandlePot_Win(BufferedReader reader,String head) throws IOException{
@@ -442,7 +446,7 @@ public class Game {
 		while(!(temp=reader.readLine()).equals(head)){
 			msgbody.append(temp);	
 		}
-		//System.out.println("pot-winÏûÏ¢Ìå"+msgbody);
+		//System.out.println("pot-winæ¶ˆæ¯ä½“"+msgbody);
 	}
 	
 	private int card2number(String str){
