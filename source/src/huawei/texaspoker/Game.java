@@ -47,19 +47,19 @@ public class Game {
 		// TODO Auto-generated method stub	
 		//初始化
 		Game dsnju=new Game();
-		dsnju.serverip=args[0];
+		/*dsnju.serverip=args[0];
 		dsnju.serverport=new Integer(args[1]);
 		dsnju.myip=args[2];
 		dsnju.myport=new Integer(args[3]);
-		dsnju.mypid=new Integer(args[4]);
-		/*dsnju.serverip="127.0.0.1";
-		dsnju.serverport=8888;
+		dsnju.mypid=new Integer(args[4]);*/
+		dsnju.serverip="127.0.0.1";
+		dsnju.serverport=6000;
 		dsnju.myip="127.0.0.1";
 		dsnju.myport=8889;
-		dsnju.mypid=666;*/
+		dsnju.mypid=666;
 		dsnju.initialize();
 		//发送注册信息
-		dsnju.player2server.println("reg: "+dsnju.mypid+" DSNJU ");
+		dsnju.player2server.println("reg: "+dsnju.mypid+" DSNJU");
 		dsnju.player2server.flush();
 		//牌局计数
 		int count=0;
@@ -67,8 +67,8 @@ public class Game {
 			do{
 				dsnju.getAllMsg(dsnju.reader);
 				
-			}while(!dsnju.MsgHead.equals("pot-win")&&!dsnju.MsgHead.equals("game-over"));
-			if(dsnju.MsgHead.equals("game-over"))
+			}while(!dsnju.MsgHead.equals("pot-win")&&!dsnju.MsgHead.equals("game-over "));
+			if(dsnju.MsgHead.equals("game-over "))
 				break start;
 			//对一些变量清空
 			dsnju.holdCards.clear();//清空自己的手牌列表
@@ -86,7 +86,9 @@ public class Game {
 	private void initialize() throws UnknownHostException, IOException{
 		player = new Socket();
 		player.bind(new InetSocketAddress(myip, myport));//绑定客户端到指定IP和端口号
-		player.connect(new InetSocketAddress(serverip, serverport));//连接server
+		if(!player.isConnected())
+			player.connect(new InetSocketAddress(serverip, serverport));//连接server
+		
 		/*player=new Socket(serverip, serverport);*/
 		player2server=new PrintWriter(player.getOutputStream());
 		reader=new BufferedReader(new InputStreamReader(player.getInputStream()));
@@ -105,7 +107,7 @@ public class Game {
 		//msghead=new String(result.substring(0, head.indexOf("/")));
 
 		String head=reader.readLine();//获取消息头
-		if(head.equals("game-over")){//game-over消息不带/
+		if(head.equals("game-over ")){//game-over消息不带/
 			this.setMsgHead(head);
 			return;
 		}
@@ -124,7 +126,7 @@ public class Game {
 		if(msghead==null)
 			return;
 		int label=MsgHeadHanlder.map.get(msghead);
-		String head="/"+msghead;
+		String head="/"+msghead+" ";
 	switch (label) {
 		case 1:
 			//调用处理座次信息方法
@@ -377,7 +379,7 @@ public class Game {
 		while(!(temp=reader.readLine()).equals(head)){
 			msgbody.append(temp);	
 		}
-		player2server.println("call ");
+		player2server.println("call");
 		player2server.flush();
 	}
 	private String getOpponentAction(String curRoundAction ){
