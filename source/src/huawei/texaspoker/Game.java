@@ -31,7 +31,7 @@ public class Game {
     int myorder;
 	private boolean isDiscard;//记录自己是否弃牌
 	private List<Card> holdCards;//自己手牌
-	private int mymoney=10000,myjetton=2000;//自己的筹码和金额
+	private int mymoney,myjetton;//自己的筹码和金额
 	Map<Integer, Opponent> Pid_Opponent;//根据pid储存一个对手实例。
 	public Game(){
 		isDiscard=false;
@@ -68,18 +68,17 @@ public class Game {
 				dsnju.getAllMsg(dsnju.reader);
 				
 			}while(!dsnju.MsgHead.equals("pot-win")&&!dsnju.MsgHead.equals("game-over "));
-			if(dsnju.MsgHead.equals("game-over "))
+			if(dsnju.MsgHead.equals("game-over "))//game-over不带“/”解析出来的head包含空格
 				break start;
 			//对一些变量清空
+			
 			dsnju.holdCards.clear();//清空自己的手牌列表
 			//清空每个对手对象的动作Map
-			for(Entry<Integer, Opponent> entry:dsnju.Pid_Opponent.entrySet()){
+			/*for(Entry<Integer, Opponent> entry:dsnju.Pid_Opponent.entrySet()){
 				entry.getValue().action.clear();
-			}
-			//System.out.println("第"+(count+1)+"局结束");
+			}*/			
 			count++;
-			if(!dsnju.player.isConnected())
-				dsnju.player.connect(new InetSocketAddress(dsnju.serverip, dsnju.serverport));
+			//System.out.println("第"+count+"局结束");
 		}
 		dsnju.reader.close();
 		dsnju.player2server.close();
@@ -128,54 +127,47 @@ public class Game {
 		if(msghead==null)
 			return;
 		int label=MsgHeadHanlder.map.get(msghead);
-		String head="/"+msghead+" ";
+		String head="/"+msghead+" ";//每一个指令都带空格
 	switch (label) {
 		case 1:
 			//调用处理座次信息方法
 			//System.out.println("……处理座次信息……");
-			//HanldeSeat(reader, head);
-			HandlePot_Win(reader, head);
+			HanldeSeat(reader, head);
 			break;
 		case 2:
 			//调用处理盲注信息方法
 			//System.out.println("……处理盲注信息……");
-			//HandleBlind(reader, head);
-			HandlePot_Win(reader, head);
+			HandleBlind(reader, head);
 			break;
 		case 3:
 			//调用处理手牌信息方法
 			//System.out.println("……处理手牌信息……");
-			//HanldeHoldCards(reader, head);
-			HandlePot_Win(reader, head);
+			HanldeHoldCards(reader, head);
 			break;
 		case 4:
 			//调用处理询问信息方法
 			//System.out.println("……处理询问信息……");
-			//HanldeInquire(reader, head);
-			HanldeInquireTest(reader, head);
+			HanldeInquire(reader, head);
 			break;
 		case 5:
 			//调用处理公牌信息方法
 			//System.out.println("……处理公牌信息……");
-			//HandleFlop(reader, head);
-			HandlePot_Win(reader, head);
+			HandleFlop(reader, head);
 			break;
 		case 6:
 			//调用处理转牌信息方法
 			//System.out.println("……处理转牌信息……");
-			//HandleTurn(reader, head);
-			HandlePot_Win(reader, head);
+			HandleTurn(reader, head);
 			break;
 		case 7:
 			//调用处理河牌信息方法
 			//System.out.println("……处理河牌信息……");
-			//HandleRiver(reader, head);
-			HandlePot_Win(reader, head);
+			HandleRiver(reader, head);
 			break;
 		case 8:
 			//调用处理摊牌信息方法
 			//System.out.println("……处理摊牌信息……");
-			HandleShutdown(reader, head);			
+			HandleShowdown(reader, head);			
 			break;
 		case 9:
 			//调用处理奖池信息方法
@@ -198,59 +190,44 @@ public class Game {
 	 * @throws IOException 
 	 */
 	public void HanldeSeat(BufferedReader reader,String head) throws IOException{
-		int smallblind=0,bigblind=0,button=0;//记录pid
 		int money,jetton,pid;//记录每一位玩家的筹码和金币数		
-		desk=new Desk(smallblind, bigblind, button);//初始化desk
-		desk.playercount=0;//记录座次消息的第几行
-		StringBuffer msgbody=new StringBuffer();
+		desk=new Desk(0, 0, 0);//初始化desk
+		desk.playercount=0;//记录座次消息的第几行，即本局参与玩家数
 		String temp="";
+		int linecount=0;
 		while(!(temp=reader.readLine()).equals(head)){
-			msgbody.append(temp);//接收这一行的消息
-			String splittemp[]=temp.split(" ");//并以空格为分隔符分成数组
-			if(splittemp[0].contains("button")){
-				button=getSeat(splittemp[0]);
-				jetton=new Integer(splittemp[1]).intValue();//获得该玩家jetton
-				money=new Integer(splittemp[2]).intValue();
-				desk.setButton(button);
-				desk.Order_Pid.put(desk.playercount, button);//加入顺序Map
-				//加入对手Map，由于key是重复的对手对象每次都是新建的
-				this.Pid_Opponent.put(button, new Opponent(button, jetton, money));
-			}
-			else if(splittemp[0].equals("small")){
-				smallblind=getSeat(splittemp[1]);
-				desk.setSmallBlind(smallblind);
+			String splittemp[]=temp.split(" ");//并以空格为分隔符分成数组			
+			switch (linecount) {
+			case 0://button
+				pid=new Integer(splittemp[1]);
 				jetton=new Integer(splittemp[2]).intValue();//获得该玩家jetton
-				money=new Integer(splittemp[3]).intValue();
-				desk.Order_Pid.put(desk.playercount, smallblind);//加入顺序Map
-				this.Pid_Opponent.put(smallblind, new Opponent(smallblind, jetton, money));//加入对手Map
-			}
-			else if(splittemp[0].equals("big")){
-				bigblind=getSeat(splittemp[1]);
-				desk.setBigBlind(bigblind);
-				jetton=new Integer(splittemp[2]).intValue();//获得该玩家jetton
-				money=new Integer(splittemp[3]).intValue();
-				desk.Order_Pid.put(desk.playercount, bigblind);//加入顺序Map
-				this.Pid_Opponent.put(bigblind, new Opponent(bigblind, jetton, money));//加入对手Map
-			}
-			else{
+				money=new Integer(splittemp[3]).intValue();				
+				desk.setButton(pid);
+				break;
+			case 1://大小盲
+				pid=new Integer(splittemp[2]);
+				jetton=new Integer(splittemp[3]).intValue();
+				money=new Integer(splittemp[4]).intValue();				
+				desk.setSmallBlind(pid);
+			case 2:
+				pid=new Integer(splittemp[2]);
+				jetton=new Integer(splittemp[3]).intValue();
+				money=new Integer(splittemp[4]).intValue();				
+				desk.setBigBlind(pid);
+				break;
+			default:
 				pid=new Integer(splittemp[0]).intValue();
-				jetton=new Integer(splittemp[1]).intValue();//获得该玩家jetton
+				jetton=new Integer(splittemp[1]).intValue();
 				money=new Integer(splittemp[2]).intValue();
-				desk.Order_Pid.put(desk.playercount, pid);//加入顺序Map
-				if(pid!=mypid)
-					this.Pid_Opponent.put(pid, new Opponent(pid, jetton, money));//加入对手Map
-				else{
-					this.myjetton=jetton;
-					this.mymoney=money;
-					this.myorder=desk.playercount;
-				}
-			}		
-			desk.playercount++;
-			desk.setcardStatus(0);//设置牌局状态
-		}
-		if(mypid==button)//button是第0行的
+				break;
+			}			
+			setMyself(pid, jetton, money,linecount);//设置自己的jetton、money即执行次序
+			linecount++;
+		}		
+		desk.playercount=linecount;
+		if(desk.getButton()==mypid)//如果自己是button位，次序为最后
 			this.myorder=desk.playercount;
-		
+		desk.setcardStatus(0);//设置牌局状态
 		/*System.out.println("button:"+desk.getButton()+",smallblind:"+desk.getSmallBlind()+",bigblind:"+desk.getBigBlind());
 		System.out.println("当前自己的筹码、金额及座次："+myjetton+","+mymoney+","+myorder);
 		System.out.println("当前牌手人数:"+desk.playercount);
@@ -263,11 +240,17 @@ public class Game {
 		     System.out.println(entry.getKey()+"-->"+entry.getValue().getPID()+" "+entry.getValue().getJetton()+" "+entry.getValue().getMoney());    
 		}*/
 	}
-	private int getSeat(String Blindmsg){
-		int index=Blindmsg.indexOf(":");
-		String str=Blindmsg.substring(index+1,Blindmsg.length());
-		int result=new Integer(str).intValue();
-		return result;
+	
+	private int setMyself(int pid,int jetton,int money,int linecount){
+		if(pid!=mypid)
+			return -1;
+		this.myjetton=jetton;
+		this.mymoney=money;
+		if(linecount==0)
+			this.myorder=-1;
+		else 
+			this.myorder=linecount;
+		return linecount;
 	}
 	/**
 	 * 盲注消息处理：记录大盲注金额
@@ -277,10 +260,8 @@ public class Game {
 	 */
 	public void HandleBlind(BufferedReader reader,String head) throws IOException{
 		String temp="";
-		StringBuffer msgbody=new StringBuffer();
 		int linecount=0;
-		while(!(temp=reader.readLine()).equals(head)){
-			msgbody.append(temp);	
+		while(!(temp=reader.readLine()).equals(head)){				
 			if(linecount==1){
 				String splittemp[]=temp.split(" ");
 				int bb=new Integer(splittemp[1]).intValue();
@@ -334,7 +315,7 @@ public class Game {
 				bet=(bettemp>bet?bettemp:bet);
 				String action=splittemp[action_index];//获取动作
 				curRoundAction.append(action);//将已知动作加入buffer
-				if(!action.equals("blind")){//对盲注信息不处理					
+				/*if(!action.equals("blind")){//对盲注信息不处理					
 					Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
 					if(action.equals("raise"))
 						opp.raise_money=new Integer(splittemp[action_index-1]);//记录对手加注金额
@@ -347,7 +328,7 @@ public class Game {
 						List<String> action_list=opp.action.get(desk.getcardStatus());//获取对应列表
 						action_list.add(action);//在列表中添加
 					}
-				}
+				}*/
 			}
 			else{
 				desk.totalpot=new Integer(splittemp[action_index]);
@@ -358,8 +339,8 @@ public class Game {
 			for(Map.Entry<Integer, List<String>> e: entry.getValue().action.entrySet()){//每个对象的动作
 				System.out.println(e.getKey()+"-->"+e.getValue());
 			}
-		}
-		System.out.println("当前总投注："+desk.totalpot);
+		}*/
+		/*System.out.println("当前总投注："+desk.totalpot);
 		System.out.println("前面玩家最大bet："+bet);
 		System.out.println("前面玩家行动消息："+curRoundAction.toString());
 		System.out.println("向sever发送自己的action……");*/
@@ -373,15 +354,6 @@ public class Game {
 					desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton);
 			player2server.println(mActionDecision.actionSendToServer());
 		}
-		player2server.flush();
-	}
-	private void HanldeInquireTest(BufferedReader reader, String head) throws IOException{
-		String temp="";
-		StringBuffer msgbody=new StringBuffer();
-		while(!(temp=reader.readLine()).equals(head)){
-			msgbody.append(temp);	
-		}
-		player2server.println("call");
 		player2server.flush();
 	}
 	private String getOpponentAction(String curRoundAction ){
@@ -440,7 +412,7 @@ public class Game {
 			String[] splittemp=temp.split(" ");
 			desk.sharedCards.add(new Card(Card.NumeralSuit.get(splittemp[0]), card2number(splittemp[1])));
 		}
-		/*System.out.println("现有公共牌：");
+	/*	System.out.println("现有公共牌：");
 		for(Card c:desk.sharedCards)
 			System.out.println(c.getSuit()+","+c.getNumber());*/
 	}
@@ -450,12 +422,12 @@ public class Game {
 	 * @param head
 	 * @throws IOException
 	 */
-	private void HandleShutdown(BufferedReader reader, String head) throws IOException {
+	private void HandleShowdown(BufferedReader reader, String head) throws IOException {
 		// TODO Auto-generated method stub
 		String temp="";
 		StringBuffer msgbody=new StringBuffer();
 		while(!(temp=reader.readLine()).equals(head)){
-			msgbody.append(temp);	
+			msgbody.append(temp);
 		}
 		//System.out.println("shutdown消息体"+msgbody);
 	}
