@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MessageHead {
-	 public final String SEAT="seat"; //座次消息
-	 public final String GAME_OVER="game-over"; //游戏结束消息
-	 public final String BINLD="blind"; //盲注消息
-	 public final String HOLD="hold"; //手牌消息
-	 public final String INQUIRE="inquire"; //询问消息
-	 public final String FLOP="flop"; //公牌消息
-	 public final String TURN="turn"; //转牌消息
-	 public final String RIVER="river"; //河牌消息
-	 public final String SHUTDOWN="shutdown"; //摊牌消息
-	 public final String POT_WIN="pot-win"; //奖池分配
+	 public final String SEAT="seat"; //搴ф娑堟伅
+	 public final String GAME_OVER="game-over"; //娓告垙缁撴潫娑堟伅
+	 public final String BINLD="blind"; //鐩叉敞娑堟伅
+	 public final String HOLD="hold"; //鎵嬬墝娑堟伅
+	 public final String INQUIRE="inquire"; //璇㈤棶娑堟伅
+	 public final String FLOP="flop"; //鍏墝娑堟伅
+	 public final String TURN="turn"; //杞墝娑堟伅
+	 public final String RIVER="river"; //娌崇墝娑堟伅
+	 public final String SHUTDOWN="showdown"; //鎽婄墝娑堟伅
+	 public final String POT_WIN="pot-win"; //濂栨睜鍒嗛厤
 	 public final Map<String, Integer> map=new HashMap<String, Integer>();
 	 {
 		 map.put(SEAT, 1);
