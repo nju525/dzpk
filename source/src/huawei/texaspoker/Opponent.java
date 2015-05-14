@@ -3,17 +3,17 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * ¶ÔÊÖÀà
+ * å¯¹æ‰‹ç±»
  * @author SQQ
  *
  */
 public class Opponent {
-	private int pid;//¶ÔÊÖid
-	private int jetton;//³ïÂëÊı
-	private int money;//½ğ±ÒÊı
-	public int raise_money;
+	private int pid;//å¯¹æ‰‹id
+	private int jetton;//ç­¹ç æ•°
+	private int money;//é‡‘å¸æ•°
+	public int bet_in=0;//æœ¬å±€è¯¥ç©å®¶å·²æŠ•å…¥çš„ç­¹ç æ•°
 	public boolean isDiscard;
-	public HashMap<Integer, List<String>> action;//µÚxÂÖµÄ¶¯×÷, check | call | raise | all_in | fold
+	public HashMap<Integer, List<String>> action;//ç¬¬xè½®çš„åŠ¨ä½œ, check | call | raise | all_in | fold
 	public Opponent(int id,int jetton,int money){
 		this.pid=id;
 		this.jetton=jetton;
