@@ -78,6 +78,8 @@ public class Game {
 			}
 			//System.out.println("第"+(count+1)+"局结束");
 			count++;
+			if(!dsnju.player.isConnected())
+				dsnju.player.connect(new InetSocketAddress(dsnju.serverip, dsnju.serverport));
 		}
 		dsnju.reader.close();
 		dsnju.player2server.close();
