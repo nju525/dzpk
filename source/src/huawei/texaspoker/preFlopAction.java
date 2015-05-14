@@ -1,4 +1,5 @@
 package huawei.texaspoker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class preFlopAction {
 			{0,0,0,0,0,0,0,0,0,0,0,3,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,3},
 			
-	};//¿¿Ç°Î»ÖÃ
+	};//é å‰ä½ç½®
 	private int[][] cutOffSeatHoleCards={
 			{9,6,3,3,1,1,1,1,1,1,1,0,0},
 			{6,9,1,1,1,1,1,0,0,0,0,0,0},
@@ -35,7 +36,7 @@ public class preFlopAction {
 			{0,0,0,0,0,0,0,0,0,0,0,3,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,3},   
 			
-	};//cutOff(buttonÇ°Î»ÖÃ)
+	};//cutOff(buttonå‰ä½ç½®)
 	private int[][] buttonSeatHoleCards={
 			{9,6,3,3,1,1,1,1,1,1,1,1,1},
 			{6,9,1,1,1,1,1,0,0,0,0,0,0},
@@ -51,7 +52,7 @@ public class preFlopAction {
 			{0,0,0,0,0,0,0,0,0,0,0,3,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,3},
 			
-	};//buttonÆğÊÖÅÆÆ×
+	};//buttonèµ·æ‰‹ç‰Œè°±
 	
 	private List<Card> holeCards=new ArrayList<Card>();
 	private int currentSeat;
@@ -73,10 +74,10 @@ public class preFlopAction {
 			/*if(currentSeat<=2) return betterSeatHoleCards[holeCards.get(0).number][holeCards.get(1).number];
 			else return worseSeatHoleCards[holeCards.get(0).number][holeCards.get(1).number];*/
      /**
-      *1. ÅÆÁ¦Ç¿¶ÈÎª9µÄ »áÒ»Ö±raiseµ½ allin
-      *2. Îª6µÄ»á ÔÚÇ°Ãæ¶¼Æ½¸ú»òĞ¡raiseÊ± ½øĞĞÔÙraise
-      *3. Îª3µÄ Ç°ÃæraiseÊ± Æ½¸ú Ç°ÃæÆ½¸úÊ±raise
-      *4. Îª1µÄ Ç°ÃæÎŞÈË¶¯×÷Ê± raise ÓĞÈË¶¯×÷Ê± fold
+      *1. ç‰ŒåŠ›å¼ºåº¦ä¸º9çš„ ä¼šä¸€ç›´raiseåˆ° allin
+      *2. ä¸º6çš„ä¼š åœ¨å‰é¢éƒ½å¹³è·Ÿæˆ–å°raiseæ—¶ è¿›è¡Œå†raise
+      *3. ä¸º3çš„ å‰é¢raiseæ—¶ å¹³è·Ÿ å‰é¢å¹³è·Ÿæ—¶raise
+      *4. ä¸º1çš„ å‰é¢æ— äººåŠ¨ä½œæ—¶ raise æœ‰äººåŠ¨ä½œæ—¶ fold
       */
       int min=Math.min(holeCards.get(0).number, holeCards.get(1).number);
       int max=Math.max(holeCards.get(0).number, holeCards.get(1).number);
@@ -110,9 +111,9 @@ public class preFlopAction {
 				return "raise "+Math.min(2*bet+potSize*1/2, myRestJetton);
 			}else{
 				if(currentSeat==2){
-					return "check";//´óÃ¤Î»check
+					return "check";//å¤§ç›²ä½check
 				}else{
-					return "call";//ÆäËûÎ»ÖÃcall
+					return "call";//å…¶ä»–ä½ç½®call
 				}		
 			}
 		case 3:
@@ -129,16 +130,27 @@ public class preFlopAction {
 				return  "raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);
 			}else{
 				if(currentSeat==2){
-					return "check";//´óÃ¤Î»check
+					if(bet>BB){
+						return "fold";
+					}else{
+						return "check";//å¤§ç›²ä½check
+					}	
 				}else{
-					return "fold";//ÆäËûÎ»ÖÃcall
+					if(bet>2*BB)
+					return "fold";//å…¶ä»–ä½ç½®call
+					else 
+					return "call";
 				}
 			}
 		case 0:
 			if(currentSeat==2){
-				return "check";//´óÃ¤Î»check
+				if(bet>BB){
+					return "fold";
+				}else{
+					return "check";//å¤§ç›²ä½check
+				}
 			}else{
-				return "fold";//ÆäËûÎ»ÖÃcall
+				return "fold";//å…¶ä»–ä½ç½®call
 			}	
 		default:
 			return "fold";
