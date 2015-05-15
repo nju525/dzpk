@@ -6,8 +6,8 @@ import java.util.List;
 
 public class preFlopAction {
 	private int[][] MPSeatHoleCards={
-		    {9,6,3,3,0,0,0,0,0,0,0,0,0},
-			{6,9,1,0,0,0,0,0,0,0,0,0,0},
+		    {9,9,3,3,0,0,0,0,0,0,0,0,0},
+			{9,9,1,0,0,0,0,0,0,0,0,0,0},
 			{3,1,9,0,0,0,0,0,0,0,0,0,0},
 			{3,0,0,6,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,6,0,0,0,0,0,0,0,0},
@@ -22,8 +22,8 @@ public class preFlopAction {
 			
 	};//靠前位置
 	private int[][] cutOffSeatHoleCards={
-			{9,6,3,3,1,1,1,1,1,1,1,0,0},
-			{6,9,1,1,1,1,1,0,0,0,0,0,0},
+			{9,9,3,3,1,1,1,1,1,1,1,0,0},
+			{9,9,1,1,1,1,1,0,0,0,0,0,0},
 			{3,1,9,1,1,1,0,0,0,0,0,0,0},
 			{3,1,1,6,1,1,1,0,0,0,0,0,0},
 			{1,1,1,1,6,1,1,0,0,0,0,0,0},
@@ -38,10 +38,10 @@ public class preFlopAction {
 			
 	};//cutOff(button前位置)
 	private int[][] buttonSeatHoleCards={
-			{9,6,3,3,1,1,1,1,1,1,1,1,1},
-			{6,9,1,1,1,1,1,0,0,0,0,0,0},
-			{3,1,9,1,1,1,1,0,0,0,0,0,0},
-			{2,1,1,6,1,1,1,0,0,0,0,0,0},
+			{9,9,3,1,1,1,1,1,1,1,1,1,1},
+			{9,9,3,1,1,1,1,0,0,0,0,0,0},
+			{3,3,9,1,1,1,1,0,0,0,0,0,0},
+			{1,1,1,6,1,1,1,0,0,0,0,0,0},
 			{1,1,1,1,6,1,1,0,0,0,0,0,0},
 			{1,0,0,0,0,3,1,1,0,0,0,0,0},
 			{1,0,0,0,0,0,3,1,1,0,0,0,0},
@@ -82,7 +82,7 @@ public class preFlopAction {
       int min=Math.min(holeCards.get(0).number, holeCards.get(1).number);
       int max=Math.max(holeCards.get(0).number, holeCards.get(1).number);
       int preFlopRank=0;
-      if(currentSeat==8){
+      if(currentSeat==8||currentSeat==1){
     	  if(holeCards.get(0).suit==holeCards.get(1).suit){
     		  preFlopRank=buttonSeatHoleCards[14-min][14-max];	
     	  }else{
@@ -108,7 +108,7 @@ public class preFlopAction {
 			return "raise "+Math.min(2*bet+potSize, myRestJetton);
 		case 6:
 			if(bet<=2*BB){
-				return "raise "+Math.min(2*bet+potSize*1/2, myRestJetton);
+				return "raise "+Math.min(3*BB+potSize*1/2, myRestJetton);
 			}else{
 				if(currentSeat==2){
 					return "check";//大盲位check
@@ -130,7 +130,7 @@ public class preFlopAction {
 				return  "raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);
 			}else{
 				if(currentSeat==2){
-					if(bet>BB){
+					if(bet>=3*BB){
 						return "fold";
 					}else{
 						return "check";//大盲位check
