@@ -82,7 +82,7 @@ public class preFlopAction {
       int min=Math.min(holeCards.get(0).number, holeCards.get(1).number);
       int max=Math.max(holeCards.get(0).number, holeCards.get(1).number);
       int preFlopRank=0;
-      if(currentSeat==8||currentSeat==1){
+      if(currentSeat==8||currentSeat==1||currentSeat==2){
     	  if(holeCards.get(0).suit==holeCards.get(1).suit){
     		  preFlopRank=buttonSeatHoleCards[14-min][14-max];	
     	  }else{
@@ -105,10 +105,10 @@ public class preFlopAction {
 	  }
 		switch (preFlopRank) {
 		case 9:
-			return "raise "+Math.min(2*bet+potSize, myRestJetton);
+			return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
 		case 6:
 			if(bet<=2*BB){
-				return "raise "+Math.min(3*BB+potSize*1/2, myRestJetton);
+				return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
 			}else{
 				if(currentSeat==2){
 					return "check";//大盲位check
@@ -118,7 +118,7 @@ public class preFlopAction {
 			}
 		case 3:
 			if(bet>BB){
-				if(bet>=4*BB){
+				if(bet>=4*BB&&myRestJetton<4*BB){
 					return "fold";
 				}else
 				 return "call";
@@ -126,29 +126,41 @@ public class preFlopAction {
 				return 	"raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);	
 			}
 		case 1:
-			if(playerJoinIn==0){
+			if(bet<=BB){
 				return  "raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);
 			}else{
 				if(currentSeat==2){
-					if(bet>=3*BB){
-						return "fold";
+					if(myRestJetton<4*BB){
+						return "all_in";
 					}else{
-						return "check";//大盲位check
-					}	
+						if(bet>=3*BB){
+							return "fold";
+						}else{
+							return "check";//大盲位check
+						}
+					}				
 				}else{
-					if(bet>2*BB)
-					return "fold";//其他位置call
-					else 
-					return "call";
+					if(myRestJetton<4*BB){
+						return "all_in";
+					}else{
+						if(bet>2*BB)
+							return "fold";//其他位置call
+							else 
+							return "call";
+					}				
 				}
 			}
 		case 0:
 			if(currentSeat==2){
-				if(bet>BB){
-					return "fold";
+				if(myRestJetton<=2*BB){
+					return "all_in";
 				}else{
-					return "check";//大盲位check
-				}
+					if(bet>BB){
+						return "fold";
+					}else{
+						return "check";//大盲位check
+					}
+				}		
 			}else{
 				return "fold";//其他位置call
 			}	
