@@ -85,7 +85,7 @@ public class Game {
 			if(!dsnju.player.isConnected())
 				dsnju.player.connect(new InetSocketAddress(dsnju.serverip, dsnju.serverport));//连接server
 			count++;
-			System.out.println(dsnju.mypid+"的第"+count+"局结束");
+			System.out.println(dsnju.mypid+"'s"+count+" round is over");
 		}
 		dsnju.reader.close();
 		dsnju.player2server.close();
@@ -387,6 +387,8 @@ public class Game {
 		}
 		if(myaction.equals("fold"))//发送了fold则将自己状态标为弃牌
 			isDiscard=true;
+		else
+			System.out.println(mypid+"'s action="+myaction);
 		/*System.out.println("本轮个玩家bet_in:");
 		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//获取每个对手对象  		
 			System.out.println(entry.getKey()+"-->"+entry.getValue().bet_in);			
