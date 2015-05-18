@@ -49,17 +49,17 @@ public class Game {
 		//初始化
 		Game dsnju=new Game();
 		
-		/*dsnju.serverip=args[0];
+		dsnju.serverip=args[0];
 		dsnju.serverport=new Integer(args[1]);
 		dsnju.myip=args[2];
 		dsnju.myport=new Integer(args[3]);
-		dsnju.mypid=new Integer(args[4]);*/
+		dsnju.mypid=new Integer(args[4]);
 		
-		dsnju.serverip="127.0.0.1";
+		/*dsnju.serverip="127.0.0.1";
 		dsnju.serverport=8888;
 		dsnju.myip="127.0.0.1";
 		dsnju.myport=4533;
-		dsnju.mypid=5555;
+		dsnju.mypid=5555;*/
 		
 		dsnju.initialize();
 		//发送注册信息
@@ -77,6 +77,7 @@ public class Game {
 			//对一些变量清空
 			dsnju.Pid_Opponent.clear();
 			dsnju.holdCards.clear();//清空自己的手牌列表
+			inquirecount=1;
 			//清空每个对手对象的动作Map
 			/*for(Entry<Integer, Opponent> entry:dsnju.Pid_Opponent.entrySet()){
 				entry.getValue().action.clear();
@@ -418,9 +419,10 @@ public class Game {
 						result=getbetresult(splitMsg, opp);
 					}
 				}
+				if(result!=-1)//找到result即退出循环
+					break;
 			}
-			if(result!=-1)//找到result即退出循环
-				break;
+			
 		}
 		inquirecount++;//增加轮数
 		//更新每个对象的jetton money
