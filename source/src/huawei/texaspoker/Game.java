@@ -23,12 +23,13 @@ public class Game {
 	BufferedReader reader;
 	MessageHead MsgHeadHanlder;
 	Desk desk;
+	int inquirecount=1;//记录当前牌局状态是第几轮inquire。
 	
-    int mypid;
     String serverip,myip;
-    int serverport,myport;
+    int serverport,myport;  
     
     int myorder;
+    int mypid;
 	private boolean isDiscard;//记录自己是否弃牌
 	private List<Card> holdCards;//自己手牌
 	private int mymoney,myjetton;//自己的筹码和金额
@@ -47,16 +48,16 @@ public class Game {
 		// TODO Auto-generated method stub	
 		//初始化
 		Game dsnju=new Game();
-		dsnju.serverip=args[0];
+		/*dsnju.serverip=args[0];
 		dsnju.serverport=new Integer(args[1]);
 		dsnju.myip=args[2];
 		dsnju.myport=new Integer(args[3]);
-		dsnju.mypid=new Integer(args[4]);
-		/*dsnju.serverip="127.0.0.1";
+		dsnju.mypid=new Integer(args[4]);*/
+		dsnju.serverip="127.0.0.1";
 		dsnju.serverport=6000;
 		dsnju.myip="127.0.0.1";
 		dsnju.myport=8889;
-		dsnju.mypid=666;*/
+		dsnju.mypid=7777;
 		dsnju.initialize();
 		//发送注册信息
 		dsnju.player2server.println("reg: "+dsnju.mypid+" DSNJU ");
@@ -223,11 +224,12 @@ public class Game {
 				break;
 			}
 			if(pid!=mypid)
-				Pid_Opponent.put(pid, new Opponent(pid, jetton, money));//创建对手对象
+				Pid_Opponent.put(pid, new Opponent(pid, jetton, money,linecount));//创建对手对象
 			setMyself(pid, jetton, money,linecount);//设置自己的jetton、money即执行次序
 			linecount++;
 		}		
 		desk.playercount=linecount;
+		Pid_Opponent.get(desk.getButton()).order=linecount;//对button位的次序重新设为玩家人数
 		if(desk.getButton()==mypid)//如果自己是button位，次序为最后
 			this.myorder=desk.playercount;
 		desk.setcardStatus(0);//设置牌局状态
@@ -238,11 +240,12 @@ public class Game {
 		System.out.println("已加入的行动顺序Map：");
 		for(Map.Entry<Integer, Integer> entry:desk.Order_Pid.entrySet()){    
 		     System.out.print(entry.getKey()+"-->"+entry.getValue()+" ");    
-		}
-		System.out.println("\n已加入的对手Map：");
-		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){    
-		     System.out.println(entry.getKey()+"-->"+entry.getValue().getPID()+" "+entry.getValue().getJetton()+" "+entry.getValue().getMoney());    
 		}*/
+		System.out.println("\n已加入的对手Map：");
+		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){
+		     System.out.println(entry.getKey()+"-->"+" "+entry.getValue().getJetton()+" "
+		    		 +entry.getValue().getMoney()+" "+entry.getValue().order);    
+		}
 	}
 	
 	private int setMyself(int pid,int jetton,int money,int linecount){
@@ -310,7 +313,9 @@ public class Game {
 		String temp="";
 		int bet=0,pid,bettemp;
 		StringBuffer curRoundAction=new StringBuffer();
-		String curRoundInquireMsg[]=new String[desk.playercount-1];//保存本次Inquire传入的玩家pid、jetton、money bet action行
+		//保存本次Inquire传入的玩家pid、jetton、money bet action行。最多playercount行
+		//除第一轮外，其他每轮都发全部玩家包括已弃牌玩家的动作
+		String curRoundInquireMsg[]=new String[desk.playercount];
 		int linecount=0;
 		while(!(temp=reader.readLine()).equals(head)){
 			String splittemp[]=temp.split(" ");
@@ -352,23 +357,30 @@ public class Game {
 		System.out.println("向sever发送自己的action……");*/
 		
 		bet=getbet(curRoundInquireMsg);
-		if(desk.getcardStatus()==0){
-			//System.out.println("bet="+bet);
-			preFlopAction pre=new preFlopAction(holdCards, myorder, bet, desk.getBB(), 
-					desk.totalpot, desk.playercount, myjetton);
-			player2server.println(pre.preFlopDecision());
+		String myaction="";
+		if(!isDiscard){//没有弃牌才发决策消息给server
+			if(desk.getcardStatus()==0){
+				System.out.println("bet="+bet);
+				preFlopAction pre=new preFlopAction(holdCards, myorder, bet, desk.getBB(), 
+						desk.totalpot, desk.playercount, myjetton);
+				myaction=pre.preFlopDecision();
+				player2server.println(myaction);
+			}
+			else {
+				System.out.println("bet="+bet);
+				actionDecision mActionDecision=new actionDecision(holdCards, desk.sharedCards, bet, 
+						desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton);
+				myaction=mActionDecision.actionSendToServer();			
+				player2server.println(myaction);
+			}
+			player2server.flush();
 		}
-		else {
-			//System.out.println("bet="+bet);
-			actionDecision mActionDecision=new actionDecision(holdCards, desk.sharedCards, bet, 
-					desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton);
-			player2server.println(mActionDecision.actionSendToServer());
-		}
-		player2server.flush();
-		
-		/*for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//获取每个对手对象  		
+		if(myaction.equals("fold"))//发送了fold则将自己状态标为弃牌
+			isDiscard=true;
+		System.out.println("本轮个玩家bet_in:");
+		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//获取每个对手对象  		
 			System.out.println(entry.getKey()+"-->"+entry.getValue().bet_in);			
-		}*/
+		}
 	}
 	//获得bet并更新每个对手的bet_in
 	private int getbet(String curRoundInquireMsg[]){//根据该pid对手的action决定bet——本轮前面玩家加入的最大筹码
@@ -378,31 +390,63 @@ public class Game {
 		for(int i=0;i<curRoundInquireMsg.length&&curRoundInquireMsg[i]!=null;i++){
 			String splitMsg[]=curRoundInquireMsg[i].split(" ");
 			pid=new Integer(splitMsg[0]);
-			Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
-			if(splitMsg[4]=="blind"){
-				result=desk.getBB();
-				break;
-			}
-			else if(splitMsg[4].equals("raise")||splitMsg[4].equals("call")||splitMsg[4].equals("all_in")){
-				int bettemp=new Integer(splitMsg[3]);
-				result=bettemp-opp.bet_in;
-				break;
-			}
-			else{
-				//fold check
+			if(pid!=mypid){//如果自己是第一个被有效询问的，result=0
+				Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
+				int temporder=opp.order;
+				if(inquirecount==1){//第一轮询问只关注自己前面的几个信息
+					if(temporder<myorder){//当对手order大于自己的order，即为上一轮的bet_in，不能作为本轮的bet决定数据
+						if(splitMsg[4].equals("blind")){//自己是三号位
+							result=desk.getBB();
+							break;
+						}
+						else if(splitMsg[4].equals("raise")||splitMsg[4].equals("call")||splitMsg[4].equals("all_in")){
+							int bettemp=new Integer(splitMsg[3]);
+							result=bettemp-opp.bet_in;//与历史值做差
+							break;
+						}
+						else if(splitMsg[4].equals("check")){
+							break;						
+						}
+						else{
+							//fold
+						}
+					}
+					else
+						break;
+				}
+				else{//大于一轮时，当自己前面的都fold就要考虑自己后的玩家的action（不会有blind）
+					if(splitMsg[4].equals("raise")||splitMsg[4].equals("call")||splitMsg[4].equals("all_in")){
+						int bettemp=new Integer(splitMsg[3]);
+						result=bettemp-opp.bet_in;//与历史值做差
+						break;
+					}
+					else if(splitMsg[4].equals("check")){
+						break;						
+					}
+					else{
+						//fold
+					}
+				}
 			}
 		}
+		inquirecount++;//增加轮数
 		//更新每个对象的jetton money
 		for(int i=0;i<curRoundInquireMsg.length&&curRoundInquireMsg[i]!=null;i++){
 			String splitMsg[]=curRoundInquireMsg[i].split(" ");
 			pid=new Integer(splitMsg[0]);
-			Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
 			int bettemp=new Integer(splitMsg[3]);
 			int jetton=new Integer(splitMsg[1]);
 			int money=new Integer(splitMsg[2]);
-			opp.bet_in=bettemp;
-			opp.setJetton(jetton);
-			opp.setMoney(money);
+			if(pid!=mypid){
+				Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象				
+				opp.bet_in=bettemp;
+				opp.setJetton(jetton);
+				opp.setMoney(money);
+			}
+			else{
+				myjetton=jetton;//更新自己的筹码数
+				mymoney=money;
+			}
 		}
 		return result;
 		
@@ -433,6 +477,7 @@ public class Game {
 			desk.sharedCards.add(new Card(Card.NumeralSuit.get(splittemp[0]), card2number(splittemp[1])));
 		}
 		desk.setcardStatus(1);//牌局状态为flop
+		inquirecount=1;//新的牌局状态，询问次数重置
 		/*System.out.println("现有公共牌：");
 		for(Card c:desk.sharedCards)
 			System.out.println(c.getSuit()+","+c.getNumber());*/
@@ -451,6 +496,8 @@ public class Game {
 			String[] splittemp=temp.split(" ");
 			desk.sharedCards.add(new Card(Card.NumeralSuit.get(splittemp[0]), card2number(splittemp[1])));
 		}
+		desk.setcardStatus(2);
+		inquirecount=1;//新的牌局状态，询问次数重置
 		/*System.out.println("现有公共牌：");
 		for(Card c:desk.sharedCards)
 			System.out.println(c.getSuit()+","+c.getNumber());*/
@@ -463,6 +510,8 @@ public class Game {
 			String[] splittemp=temp.split(" ");
 			desk.sharedCards.add(new Card(Card.NumeralSuit.get(splittemp[0]), card2number(splittemp[1])));
 		}
+		desk.setcardStatus(3);
+		inquirecount=1;//新的牌局状态，询问次数重置
 	/*	System.out.println("现有公共牌：");
 		for(Card c:desk.sharedCards)
 			System.out.println(c.getSuit()+","+c.getNumber());*/
