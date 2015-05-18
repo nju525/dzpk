@@ -77,7 +77,7 @@ public class Game {
 			//对一些变量清空
 			dsnju.Pid_Opponent.clear();
 			dsnju.holdCards.clear();//清空自己的手牌列表
-			inquirecount=1;
+			dsnju.inquirecount=1;
 			//清空每个对手对象的动作Map
 			/*for(Entry<Integer, Opponent> entry:dsnju.Pid_Opponent.entrySet()){
 				entry.getValue().action.clear();
