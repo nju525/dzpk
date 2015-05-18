@@ -49,17 +49,17 @@ public class Game {
 		//初始化
 		Game dsnju=new Game();
 		
-		dsnju.serverip=args[0];
+		/*dsnju.serverip=args[0];
 		dsnju.serverport=new Integer(args[1]);
 		dsnju.myip=args[2];
 		dsnju.myport=new Integer(args[3]);
-		dsnju.mypid=new Integer(args[4]);
+		dsnju.mypid=new Integer(args[4]);*/
 		
-		/*dsnju.serverip="127.0.0.1";
-		dsnju.serverport=6000;
+		dsnju.serverip="127.0.0.1";
+		dsnju.serverport=8888;
 		dsnju.myip="127.0.0.1";
-		dsnju.myport=8889;
-		dsnju.mypid=7777;*/
+		dsnju.myport=4533;
+		dsnju.mypid=5555;
 		
 		dsnju.initialize();
 		//发送注册信息
@@ -81,7 +81,8 @@ public class Game {
 			/*for(Entry<Integer, Opponent> entry:dsnju.Pid_Opponent.entrySet()){
 				entry.getValue().action.clear();
 			}*/	
-		
+			if(!dsnju.player.isConnected())
+				dsnju.player.connect(new InetSocketAddress(dsnju.serverip, dsnju.serverport));//连接server
 			count++;
 			//System.out.println("第"+count+"局结束");
 		}
