@@ -1,14 +1,14 @@
 
 
----GAME START @ 2015-5-18-16-30-18---
-reg: 1111 DSNJU 
+---GAME START @ 2015-5-18-17-27-11---
 reg: 7777 DSNJU 
-reg: 8888 DSNJU 
-reg: 4444 DSNJU 
 reg: 5555 DSNJU 
-reg: 2222 DSNJU 
-reg: 3333 DSNJU 
+reg: 4444 DSNJU 
 reg: 6666 DSNJU 
+reg: 3333 DSNJU 
+reg: 1111 DSNJU 
+reg: 8888 DSNJU 
+reg: 2222 DSNJU 
 
 -----1 Hand-----
 
@@ -16,85 +16,64 @@ reg: 6666 DSNJU
 seat/ 
 button: 4444 2000 8000 
 small blind: 2222 2000 8000 
-big blind: 1111 2000 8000 
-8888 2000 8000 
+big blind: 6666 2000 8000 
 5555 2000 8000 
-6666 2000 8000 
 7777 2000 8000 
 3333 2000 8000 
+1111 2000 8000 
+8888 2000 8000 
 /seat 
 blind/ 
 2222: 50 
-1111: 100 
+6666: 100 
 /blind 
 player 2222:hold/ 
-CLUBS J 
-DIAMONDS K 
-/hold 
-player 1111:hold/ 
-DIAMONDS 10 
-SPADES 8 
-/hold 
-player 8888:hold/ 
-DIAMONDS J 
-CLUBS 5 
-/hold 
-player 5555:hold/ 
-DIAMONDS 9 
-HEARTS 8 
+SPADES J 
+HEARTS 6 
 /hold 
 player 6666:hold/ 
-DIAMONDS 4 
-HEARTS 5 
+HEARTS 7 
+SPADES 8 
+/hold 
+player 5555:hold/ 
+SPADES A 
+SPADES 9 
 /hold 
 player 7777:hold/ 
-CLUBS 4 
-SPADES J 
+DIAMONDS 10 
+HEARTS 9 
 /hold 
 player 3333:hold/ 
-SPADES 6 
-HEARTS 7 
+HEARTS 2 
+CLUBS 2 
+/hold 
+player 1111:hold/ 
+SPADES 4 
+SPADES 10 
+/hold 
+player 8888:hold/ 
+CLUBS J 
+DIAMONDS 7 
 /hold 
 player 4444:hold/ 
-SPADES 2 
-HEARTS J 
+SPADES 5 
+CLUBS 3 
 /hold 
 
 ---pre flop round bet---
 valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 8888 
-inquire/ 
-1111 1900 8000 100 blind 
-2222 1950 8000 50 blind 
-total pot: 150 
-/inquire 
-recv from player 8888: fold
-
 send inquire msg to player 5555 
 inquire/ 
-8888 2000 8000 0 fold 
-1111 1900 8000 100 blind 
+6666 1900 8000 100 blind 
 2222 1950 8000 50 blind 
 total pot: 150 
 /inquire 
 recv from player 5555: fold
 
-send inquire msg to player 6666 
-inquire/ 
-5555 2000 8000 0 fold 
-8888 2000 8000 0 fold 
-1111 1900 8000 100 blind 
-2222 1950 8000 50 blind 
-total pot: 150 
-/inquire 
-recv from player 6666: fold
-
 send inquire msg to player 7777 
 inquire/ 
-6666 2000 8000 0 fold 
 5555 2000 8000 0 fold 
-8888 2000 8000 0 fold 
-1111 1900 8000 100 blind 
+6666 1900 8000 100 blind 
 2222 1950 8000 50 blind 
 total pot: 150 
 /inquire 
@@ -103,55 +82,76 @@ recv from player 7777: fold
 send inquire msg to player 3333 
 inquire/ 
 7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
 5555 2000 8000 0 fold 
-8888 2000 8000 0 fold 
-1111 1900 8000 100 blind 
+6666 1900 8000 100 blind 
 2222 1950 8000 50 blind 
 total pot: 150 
 /inquire 
-recv from player 3333: fold
+recv from player 3333: raise 275
+
+send inquire msg to player 1111 
+inquire/ 
+3333 1625 8000 375 raise 
+7777 2000 8000 0 fold 
+5555 2000 8000 0 fold 
+6666 1900 8000 100 blind 
+2222 1950 8000 50 blind 
+total pot: 525 
+/inquire 
+recv from player 1111: fold
+
+send inquire msg to player 8888 
+inquire/ 
+1111 2000 8000 0 fold 
+3333 1625 8000 375 raise 
+7777 2000 8000 0 fold 
+5555 2000 8000 0 fold 
+6666 1900 8000 100 blind 
+2222 1950 8000 50 blind 
+total pot: 525 
+/inquire 
+recv from player 8888: fold
 
 send inquire msg to player 4444 
 inquire/ 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
 8888 2000 8000 0 fold 
-1111 1900 8000 100 blind 
+1111 2000 8000 0 fold 
+3333 1625 8000 375 raise 
+7777 2000 8000 0 fold 
+5555 2000 8000 0 fold 
+6666 1900 8000 100 blind 
 2222 1950 8000 50 blind 
-total pot: 150 
+total pot: 525 
 /inquire 
 recv from player 4444: fold
 
 send inquire msg to player 2222 
 inquire/ 
 4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
 8888 2000 8000 0 fold 
-1111 1900 8000 100 blind 
+1111 2000 8000 0 fold 
+3333 1625 8000 375 raise 
+7777 2000 8000 0 fold 
+5555 2000 8000 0 fold 
+6666 1900 8000 100 blind 
 2222 1950 8000 50 blind 
-total pot: 150 
+total pot: 525 
 /inquire 
-recv from player 2222: raise 275
+recv from player 2222: fold
 
-send inquire msg to player 1111 
+send inquire msg to player 6666 
 inquire/ 
-2222 1625 8000 375 raise 
+2222 1950 8000 50 fold 
 4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
 8888 2000 8000 0 fold 
-1111 1900 8000 100 blind 
-total pot: 475 
+1111 2000 8000 0 fold 
+3333 1625 8000 375 raise 
+7777 2000 8000 0 fold 
+5555 2000 8000 0 fold 
+6666 1900 8000 100 blind 
+total pot: 525 
 /inquire 
-recv from player 1111: fold
+recv from player 6666: fold
 
 
 ---flop round bet---
@@ -166,9 +166,9 @@ valid player: 8, all in player: 0, fold player: 7
 --- 1 players not fold, don't need show down---
 
 ---Allocate pot---
-Only player at seat 0 not fold, win all the pot 475
+Only player at seat 4 not fold, win all the pot 525
 pot-win/ 
-2222: 475 
+3333: 525 
 /pot-win 
 it is player 2222's turn to be button
 
@@ -176,594 +176,138 @@ it is player 2222's turn to be button
 
 ----- clean player data in socket -----
 seat/ 
-button: 2222 2100 8000 
-small blind: 1111 1900 8000 
-big blind: 8888 2000 8000 
-5555 2000 8000 
-6666 2000 8000 
+button: 2222 1950 8000 
+small blind: 6666 1900 8000 
+big blind: 5555 2000 8000 
 7777 2000 8000 
-3333 2000 8000 
+3333 2150 8000 
+1111 2000 8000 
+8888 2000 8000 
 4444 2000 8000 
 /seat 
 blind/ 
-1111: 50 
-8888: 100 
+6666: 50 
+5555: 100 
 /blind 
-player 1111:hold/ 
-CLUBS J 
-DIAMONDS K 
-/hold 
-player 8888:hold/ 
-DIAMONDS 10 
-SPADES 8 
+player 6666:hold/ 
+SPADES J 
+HEARTS 6 
 /hold 
 player 5555:hold/ 
-DIAMONDS J 
-CLUBS 5 
-/hold 
-player 6666:hold/ 
-DIAMONDS 9 
-HEARTS 8 
+HEARTS 7 
+SPADES 8 
 /hold 
 player 7777:hold/ 
-DIAMONDS 4 
-HEARTS 5 
+SPADES A 
+SPADES 9 
 /hold 
 player 3333:hold/ 
-CLUBS 4 
-SPADES J 
+DIAMONDS 10 
+HEARTS 9 
+/hold 
+player 1111:hold/ 
+HEARTS 2 
+CLUBS 2 
+/hold 
+player 8888:hold/ 
+SPADES 4 
+SPADES 10 
 /hold 
 player 4444:hold/ 
-SPADES 6 
-HEARTS 7 
+CLUBS J 
+DIAMONDS 7 
 /hold 
 player 2222:hold/ 
-SPADES 2 
-HEARTS J 
+SPADES 5 
+CLUBS 3 
 /hold 
 
 ---pre flop round bet---
 valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 5555 
-inquire/ 
-8888 1900 8000 100 blind 
-1111 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 1 times
-send inquire msg to player 6666 
-inquire/ 
-5555 2000 8000 0 fold 
-8888 1900 8000 100 blind 
-1111 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 1 times
 send inquire msg to player 7777 
 inquire/ 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
-8888 1900 8000 100 blind 
-1111 1850 8000 50 blind 
+5555 1900 8000 100 blind 
+6666 1850 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 7777(ret:-1, err: 0) for 1 times
 send inquire msg to player 3333 
 inquire/ 
 7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
-8888 1900 8000 100 blind 
-1111 1850 8000 50 blind 
+5555 1900 8000 100 blind 
+6666 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 1 times
+recv from player 3333: fold
+
+send inquire msg to player 1111 
+inquire/ 
+3333 2150 8000 0 fold 
+7777 2000 8000 0 fold 
+5555 1900 8000 100 blind 
+6666 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 1 times
+send inquire msg to player 8888 
+inquire/ 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 2000 8000 0 fold 
+5555 1900 8000 100 blind 
+6666 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 1 times
 send inquire msg to player 4444 
 inquire/ 
-3333 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
 7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
-8888 1900 8000 100 blind 
-1111 1850 8000 50 blind 
+5555 1900 8000 100 blind 
+6666 1850 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 4444(ret:-1, err: 0) for 1 times
 send inquire msg to player 2222 
 inquire/ 
 4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
 7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
-8888 1900 8000 100 blind 
-1111 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-recv from player 2222: fold
-
-send inquire msg to player 1111 
-inquire/ 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
-8888 1900 8000 100 blind 
-1111 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 1 times
-send inquire msg to player 8888 
-inquire/ 
-1111 1850 8000 50 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 2000 8000 0 fold 
-8888 1900 8000 100 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 1 times
-
----flop round bet---
-valid player: 8, all in player: 0, fold player: 8
-
----turn round bet---
-valid player: 8, all in player: 0, fold player: 8
-
----river round bet---
-valid player: 8, all in player: 0, fold player: 8
-
---- 0 players not fold, don't need show down---
-
----Allocate pot---
-pot-win/ 
-/pot-win 
-it is player 1111's turn to be button
-
------3 Hand-----
-
------ clean player data in socket -----
-seat/ 
-button: 1111 1850 8000 
-small blind: 8888 1900 8000 
-big blind: 5555 2000 8000 
-6666 2000 8000 
-7777 2000 8000 
-3333 2000 8000 
-4444 2000 8000 
-2222 2100 8000 
-/seat 
-blind/ 
-8888: 50 
-5555: 100 
-/blind 
-player 8888:hold/ 
-DIAMONDS 3 
-CLUBS 2 
-/hold 
-player 5555:hold/ 
-DIAMONDS J 
-HEARTS 5 
-/hold 
-player 6666:hold/ 
-CLUBS J 
-DIAMONDS 5 
-/hold 
-player 7777:hold/ 
-CLUBS 9 
-DIAMONDS 6 
-/hold 
-player 3333:hold/ 
-HEARTS K 
-CLUBS K 
-/hold 
-player 4444:hold/ 
-SPADES 6 
-HEARTS 10 
-/hold 
-player 2222:hold/ 
-DIAMONDS Q 
-HEARTS 8 
-/hold 
-player 1111:hold/ 
-SPADES 2 
-CLUBS 8 
-/hold 
-
----pre flop round bet---
-valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 6666 
-inquire/ 
 5555 1900 8000 100 blind 
-8888 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 2 times
-send inquire msg to player 7777 
-inquire/ 
-6666 2000 8000 0 fold 
-5555 1900 8000 100 blind 
-8888 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 7777(ret:-1, err: 0) for 2 times
-send inquire msg to player 3333 
-inquire/ 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 1900 8000 100 blind 
-8888 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 2 times
-send inquire msg to player 4444 
-inquire/ 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 1900 8000 100 blind 
-8888 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 4444(ret:-1, err: 0) for 2 times
-send inquire msg to player 2222 
-inquire/ 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 1900 8000 100 blind 
-8888 1850 8000 50 blind 
+6666 1850 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 2222(ret:-1, err: 0) for 1 times
-send inquire msg to player 1111 
-inquire/ 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 1900 8000 100 blind 
-8888 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 2 times
-send inquire msg to player 8888 
-inquire/ 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 1900 8000 100 blind 
-8888 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 2 times
-send inquire msg to player 5555 
-inquire/ 
-8888 1850 8000 50 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 2000 8000 0 fold 
-5555 1900 8000 100 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 2 times
-
----flop round bet---
-valid player: 8, all in player: 0, fold player: 8
-
----turn round bet---
-valid player: 8, all in player: 0, fold player: 8
-
----river round bet---
-valid player: 8, all in player: 0, fold player: 8
-
---- 0 players not fold, don't need show down---
-
----Allocate pot---
-pot-win/ 
-/pot-win 
-it is player 8888's turn to be button
-
------4 Hand-----
-
------ clean player data in socket -----
-seat/ 
-button: 8888 1850 8000 
-small blind: 5555 1900 8000 
-big blind: 6666 2000 8000 
-7777 2000 8000 
-3333 2000 8000 
-4444 2000 8000 
-2222 2100 8000 
-1111 1850 8000 
-/seat 
-blind/ 
-5555: 50 
-6666: 100 
-/blind 
-player 5555:hold/ 
-SPADES 8 
-CLUBS 5 
-/hold 
-player 6666:hold/ 
-CLUBS 4 
-CLUBS K 
-/hold 
-player 7777:hold/ 
-HEARTS 8 
-DIAMONDS 8 
-/hold 
-player 3333:hold/ 
-CLUBS 10 
-HEARTS 3 
-/hold 
-player 4444:hold/ 
-SPADES 2 
-DIAMONDS A 
-/hold 
-player 2222:hold/ 
-HEARTS 9 
-CLUBS 3 
-/hold 
-player 1111:hold/ 
-SPADES 10 
-CLUBS 8 
-/hold 
-player 8888:hold/ 
-SPADES A 
-DIAMONDS 10 
-/hold 
-
----pre flop round bet---
-valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 7777 
-inquire/ 
-6666 1900 8000 100 blind 
-5555 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 7777(ret:-1, err: 0) for 3 times
-send inquire msg to player 3333 
-inquire/ 
-7777 2000 8000 0 fold 
-6666 1900 8000 100 blind 
-5555 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 3 times
-send inquire msg to player 4444 
-inquire/ 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 1900 8000 100 blind 
-5555 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 4444(ret:-1, err: 0) for 3 times
-send inquire msg to player 2222 
-inquire/ 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 1900 8000 100 blind 
-5555 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 2 times
-send inquire msg to player 1111 
-inquire/ 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 1900 8000 100 blind 
-5555 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 3 times
-send inquire msg to player 8888 
-inquire/ 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 1900 8000 100 blind 
-5555 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 3 times
-send inquire msg to player 5555 
-inquire/ 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 2000 8000 0 fold 
-6666 1900 8000 100 blind 
-5555 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 3 times
 send inquire msg to player 6666 
 inquire/ 
-5555 1850 8000 50 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
 7777 2000 8000 0 fold 
-6666 1900 8000 100 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 3 times
-
----flop round bet---
-valid player: 8, all in player: 0, fold player: 8
-
----turn round bet---
-valid player: 8, all in player: 0, fold player: 8
-
----river round bet---
-valid player: 8, all in player: 0, fold player: 8
-
---- 0 players not fold, don't need show down---
-
----Allocate pot---
-pot-win/ 
-/pot-win 
-it is player 5555's turn to be button
-
------5 Hand-----
-
------ clean player data in socket -----
-seat/ 
-button: 5555 1850 8000 
-small blind: 6666 1900 8000 
-big blind: 7777 2000 8000 
-3333 2000 8000 
-4444 2000 8000 
-2222 2100 8000 
-1111 1850 8000 
-8888 1850 8000 
-/seat 
-blind/ 
-6666: 50 
-7777: 100 
-/blind 
-player 6666:hold/ 
-HEARTS 3 
-DIAMONDS 5 
-/hold 
-player 7777:hold/ 
-DIAMONDS 3 
-DIAMONDS 4 
-/hold 
-player 3333:hold/ 
-CLUBS 4 
-CLUBS J 
-/hold 
-player 4444:hold/ 
-CLUBS 2 
-SPADES 10 
-/hold 
-player 2222:hold/ 
-SPADES 9 
-SPADES A 
-/hold 
-player 1111:hold/ 
-DIAMONDS 6 
-CLUBS 3 
-/hold 
-player 8888:hold/ 
-HEARTS 6 
-HEARTS K 
-/hold 
-player 5555:hold/ 
-HEARTS 7 
-HEARTS 8 
-/hold 
-
----pre flop round bet---
-valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 3333 
-inquire/ 
-7777 1900 8000 100 blind 
+5555 1900 8000 100 blind 
 6666 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 4 times
-send inquire msg to player 4444 
-inquire/ 
-3333 2000 8000 0 fold 
-7777 1900 8000 100 blind 
-6666 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 4444(ret:-1, err: 0) for 4 times
-send inquire msg to player 2222 
-inquire/ 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 1900 8000 100 blind 
-6666 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 3 times
-send inquire msg to player 1111 
-inquire/ 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 1900 8000 100 blind 
-6666 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 4 times
-send inquire msg to player 8888 
-inquire/ 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 1900 8000 100 blind 
-6666 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 4 times
+fail to check msg from player 6666(ret:-1, err: 0) for 1 times
 send inquire msg to player 5555 
-inquire/ 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 1900 8000 100 blind 
-6666 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 4 times
-send inquire msg to player 6666 
-inquire/ 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 1900 8000 100 blind 
-6666 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 4 times
-send inquire msg to player 7777 
 inquire/ 
 6666 1850 8000 50 fold 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 2000 8000 0 fold 
-3333 2000 8000 0 fold 
-7777 1900 8000 100 blind 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 2000 8000 0 fold 
+5555 1900 8000 100 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 7777(ret:-1, err: 0) for 4 times
+fail to check msg from player 5555(ret:-1, err: 0) for 1 times
 
 ---flop round bet---
 valid player: 8, all in player: 0, fold player: 8
@@ -781,141 +325,293 @@ pot-win/
 /pot-win 
 it is player 6666's turn to be button
 
------6 Hand-----
+-----3 Hand-----
 
 ----- clean player data in socket -----
 seat/ 
 button: 6666 1850 8000 
-small blind: 7777 1900 8000 
-big blind: 3333 2000 8000 
+small blind: 5555 1900 8000 
+big blind: 7777 2000 8000 
+3333 2150 8000 
+1111 2000 8000 
+8888 2000 8000 
 4444 2000 8000 
-2222 2100 8000 
-1111 1850 8000 
-8888 1850 8000 
-5555 1850 8000 
+2222 1950 8000 
+/seat 
+blind/ 
+5555: 50 
+7777: 100 
+/blind 
+player 5555:hold/ 
+SPADES 7 
+CLUBS 6 
+/hold 
+player 7777:hold/ 
+CLUBS 2 
+CLUBS K 
+/hold 
+player 3333:hold/ 
+HEARTS 3 
+SPADES 6 
+/hold 
+player 1111:hold/ 
+SPADES 2 
+HEARTS 6 
+/hold 
+player 8888:hold/ 
+CLUBS 9 
+DIAMONDS 10 
+/hold 
+player 4444:hold/ 
+CLUBS A 
+HEARTS 4 
+/hold 
+player 2222:hold/ 
+DIAMONDS K 
+CLUBS 3 
+/hold 
+player 6666:hold/ 
+HEARTS Q 
+DIAMONDS 7 
+/hold 
+
+---pre flop round bet---
+valid player: 8, all in player: 0, fold player: 0
+send inquire msg to player 3333 
+inquire/ 
+7777 1900 8000 100 blind 
+5555 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 3333(ret:-1, err: 0) for 1 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2150 8000 0 fold 
+7777 1900 8000 100 blind 
+5555 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 2 times
+send inquire msg to player 8888 
+inquire/ 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 1900 8000 100 blind 
+5555 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 2 times
+send inquire msg to player 4444 
+inquire/ 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 1900 8000 100 blind 
+5555 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 4444(ret:-1, err: 0) for 2 times
+send inquire msg to player 2222 
+inquire/ 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 1900 8000 100 blind 
+5555 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 2222(ret:-1, err: 0) for 2 times
+send inquire msg to player 6666 
+inquire/ 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 1900 8000 100 blind 
+5555 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 6666(ret:-1, err: 0) for 2 times
+send inquire msg to player 5555 
+inquire/ 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 1900 8000 100 blind 
+5555 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 5555(ret:-1, err: 0) for 2 times
+send inquire msg to player 7777 
+inquire/ 
+5555 1850 8000 50 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2150 8000 0 fold 
+7777 1900 8000 100 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 7777(ret:-1, err: 0) for 2 times
+
+---flop round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+---turn round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+---river round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+--- 0 players not fold, don't need show down---
+
+---Allocate pot---
+pot-win/ 
+/pot-win 
+it is player 5555's turn to be button
+
+-----4 Hand-----
+
+----- clean player data in socket -----
+seat/ 
+button: 5555 1850 8000 
+small blind: 7777 1900 8000 
+big blind: 3333 2150 8000 
+1111 2000 8000 
+8888 2000 8000 
+4444 2000 8000 
+2222 1950 8000 
+6666 1850 8000 
 /seat 
 blind/ 
 7777: 50 
 3333: 100 
 /blind 
 player 7777:hold/ 
-HEARTS 9 
-DIAMONDS K 
+HEARTS 8 
+HEARTS 7 
 /hold 
 player 3333:hold/ 
-CLUBS 6 
-SPADES 8 
-/hold 
-player 4444:hold/ 
-SPADES J 
-DIAMONDS 6 
-/hold 
-player 2222:hold/ 
-DIAMONDS 9 
-HEARTS 10 
+CLUBS J 
+HEARTS Q 
 /hold 
 player 1111:hold/ 
-HEARTS J 
-CLUBS 10 
+CLUBS 9 
+DIAMONDS 6 
 /hold 
 player 8888:hold/ 
-DIAMONDS 2 
-HEARTS 8 
+DIAMONDS A 
+DIAMONDS 7 
 /hold 
-player 5555:hold/ 
-CLUBS Q 
-SPADES Q 
+player 4444:hold/ 
+CLUBS 4 
+CLUBS 3 
+/hold 
+player 2222:hold/ 
+DIAMONDS 2 
+HEARTS 6 
 /hold 
 player 6666:hold/ 
-SPADES 2 
-CLUBS 2 
+DIAMONDS 3 
+HEARTS 4 
+/hold 
+player 5555:hold/ 
+SPADES A 
+DIAMONDS 9 
 /hold 
 
 ---pre flop round bet---
 valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 4444 
+send inquire msg to player 1111 
 inquire/ 
-3333 1900 8000 100 blind 
+3333 2050 8000 100 blind 
 7777 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 4444(ret:-1, err: 0) for 5 times
+fail to check msg from player 1111(ret:-1, err: 0) for 3 times
+send inquire msg to player 8888 
+inquire/ 
+1111 2000 8000 0 fold 
+3333 2050 8000 100 blind 
+7777 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 3 times
+send inquire msg to player 4444 
+inquire/ 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2050 8000 100 blind 
+7777 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 4444(ret:-1, err: 0) for 3 times
 send inquire msg to player 2222 
 inquire/ 
 4444 2000 8000 0 fold 
-3333 1900 8000 100 blind 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2050 8000 100 blind 
 7777 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 4 times
-send inquire msg to player 1111 
-inquire/ 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 1900 8000 100 blind 
-7777 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 5 times
-send inquire msg to player 8888 
-inquire/ 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 1900 8000 100 blind 
-7777 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 5 times
-send inquire msg to player 5555 
-inquire/ 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 2000 8000 0 fold 
-3333 1900 8000 100 blind 
-7777 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 5 times
+fail to check msg from player 2222(ret:-1, err: 0) for 3 times
 send inquire msg to player 6666 
 inquire/ 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 2000 8000 0 fold 
-3333 1900 8000 100 blind 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2050 8000 100 blind 
 7777 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 5 times
-send inquire msg to player 7777 
+fail to check msg from player 6666(ret:-1, err: 0) for 3 times
+send inquire msg to player 5555 
 inquire/ 
 6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 2000 8000 0 fold 
-3333 1900 8000 100 blind 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2050 8000 100 blind 
 7777 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 7777(ret:-1, err: 0) for 5 times
+fail to check msg from player 5555(ret:-1, err: 0) for 3 times
+send inquire msg to player 7777 
+inquire/ 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2050 8000 100 blind 
+7777 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 7777(ret:-1, err: 0) for 3 times
 send inquire msg to player 3333 
 inquire/ 
 7777 1850 8000 50 fold 
-6666 1850 8000 0 fold 
 5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 2000 8000 0 fold 
-3333 1900 8000 100 blind 
+8888 2000 8000 0 fold 
+1111 2000 8000 0 fold 
+3333 2050 8000 100 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 5 times
+fail to check msg from player 3333(ret:-1, err: 0) for 2 times
 
 ---flop round bet---
 valid player: 8, all in player: 0, fold player: 8
@@ -933,54 +629,358 @@ pot-win/
 /pot-win 
 it is player 7777's turn to be button
 
------7 Hand-----
+-----5 Hand-----
 
 ----- clean player data in socket -----
 seat/ 
 button: 7777 1850 8000 
-small blind: 3333 1900 8000 
-big blind: 4444 2000 8000 
-2222 2100 8000 
-1111 1850 8000 
-8888 1850 8000 
-5555 1850 8000 
+small blind: 3333 2050 8000 
+big blind: 1111 2000 8000 
+8888 2000 8000 
+4444 2000 8000 
+2222 1950 8000 
 6666 1850 8000 
+5555 1850 8000 
 /seat 
 blind/ 
 3333: 50 
-4444: 100 
+1111: 100 
 /blind 
 player 3333:hold/ 
-DIAMONDS 2 
-HEARTS 6 
-/hold 
-player 4444:hold/ 
-DIAMONDS 3 
-CLUBS Q 
-/hold 
-player 2222:hold/ 
-SPADES 7 
-CLUBS A 
+SPADES 2 
+HEARTS 2 
 /hold 
 player 1111:hold/ 
-HEARTS 3 
-CLUBS 3 
+SPADES 5 
+HEARTS J 
 /hold 
 player 8888:hold/ 
-SPADES 8 
-SPADES 3 
+CLUBS J 
+CLUBS Q 
 /hold 
-player 5555:hold/ 
-CLUBS 8 
-DIAMONDS 9 
+player 4444:hold/ 
+DIAMONDS 5 
+CLUBS K 
+/hold 
+player 2222:hold/ 
+SPADES K 
+HEARTS 3 
 /hold 
 player 6666:hold/ 
-SPADES 10 
-HEARTS 7 
+CLUBS 10 
+CLUBS 5 
+/hold 
+player 5555:hold/ 
+SPADES A 
+SPADES 4 
 /hold 
 player 7777:hold/ 
-HEARTS 4 
+SPADES 6 
+HEARTS 8 
+/hold 
+
+---pre flop round bet---
+valid player: 8, all in player: 0, fold player: 0
+send inquire msg to player 8888 
+inquire/ 
+1111 1900 8000 100 blind 
+3333 2000 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 4 times
+send inquire msg to player 4444 
+inquire/ 
+8888 2000 8000 0 fold 
+1111 1900 8000 100 blind 
+3333 2000 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 4444(ret:-1, err: 0) for 4 times
+send inquire msg to player 2222 
+inquire/ 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 1900 8000 100 blind 
+3333 2000 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 2222(ret:-1, err: 0) for 4 times
+send inquire msg to player 6666 
+inquire/ 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 1900 8000 100 blind 
+3333 2000 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 6666(ret:-1, err: 0) for 4 times
+send inquire msg to player 5555 
+inquire/ 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 1900 8000 100 blind 
+3333 2000 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 5555(ret:-1, err: 0) for 4 times
+send inquire msg to player 7777 
+inquire/ 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 1900 8000 100 blind 
+3333 2000 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 7777(ret:-1, err: 0) for 4 times
+send inquire msg to player 3333 
+inquire/ 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 1900 8000 100 blind 
+3333 2000 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 3333(ret:-1, err: 0) for 3 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2000 8000 50 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 2000 8000 0 fold 
+1111 1900 8000 100 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 4 times
+
+---flop round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+---turn round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+---river round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+--- 0 players not fold, don't need show down---
+
+---Allocate pot---
+pot-win/ 
+/pot-win 
+it is player 3333's turn to be button
+
+-----6 Hand-----
+
+----- clean player data in socket -----
+seat/ 
+button: 3333 2000 8000 
+small blind: 1111 1900 8000 
+big blind: 8888 2000 8000 
+4444 2000 8000 
+2222 1950 8000 
+6666 1850 8000 
+5555 1850 8000 
+7777 1850 8000 
+/seat 
+blind/ 
+1111: 50 
+8888: 100 
+/blind 
+player 1111:hold/ 
+SPADES 4 
+CLUBS J 
+/hold 
+player 8888:hold/ 
+SPADES 2 
+HEARTS 9 
+/hold 
+player 4444:hold/ 
+CLUBS 8 
+CLUBS 4 
+/hold 
+player 2222:hold/ 
+CLUBS Q 
+SPADES Q 
+/hold 
+player 6666:hold/ 
+DIAMONDS 9 
+CLUBS A 
+/hold 
+player 5555:hold/ 
+CLUBS 9 
+DIAMONDS 5 
+/hold 
+player 7777:hold/ 
+SPADES 8 
+HEARTS 5 
+/hold 
+player 3333:hold/ 
+SPADES K 
+SPADES 3 
+/hold 
+
+---pre flop round bet---
+valid player: 8, all in player: 0, fold player: 0
+send inquire msg to player 4444 
+inquire/ 
+8888 1900 8000 100 blind 
+1111 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 4444(ret:-1, err: 0) for 5 times
+send inquire msg to player 2222 
+inquire/ 
+4444 2000 8000 0 fold 
+8888 1900 8000 100 blind 
+1111 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 2222(ret:-1, err: 0) for 5 times
+send inquire msg to player 6666 
+inquire/ 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 1900 8000 100 blind 
+1111 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 6666(ret:-1, err: 0) for 5 times
+send inquire msg to player 5555 
+inquire/ 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 1900 8000 100 blind 
+1111 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 5555(ret:-1, err: 0) for 5 times
+send inquire msg to player 7777 
+inquire/ 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 1900 8000 100 blind 
+1111 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 7777(ret:-1, err: 0) for 5 times
+send inquire msg to player 3333 
+inquire/ 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 1900 8000 100 blind 
+1111 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 3333(ret:-1, err: 0) for 4 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 1900 8000 100 blind 
+1111 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 5 times
+send inquire msg to player 8888 
+inquire/ 
+1111 1850 8000 50 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 2000 8000 0 fold 
+8888 1900 8000 100 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 5 times
+
+---flop round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+---turn round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+---river round bet---
+valid player: 8, all in player: 0, fold player: 8
+
+--- 0 players not fold, don't need show down---
+
+---Allocate pot---
+pot-win/ 
+/pot-win 
+it is player 1111's turn to be button
+
+-----7 Hand-----
+
+----- clean player data in socket -----
+seat/ 
+button: 1111 1850 8000 
+small blind: 8888 1900 8000 
+big blind: 4444 2000 8000 
+2222 1950 8000 
+6666 1850 8000 
+5555 1850 8000 
+7777 1850 8000 
+3333 2000 8000 
+/seat 
+blind/ 
+8888: 50 
+4444: 100 
+/blind 
+player 8888:hold/ 
+CLUBS Q 
+HEARTS 7 
+/hold 
+player 4444:hold/ 
+CLUBS 8 
+DIAMONDS 4 
+/hold 
+player 2222:hold/ 
+DIAMONDS K 
+DIAMONDS 6 
+/hold 
+player 6666:hold/ 
+DIAMONDS A 
+HEARTS 5 
+/hold 
+player 5555:hold/ 
+CLUBS A 
+CLUBS 7 
+/hold 
+player 7777:hold/ 
+SPADES 8 
 DIAMONDS 7 
+/hold 
+player 3333:hold/ 
+DIAMONDS 8 
+SPADES 5 
+/hold 
+player 1111:hold/ 
+DIAMONDS 3 
+HEARTS 8 
 /hold 
 
 ---pre flop round bet---
@@ -988,82 +988,82 @@ valid player: 8, all in player: 0, fold player: 0
 send inquire msg to player 2222 
 inquire/ 
 4444 1900 8000 100 blind 
-3333 1850 8000 50 blind 
+8888 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 5 times
-send inquire msg to player 1111 
-inquire/ 
-2222 2100 8000 0 fold 
-4444 1900 8000 100 blind 
-3333 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 6 times
-send inquire msg to player 8888 
-inquire/ 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 1900 8000 100 blind 
-3333 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 6 times
-send inquire msg to player 5555 
-inquire/ 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
-4444 1900 8000 100 blind 
-3333 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 6 times
+fail to check msg from player 2222(ret:-1, err: 0) for 6 times
 send inquire msg to player 6666 
 inquire/ 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 1900 8000 100 blind 
-3333 1850 8000 50 blind 
+8888 1850 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 6666(ret:-1, err: 0) for 6 times
-send inquire msg to player 7777 
+send inquire msg to player 5555 
 inquire/ 
 6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 1900 8000 100 blind 
-3333 1850 8000 50 blind 
+8888 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 5555(ret:-1, err: 0) for 6 times
+send inquire msg to player 7777 
+inquire/ 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 1900 8000 100 blind 
+8888 1850 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 7777(ret:-1, err: 0) for 6 times
 send inquire msg to player 3333 
 inquire/ 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
 5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 1900 8000 100 blind 
-3333 1850 8000 50 blind 
+8888 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 6 times
+fail to check msg from player 3333(ret:-1, err: 0) for 5 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 1900 8000 100 blind 
+8888 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 6 times
+send inquire msg to player 8888 
+inquire/ 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
+4444 1900 8000 100 blind 
+8888 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 6 times
 send inquire msg to player 4444 
 inquire/ 
-3333 1850 8000 50 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
+8888 1850 8000 50 fold 
 1111 1850 8000 0 fold 
-2222 2100 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1950 8000 0 fold 
 4444 1900 8000 100 blind 
 total pot: 150 
 /inquire 
@@ -1083,101 +1083,80 @@ valid player: 8, all in player: 0, fold player: 8
 ---Allocate pot---
 pot-win/ 
 /pot-win 
-it is player 3333's turn to be button
+it is player 8888's turn to be button
 
 -----8 Hand-----
 
 ----- clean player data in socket -----
 seat/ 
-button: 3333 1850 8000 
+button: 8888 1850 8000 
 small blind: 4444 1900 8000 
-big blind: 2222 2100 8000 
-1111 1850 8000 
-8888 1850 8000 
-5555 1850 8000 
+big blind: 2222 1950 8000 
 6666 1850 8000 
+5555 1850 8000 
 7777 1850 8000 
+3333 2000 8000 
+1111 1850 8000 
 /seat 
 blind/ 
 4444: 50 
 2222: 100 
 /blind 
 player 4444:hold/ 
-CLUBS 8 
-CLUBS 6 
+SPADES A 
+SPADES 3 
 /hold 
 player 2222:hold/ 
-CLUBS 2 
-CLUBS 5 
-/hold 
-player 1111:hold/ 
-HEARTS 9 
-CLUBS J 
-/hold 
-player 8888:hold/ 
-DIAMONDS 6 
-DIAMONDS A 
-/hold 
-player 5555:hold/ 
 CLUBS K 
-DIAMONDS 2 
+SPADES 10 
 /hold 
 player 6666:hold/ 
-DIAMONDS 8 
-DIAMONDS 9 
+DIAMONDS A 
+HEARTS 3 
+/hold 
+player 5555:hold/ 
+DIAMONDS 5 
+SPADES 2 
 /hold 
 player 7777:hold/ 
-DIAMONDS Q 
-SPADES Q 
+CLUBS 4 
+SPADES 4 
 /hold 
 player 3333:hold/ 
-CLUBS 4 
-HEARTS Q 
+HEARTS 8 
+HEARTS 10 
+/hold 
+player 1111:hold/ 
+CLUBS 8 
+SPADES J 
+/hold 
+player 8888:hold/ 
+DIAMONDS 4 
+DIAMONDS J 
 /hold 
 
 ---pre flop round bet---
 valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 1111 
-inquire/ 
-2222 2000 8000 100 blind 
-4444 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 7 times
-send inquire msg to player 8888 
-inquire/ 
-1111 1850 8000 0 fold 
-2222 2000 8000 100 blind 
-4444 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 7 times
-send inquire msg to player 5555 
-inquire/ 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2000 8000 100 blind 
-4444 1850 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 7 times
 send inquire msg to player 6666 
 inquire/ 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2000 8000 100 blind 
+2222 1850 8000 100 blind 
 4444 1850 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 6666(ret:-1, err: 0) for 7 times
-send inquire msg to player 7777 
+send inquire msg to player 5555 
 inquire/ 
 6666 1850 8000 0 fold 
+2222 1850 8000 100 blind 
+4444 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 5555(ret:-1, err: 0) for 7 times
+send inquire msg to player 7777 
+inquire/ 
 5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2000 8000 100 blind 
+6666 1850 8000 0 fold 
+2222 1850 8000 100 blind 
 4444 1850 8000 50 blind 
 total pot: 150 
 /inquire 
@@ -1185,24 +1164,45 @@ fail to check msg from player 7777(ret:-1, err: 0) for 7 times
 send inquire msg to player 3333 
 inquire/ 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
 5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1850 8000 0 fold 
-2222 2000 8000 100 blind 
+6666 1850 8000 0 fold 
+2222 1850 8000 100 blind 
 4444 1850 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 7 times
+fail to check msg from player 3333(ret:-1, err: 0) for 6 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1850 8000 100 blind 
+4444 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 7 times
+send inquire msg to player 8888 
+inquire/ 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1850 8000 100 blind 
+4444 1850 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 7 times
 send inquire msg to player 4444 
 inquire/ 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
 8888 1850 8000 0 fold 
 1111 1850 8000 0 fold 
-2222 2000 8000 100 blind 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1850 8000 100 blind 
 4444 1850 8000 50 blind 
 total pot: 150 
 /inquire 
@@ -1210,16 +1210,16 @@ fail to check msg from player 4444(ret:-1, err: 0) for 7 times
 send inquire msg to player 2222 
 inquire/ 
 4444 1850 8000 50 fold 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
 8888 1850 8000 0 fold 
 1111 1850 8000 0 fold 
-2222 2000 8000 100 blind 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1850 8000 0 fold 
+2222 1850 8000 100 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 6 times
+fail to check msg from player 2222(ret:-1, err: 0) for 7 times
 
 ---flop round bet---
 valid player: 8, all in player: 0, fold player: 8
@@ -1242,136 +1242,136 @@ it is player 4444's turn to be button
 ----- clean player data in socket -----
 seat/ 
 button: 4444 1850 8000 
-small blind: 2222 2000 8000 
-big blind: 1111 1850 8000 
-8888 1850 8000 
+small blind: 2222 1850 8000 
+big blind: 6666 1850 8000 
 5555 1850 8000 
-6666 1850 8000 
 7777 1850 8000 
-3333 1850 8000 
+3333 2000 8000 
+1111 1850 8000 
+8888 1850 8000 
 /seat 
 blind/ 
 2222: 50 
-1111: 100 
+6666: 100 
 /blind 
 player 2222:hold/ 
 DIAMONDS A 
 HEARTS A 
 /hold 
-player 1111:hold/ 
-CLUBS 3 
-CLUBS Q 
-/hold 
-player 8888:hold/ 
-DIAMONDS 10 
-HEARTS 6 
+player 6666:hold/ 
+SPADES 7 
+HEARTS 5 
 /hold 
 player 5555:hold/ 
-DIAMONDS Q 
-CLUBS 4 
-/hold 
-player 6666:hold/ 
-SPADES 8 
-CLUBS 8 
+DIAMONDS 8 
+DIAMONDS 4 
 /hold 
 player 7777:hold/ 
 CLUBS 7 
-SPADES 9 
+HEARTS K 
 /hold 
 player 3333:hold/ 
-SPADES 3 
-DIAMONDS 5 
+SPADES 2 
+DIAMONDS 10 
+/hold 
+player 1111:hold/ 
+SPADES 10 
+SPADES J 
+/hold 
+player 8888:hold/ 
+SPADES 4 
+HEARTS 6 
 /hold 
 player 4444:hold/ 
-CLUBS 10 
-DIAMONDS 6 
+CLUBS 3 
+HEARTS 2 
 /hold 
 
 ---pre flop round bet---
 valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 8888 
-inquire/ 
-1111 1750 8000 100 blind 
-2222 1950 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 8 times
 send inquire msg to player 5555 
 inquire/ 
-8888 1850 8000 0 fold 
-1111 1750 8000 100 blind 
-2222 1950 8000 50 blind 
+6666 1750 8000 100 blind 
+2222 1800 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 5555(ret:-1, err: 0) for 8 times
-send inquire msg to player 6666 
-inquire/ 
-5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1750 8000 100 blind 
-2222 1950 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 8 times
 send inquire msg to player 7777 
 inquire/ 
-6666 1850 8000 0 fold 
 5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1750 8000 100 blind 
-2222 1950 8000 50 blind 
+6666 1750 8000 100 blind 
+2222 1800 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 7777(ret:-1, err: 0) for 8 times
 send inquire msg to player 3333 
 inquire/ 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
 5555 1850 8000 0 fold 
-8888 1850 8000 0 fold 
-1111 1750 8000 100 blind 
-2222 1950 8000 50 blind 
+6666 1750 8000 100 blind 
+2222 1800 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 8 times
+fail to check msg from player 3333(ret:-1, err: 0) for 7 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1750 8000 100 blind 
+2222 1800 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 8 times
+send inquire msg to player 8888 
+inquire/ 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1750 8000 100 blind 
+2222 1800 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 8 times
 send inquire msg to player 4444 
 inquire/ 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
 8888 1850 8000 0 fold 
-1111 1750 8000 100 blind 
-2222 1950 8000 50 blind 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1750 8000 100 blind 
+2222 1800 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 4444(ret:-1, err: 0) for 8 times
 send inquire msg to player 2222 
 inquire/ 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
 8888 1850 8000 0 fold 
-1111 1750 8000 100 blind 
-2222 1950 8000 50 blind 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1750 8000 100 blind 
+2222 1800 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 7 times
-send inquire msg to player 1111 
+fail to check msg from player 2222(ret:-1, err: 0) for 8 times
+send inquire msg to player 6666 
 inquire/ 
-2222 1950 8000 50 fold 
+2222 1800 8000 50 fold 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
 8888 1850 8000 0 fold 
-1111 1750 8000 100 blind 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1850 8000 0 fold 
+6666 1750 8000 100 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 8 times
+fail to check msg from player 6666(ret:-1, err: 0) for 8 times
 
 ---flop round bet---
 valid player: 8, all in player: 0, fold player: 8
@@ -1393,137 +1393,137 @@ it is player 2222's turn to be button
 
 ----- clean player data in socket -----
 seat/ 
-button: 2222 1950 8000 
-small blind: 1111 1750 8000 
-big blind: 8888 1850 8000 
-5555 1850 8000 
-6666 1850 8000 
+button: 2222 1800 8000 
+small blind: 6666 1750 8000 
+big blind: 5555 1850 8000 
 7777 1850 8000 
-3333 1850 8000 
+3333 2000 8000 
+1111 1850 8000 
+8888 1850 8000 
 4444 1850 8000 
 /seat 
 blind/ 
-1111: 50 
-8888: 100 
+6666: 50 
+5555: 100 
 /blind 
-player 1111:hold/ 
-CLUBS 7 
-CLUBS J 
-/hold 
-player 8888:hold/ 
-DIAMONDS 3 
-DIAMONDS 7 
+player 6666:hold/ 
+SPADES A 
+DIAMONDS Q 
 /hold 
 player 5555:hold/ 
-CLUBS 6 
-SPADES 6 
-/hold 
-player 6666:hold/ 
-DIAMONDS Q 
-CLUBS 10 
+SPADES 8 
+DIAMONDS K 
 /hold 
 player 7777:hold/ 
-HEARTS 5 
-HEARTS 3 
-/hold 
-player 3333:hold/ 
-SPADES 10 
+DIAMONDS 3 
 HEARTS J 
 /hold 
+player 3333:hold/ 
+SPADES 9 
+SPADES K 
+/hold 
+player 1111:hold/ 
+CLUBS J 
+HEARTS 7 
+/hold 
+player 8888:hold/ 
+DIAMONDS 6 
+SPADES 4 
+/hold 
 player 4444:hold/ 
-CLUBS A 
-HEARTS A 
+CLUBS 10 
+HEARTS 5 
 /hold 
 player 2222:hold/ 
-DIAMONDS 2 
-HEARTS 7 
+HEARTS K 
+CLUBS 9 
 /hold 
 
 ---pre flop round bet---
 valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 5555 
-inquire/ 
-8888 1750 8000 100 blind 
-1111 1700 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 5555(ret:-1, err: 0) for 9 times
-send inquire msg to player 6666 
-inquire/ 
-5555 1850 8000 0 fold 
-8888 1750 8000 100 blind 
-1111 1700 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 9 times
 send inquire msg to player 7777 
 inquire/ 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1750 8000 100 blind 
-1111 1700 8000 50 blind 
+5555 1750 8000 100 blind 
+6666 1700 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 7777(ret:-1, err: 0) for 9 times
 send inquire msg to player 3333 
 inquire/ 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1750 8000 100 blind 
-1111 1700 8000 50 blind 
+5555 1750 8000 100 blind 
+6666 1700 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 9 times
+fail to check msg from player 3333(ret:-1, err: 0) for 8 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1750 8000 100 blind 
+6666 1700 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 9 times
+send inquire msg to player 8888 
+inquire/ 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1850 8000 0 fold 
+5555 1750 8000 100 blind 
+6666 1700 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 9 times
 send inquire msg to player 4444 
 inquire/ 
-3333 1850 8000 0 fold 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1750 8000 100 blind 
-1111 1700 8000 50 blind 
+5555 1750 8000 100 blind 
+6666 1700 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 4444(ret:-1, err: 0) for 9 times
 send inquire msg to player 2222 
 inquire/ 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1750 8000 100 blind 
-1111 1700 8000 50 blind 
+5555 1750 8000 100 blind 
+6666 1700 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 8 times
-send inquire msg to player 1111 
+fail to check msg from player 2222(ret:-1, err: 0) for 9 times
+send inquire msg to player 6666 
 inquire/ 
-2222 1950 8000 0 fold 
+2222 1800 8000 0 fold 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1750 8000 100 blind 
-1111 1700 8000 50 blind 
+5555 1750 8000 100 blind 
+6666 1700 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 9 times
-send inquire msg to player 8888 
+fail to check msg from player 6666(ret:-1, err: 0) for 9 times
+send inquire msg to player 5555 
 inquire/ 
-1111 1700 8000 50 fold 
-2222 1950 8000 0 fold 
+6666 1700 8000 50 fold 
+2222 1800 8000 0 fold 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
 7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1850 8000 0 fold 
-8888 1750 8000 100 blind 
+5555 1750 8000 100 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 9 times
+fail to check msg from player 5555(ret:-1, err: 0) for 9 times
 
 ---flop round bet---
 valid player: 8, all in player: 0, fold player: 8
@@ -1539,94 +1539,93 @@ valid player: 8, all in player: 0, fold player: 8
 ---Allocate pot---
 pot-win/ 
 /pot-win 
-it is player 1111's turn to be button
+it is player 6666's turn to be button
 
 -----11 Hand-----
 
 ----- clean player data in socket -----
 seat/ 
-button: 1111 1700 8000 
-small blind: 8888 1750 8000 
-big blind: 5555 1850 8000 
-6666 1850 8000 
-7777 1850 8000 
-3333 1850 8000 
+button: 6666 1700 8000 
+small blind: 5555 1750 8000 
+big blind: 7777 1850 8000 
+3333 2000 8000 
+1111 1850 8000 
+8888 1850 8000 
 4444 1850 8000 
-2222 1950 8000 
+2222 1800 8000 
 /seat 
 blind/ 
-8888: 50 
-5555: 100 
+5555: 50 
+7777: 100 
 /blind 
-player 8888:hold/ 
-SPADES 6 
-DIAMONDS 8 
-/hold 
 player 5555:hold/ 
-CLUBS 4 
-DIAMONDS 7 
-/hold 
-player 6666:hold/ 
-SPADES A 
-DIAMONDS 6 
-/hold 
-player 7777:hold/ 
-CLUBS 9 
+HEARTS K 
 CLUBS 6 
 /hold 
+player 7777:hold/ 
+DIAMONDS Q 
+DIAMONDS 4 
+/hold 
 player 3333:hold/ 
-HEARTS 9 
 CLUBS 10 
-/hold 
-player 4444:hold/ 
-DIAMONDS 10 
-HEARTS 2 
-/hold 
-player 2222:hold/ 
-CLUBS J 
-DIAMONDS J 
+SPADES 8 
 /hold 
 player 1111:hold/ 
-CLUBS 3 
-SPADES 4 
+DIAMONDS J 
+CLUBS 8 
+/hold 
+player 8888:hold/ 
+HEARTS 8 
+DIAMONDS 3 
+/hold 
+player 4444:hold/ 
+SPADES 3 
+CLUBS K 
+/hold 
+player 2222:hold/ 
+HEARTS 7 
+HEARTS 9 
+/hold 
+player 6666:hold/ 
+DIAMONDS A 
+HEARTS 3 
 /hold 
 
 ---pre flop round bet---
 valid player: 8, all in player: 0, fold player: 0
-send inquire msg to player 6666 
-inquire/ 
-5555 1750 8000 100 blind 
-8888 1700 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 6666(ret:-1, err: 0) for 10 times
-player 6666 off line
-send inquire msg to player 7777 
-inquire/ 
-6666 1850 8000 0 fold 
-5555 1750 8000 100 blind 
-8888 1700 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 7777(ret:-1, err: 0) for 10 times
-player 7777 off line
 send inquire msg to player 3333 
 inquire/ 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1750 8000 100 blind 
-8888 1700 8000 50 blind 
+7777 1750 8000 100 blind 
+5555 1700 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 3333(ret:-1, err: 0) for 10 times
-player 3333 off line
+fail to check msg from player 3333(ret:-1, err: 0) for 9 times
+send inquire msg to player 1111 
+inquire/ 
+3333 2000 8000 0 fold 
+7777 1750 8000 100 blind 
+5555 1700 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 1111(ret:-1, err: 0) for 10 times
+player 1111 off line
+send inquire msg to player 8888 
+inquire/ 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1750 8000 100 blind 
+5555 1700 8000 50 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 8888(ret:-1, err: 0) for 10 times
+player 8888 off line
 send inquire msg to player 4444 
 inquire/ 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1750 8000 100 blind 
-8888 1700 8000 50 blind 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1750 8000 100 blind 
+5555 1700 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 4444(ret:-1, err: 0) for 10 times
@@ -1634,55 +1633,56 @@ player 4444 off line
 send inquire msg to player 2222 
 inquire/ 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1750 8000 100 blind 
-8888 1700 8000 50 blind 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1750 8000 100 blind 
+5555 1700 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 2222(ret:-1, err: 0) for 9 times
-send inquire msg to player 1111 
+fail to check msg from player 2222(ret:-1, err: 0) for 10 times
+player 2222 off line
+send inquire msg to player 6666 
 inquire/ 
-2222 1950 8000 0 fold 
+2222 1800 8000 0 fold 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1750 8000 100 blind 
-8888 1700 8000 50 blind 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1750 8000 100 blind 
+5555 1700 8000 50 blind 
 total pot: 150 
 /inquire 
-fail to check msg from player 1111(ret:-1, err: 0) for 10 times
-player 1111 off line
-send inquire msg to player 8888 
-inquire/ 
-1111 1700 8000 0 fold 
-2222 1950 8000 0 fold 
-4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1750 8000 100 blind 
-8888 1700 8000 50 blind 
-total pot: 150 
-/inquire 
-fail to check msg from player 8888(ret:-1, err: 0) for 10 times
-player 8888 off line
+fail to check msg from player 6666(ret:-1, err: 0) for 10 times
+player 6666 off line
 send inquire msg to player 5555 
 inquire/ 
-8888 1700 8000 50 fold 
-1111 1700 8000 0 fold 
-2222 1950 8000 0 fold 
+6666 1700 8000 0 fold 
+2222 1800 8000 0 fold 
 4444 1850 8000 0 fold 
-3333 1850 8000 0 fold 
-7777 1850 8000 0 fold 
-6666 1850 8000 0 fold 
-5555 1750 8000 100 blind 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1750 8000 100 blind 
+5555 1700 8000 50 blind 
 total pot: 150 
 /inquire 
 fail to check msg from player 5555(ret:-1, err: 0) for 10 times
 player 5555 off line
+send inquire msg to player 7777 
+inquire/ 
+5555 1700 8000 50 fold 
+6666 1700 8000 0 fold 
+2222 1800 8000 0 fold 
+4444 1850 8000 0 fold 
+8888 1850 8000 0 fold 
+1111 1850 8000 0 fold 
+3333 2000 8000 0 fold 
+7777 1750 8000 100 blind 
+total pot: 150 
+/inquire 
+fail to check msg from player 7777(ret:-1, err: 0) for 10 times
+player 7777 off line
 
 ---flop round bet---
 valid player: 8, all in player: 0, fold player: 8
@@ -1699,11 +1699,11 @@ valid player: 8, all in player: 0, fold player: 8
 pot-win/ 
 /pot-win 
 
- punish off line player 8888, clear all his jetton and money
  punish off line player 5555, clear all his jetton and money
- punish off line player 6666, clear all his jetton and money
  punish off line player 7777, clear all his jetton and money
- punish off line player 3333, clear all his jetton and money
+ punish off line player 1111, clear all his jetton and money
+ punish off line player 8888, clear all his jetton and money
  punish off line player 4444, clear all his jetton and money
- punish off line player 1111, clear all his jetton and moneyit is player 2222's turn to be button
+ punish off line player 2222, clear all his jetton and money
+ punish off line player 6666, clear all his jetton and moneyit is player 3333's turn to be button
 game-over
