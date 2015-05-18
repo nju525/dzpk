@@ -25,11 +25,11 @@ public class Game {
 	Desk desk;
 	int inquirecount=1;//记录当前牌局状态是第几轮inquire。
 	
-    String serverip,myip;
-    int serverport,myport;  
-    
-    int myorder;
-    int mypid;
+	String serverip,myip;
+	int serverport,myport;  
+	    
+	int myorder;
+	int mypid;
 	private boolean isDiscard;//记录自己是否弃牌
 	private List<Card> holdCards;//自己手牌
 	private int mymoney,myjetton;//自己的筹码和金额
@@ -85,7 +85,7 @@ public class Game {
 			if(!dsnju.player.isConnected())
 				dsnju.player.connect(new InetSocketAddress(dsnju.serverip, dsnju.serverport));//连接server
 			count++;
-			//System.out.println("第"+count+"局结束");
+			System.out.println(dsnju.mypid+"的第"+count+"局结束");
 		}
 		dsnju.reader.close();
 		dsnju.player2server.close();
@@ -370,14 +370,14 @@ public class Game {
 		String myaction="";
 		if(!isDiscard){//没有弃牌才发决策消息给server
 			if(desk.getcardStatus()==0){
-				//System.out.println("bet="+bet);
+				System.out.println(mypid+" bet="+bet);
 				preFlopAction pre=new preFlopAction(holdCards, myorder, bet, desk.getBB(), 
 						desk.totalpot, desk.playercount, myjetton);
 				myaction=pre.preFlopDecision();
 				player2server.println(myaction);
 			}
 			else {
-				//System.out.println("bet="+bet);
+				System.out.println(mypid+" bet="+bet);
 				actionDecision mActionDecision=new actionDecision(holdCards, desk.sharedCards, bet, 
 						desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton);
 				myaction=mActionDecision.actionSendToServer();			
