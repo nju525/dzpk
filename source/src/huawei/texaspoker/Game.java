@@ -54,6 +54,7 @@ public class Game {
 		dsnju.myip=args[2];
 		dsnju.myport=new Integer(args[3]);
 		dsnju.mypid=new Integer(args[4]);
+		
 		/*dsnju.serverip="127.0.0.1";
 		dsnju.serverport=6000;
 		dsnju.myip="127.0.0.1";
@@ -400,41 +401,25 @@ public class Game {
 			if(pid!=mypid){//如果自己是第一个被有效询问的，result=0
 				Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
 				int temporder=opp.order;
-				if(inquirecount==1){//第一轮询问只关注自己前面的几个信息
-					if(temporder<myorder){//当对手order大于自己的order，即为上一轮的bet_in，不能作为本轮的bet决定数据
-						if(splitMsg[4].equals("blind")){//自己是三号位、或者大小盲
-							result=desk.getBB();
-							break;
-						}
-						else if(splitMsg[4].equals("raise")||splitMsg[4].equals("call")||splitMsg[4].equals("all_in")){
-							int bettemp=new Integer(splitMsg[3]);
-							result=bettemp-opp.bet_in;//与历史值做差
-							break;
-						}
-						else if(splitMsg[4].equals("check")){
-							break;						
-						}
-						else{
-							//fold
-						}
-					}
-					else
-						break;
+				if(desk.getcardStatus()==0){//pre-flop大盲的后一位是第一个行动的，不能以小盲为界，此时bet要参考全部信息。
+					//因为在pre-fold的询问消息之前没有上一牌局状态的询问消息，不用考虑上一牌局状态的动作影响这一牌局状态的决定
+					result=getbetresult(splitMsg, opp);
 				}
-				else{//大于一轮时，当自己前面的都fold就要考虑自己后的玩家的action（不会有blind）
-					if(splitMsg[4].equals("raise")||splitMsg[4].equals("call")||splitMsg[4].equals("all_in")){
-						int bettemp=new Integer(splitMsg[3]);
-						result=bettemp-opp.bet_in;//与历史值做差
-						break;
+				else{//第一轮询问以小盲为界，后几轮不存在上一牌局的状态信息，故考虑全部
+					if(inquirecount==1){//同一个牌局状态的第一轮询问只关注自己前面的几个信息
+						if(temporder<myorder){//第一轮中当对手order大于自己的order，即为上牌局状态的bet_in，不能作为本轮的bet决定数据
+							result=getbetresult(splitMsg, opp);
+						}
+						else
+							break;
 					}
-					else if(splitMsg[4].equals("check")){
-						break;						
-					}
-					else{
-						//fold
+					else{//大于一轮时，当自己前面的都fold就要考虑自己后的玩家的action（不会有blind），尤其是前面的玩家fold
+						result=getbetresult(splitMsg, opp);
 					}
 				}
 			}
+			if(result!=-1)//找到result即退出循环
+				break;
 		}
 		inquirecount++;//增加轮数
 		//更新每个对象的jetton money
@@ -455,8 +440,25 @@ public class Game {
 				mymoney=money;
 			}
 		}
-		return result;
+		return result==-1?0:result;//如果是-1，改为0
 		
+	}
+	private int getbetresult(String splitMsg[],Opponent opp){
+		int result=-1;
+		if(splitMsg[4].equals("blind")){//
+			result=desk.getBB();
+		}
+		else if(splitMsg[4].equals("raise")||splitMsg[4].equals("call")||splitMsg[4].equals("all_in")){
+			int bettemp=new Integer(splitMsg[3]);
+			result=bettemp-opp.bet_in;//与历史值做差
+		}
+		else if(splitMsg[4].equals("check")){		
+			result=0;
+		}
+		else{//都是fold返回-1
+			//fold
+		}
+		return result;
 	}
 	private String getOpponentAction(String curRoundAction ){
 		if(curRoundAction.contains("all_in"))//包含all_in
