@@ -85,7 +85,7 @@ public class Game {
 			if(!dsnju.player.isConnected())
 				dsnju.player.connect(new InetSocketAddress(dsnju.serverip, dsnju.serverport));//连接server
 			count++;
-			System.out.println(dsnju.mypid+"'s"+count+" round is over");
+			System.out.println(dsnju.mypid+"'s "+count+" round is over");
 		}
 		dsnju.reader.close();
 		dsnju.player2server.close();
@@ -367,7 +367,7 @@ public class Game {
 		System.out.println("向sever发送自己的action……");*/
 		
 		bet=getbet(curRoundInquireMsg);
-		String myaction="";
+		String myaction="noaction";
 		if(!isDiscard){//没有弃牌才发决策消息给server
 			if(desk.getcardStatus()==0){
 				System.out.println(mypid+" bet="+bet);
@@ -384,11 +384,11 @@ public class Game {
 				player2server.println(myaction);
 			}
 			player2server.flush();
+			
 		}
 		if(myaction.equals("fold"))//发送了fold则将自己状态标为弃牌
 			isDiscard=true;
-		else
-			System.out.println(mypid+"'s action="+myaction);
+		System.out.println(mypid+"'s action="+myaction);
 		/*System.out.println("本轮个玩家bet_in:");
 		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//获取每个对手对象  		
 			System.out.println(entry.getKey()+"-->"+entry.getValue().bet_in);			
