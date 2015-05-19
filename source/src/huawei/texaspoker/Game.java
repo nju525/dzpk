@@ -1,13 +1,12 @@
 package huawei.texaspoker;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +29,7 @@ public class Game {
 	    
 	int myorder;
 	int mypid;
+	int mybet;//当前这一局已经投入的筹码数
 	private boolean isDiscard;//记录自己是否弃牌
 	private List<Card> holdCards;//自己手牌
 	private int mymoney,myjetton;//自己的筹码和金额
@@ -79,6 +79,7 @@ public class Game {
 			dsnju.holdCards.clear();//清空自己的手牌列表
 			dsnju.inquirecount=1;
 			dsnju.isDiscard=false;
+			dsnju.mybet=0;
 			//清空每个对手对象的动作Map
 			/*for(Entry<Integer, Opponent> entry:dsnju.Pid_Opponent.entrySet()){
 				entry.getValue().action.clear();
@@ -212,12 +213,12 @@ public class Game {
 				money=new Integer(splittemp[3]).intValue();				
 				desk.setButton(pid);
 				break;
-			case 1://大小盲
+			case 1://小盲
 				pid=new Integer(splittemp[2]);
 				jetton=new Integer(splittemp[3]).intValue();
 				money=new Integer(splittemp[4]).intValue();				
 				desk.setSmallBlind(pid);
-			case 2:
+			case 2://大盲——只有两个玩家时没有大盲，只有button和小盲
 				pid=new Integer(splittemp[2]);
 				jetton=new Integer(splittemp[3]).intValue();
 				money=new Integer(splittemp[4]).intValue();				
@@ -243,7 +244,6 @@ public class Game {
 		/*if(desk.getButton()==mypid)//
 			this.myorder=desk.playercount;*/
 		desk.setcardStatus(0);//设置牌局状态
-		
 		/*System.out.println("button:"+desk.getButton()+",smallblind:"+desk.getSmallBlind()+",bigblind:"+desk.getBigBlind());
 		System.out.println("当前自己的筹码、金额及座次："+myjetton+","+mymoney+","+myorder);
 		System.out.println("当前牌手人数:"+desk.playercount);
@@ -279,11 +279,19 @@ public class Game {
 	public void HandleBlind(BufferedReader reader,String head) throws IOException{
 		String temp="";
 		int linecount=0;
-		while(!(temp=reader.readLine()).equals(head)){				
-			if(linecount==1){
-				String splittemp[]=temp.split(" ");
-				int bb=new Integer(splittemp[1]).intValue();
+		while(!(temp=reader.readLine()).equals(head)){	
+			String splittemp[]=temp.split(" ");
+			int pid=new Integer(splittemp[0].substring(0, splittemp[0].length()-1)).intValue();
+			int bb=new Integer(splittemp[1]).intValue();
+			if(linecount==0){				
+				desk.setBB(bb);//记录小盲注金额，当存在大盲时，BB更新为大盲值。无大盲时设为小盲值
+				if(pid==mypid)//如果我是小盲，设置自己的当前的bet量为小盲值
+					mybet=bb;
+			}
+			else if(linecount==1){//存在大盲时，linecount才会等于1				
 				desk.setBB(bb);//记录大盲注金额
+				if(pid==mypid)//如果我是大盲，设置自己的当前的bet量为大盲值
+					mybet=bb;
 			}
 			++linecount;
 		}
@@ -322,7 +330,7 @@ public class Game {
 	private void HanldeInquire(BufferedReader reader, String head) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		String temp="";
-		int bet=0,pid,bettemp;
+		int bet=0;
 		StringBuffer curRoundAction=new StringBuffer();
 		//保存本次Inquire传入的玩家pid、jetton、money bet action行。最多playercount行
 		//除第一轮外，其他每轮都发全部玩家包括已弃牌玩家的动作
@@ -332,15 +340,10 @@ public class Game {
 			String splittemp[]=temp.split(" ");
 			int action_index=splittemp.length-1;
 			if(!splittemp[0].equals("total")){
-				pid=new Integer(splittemp[0]);
-				bettemp=new Integer(splittemp[action_index-1]);
-				int jetton=new Integer(splittemp[1]);
-				int money=new Integer(splittemp[1]);
 				String action=splittemp[action_index];//获取动作
-				curRoundAction.append(action);//将已知动作加入buffer
-				if(pid!=mypid){
-					curRoundInquireMsg[linecount]=temp;
-				}
+				curRoundAction.append(action);//将已知动作加入buffer				
+				curRoundInquireMsg[linecount]=temp;
+				
 				/*if(!action.equals("blind")){//对盲注信息不处理					
 					Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
 					if(action.equals("raise"))
@@ -389,6 +392,13 @@ public class Game {
 		}
 		if(myaction.equals("fold"))//发送了fold则将自己状态标为弃牌
 			isDiscard=true;
+		else if(myaction.equals("call"))//更新自己的bet
+			mybet+=bet;
+		else if(myaction.equals("all_in"))
+			mybet=myjetton;
+		else if(myaction.contains("raise")){//获取raise的值
+			mybet+=new Integer(myaction.split(" ")[1]);
+		}
 		System.out.println(mypid+"'s action="+myaction);
 		/*System.out.println("本轮个玩家bet_in:");
 		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//获取每个对手对象  		
@@ -402,30 +412,19 @@ public class Game {
 		
 		for(int i=0;i<curRoundInquireMsg.length&&curRoundInquireMsg[i]!=null;i++){
 			String splitMsg[]=curRoundInquireMsg[i].split(" ");
-			pid=new Integer(splitMsg[0]);
-			if(pid!=mypid){//如果自己是第一个被有效询问的，result=0
-				Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
-				int temporder=opp.order;
-				if(desk.getcardStatus()==0){//pre-flop大盲的后一位是第一个行动的，不能以小盲为界，此时bet要参考全部信息。
-					//因为在pre-fold的询问消息之前没有上一牌局状态的询问消息，不用考虑上一牌局状态的动作影响这一牌局状态的决定
-					result=getbetresult(splitMsg, opp);
-				}
-				else{//第一轮询问以小盲为界，后几轮不存在上一牌局的状态信息，故考虑全部
-					if(inquirecount==1){//同一个牌局状态的第一轮询问只关注自己前面的几个信息
-						if(temporder<myorder){//第一轮中当对手order大于自己的order，即为上牌局状态的bet_in，不能作为本轮的bet决定数据
-							result=getbetresult(splitMsg, opp);
-						}
-						else
-							break;
-					}
-					else{//大于一轮时，当自己前面的都fold就要考虑自己后的玩家的action（不会有blind），尤其是前面的玩家fold
-						result=getbetresult(splitMsg, opp);
-					}
-				}
-				if(result!=-1)//找到result即退出循环
-					break;
+			if(splitMsg[4].equals("blind")||splitMsg[4].equals("call")
+					||splitMsg[4].equals("raise")||splitMsg[4].equals("all_in")){
+				result=new Integer(splitMsg[3])-mybet;
+				//第一个call、raise或all_in的玩家总投入bet值减去自己已经投入的bet，即为我要跟注的最小筹码数
+				break;
 			}
-			
+			else if(splitMsg[4].equals("check")){
+				result=0;
+				break;
+			}
+			else{
+				//fold
+			}
 		}
 		inquirecount++;//增加轮数
 		//更新每个对象的jetton money
@@ -446,7 +445,7 @@ public class Game {
 				mymoney=money;
 			}
 		}
-		return result==-1?0:result;//如果是-1，改为0
+		return result<0?0:result;//如果小于0（对手all_in的bet值也小于自己的bet值），改为0
 		
 	}
 	private int getbetresult(String splitMsg[],Opponent opp){
@@ -574,3 +573,4 @@ public class Game {
 		return num;
 	}
 }
+
