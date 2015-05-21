@@ -82,6 +82,7 @@ public class preFlopAction {
 		this.bet=bet;
 		this.BB=BB;
 		this.potSize=potSize;
+		this.playerJoinIn=playerJoinIn;
 		this.myRestJetton=myRestJetton;
 	}
 	public String preFlopDecision(){
