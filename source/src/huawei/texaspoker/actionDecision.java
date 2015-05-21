@@ -335,6 +335,9 @@ public class actionDecision {
 											return "fold";
 										}
 									} else {
+										if (bet == 0) {
+											return "check";
+										} else
 										return "fold";
 									}
 								}
