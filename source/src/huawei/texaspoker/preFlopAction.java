@@ -1,5 +1,3 @@
-package huawei.texaspoker;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +11,12 @@ public class preFlopAction {
 			{0,0,0,0,6,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,3,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,3,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,3,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,3,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,3,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,3,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,3,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{0,0,0,0,0,0,0,1,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,1,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,1,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,1,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,1,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,1},
 			
 	};//靠前位置
 	private int[][] cutOffSeatHoleCards={
@@ -29,12 +27,12 @@ public class preFlopAction {
 			{1,1,1,1,6,1,1,0,0,0,0,0,0},
 			{1,0,0,0,0,3,1,1,0,0,0,0,0},
 			{0,0,0,0,0,0,3,1,1,0,0,0,0},
-			{0,0,0,0,0,0,0,3,1,1,0,0,0},
-			{0,0,0,0,0,0,0,0,3,1,1,0,0},
-			{0,0,0,0,0,0,0,0,0,3,1,0,0},
-			{0,0,0,0,0,0,0,0,0,0,3,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,3,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,3},   
+			{0,0,0,0,0,0,0,1,1,1,0,0,0},
+			{0,0,0,0,0,0,0,0,1,1,1,0,0},
+			{0,0,0,0,0,0,0,0,0,1,1,0,0},
+			{0,0,0,0,0,0,0,0,0,0,1,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,1,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,1},   
 			
 	};//cutOff(button前位置)
 	private int[][] buttonSeatHoleCards={
@@ -45,14 +43,30 @@ public class preFlopAction {
 			{1,1,1,1,6,1,1,0,0,0,0,0,0},
 			{1,0,0,0,0,3,1,1,0,0,0,0,0},
 			{1,0,0,0,0,0,3,1,1,0,0,0,0},
-			{1,0,0,0,0,0,0,3,1,1,0,0,0},
-			{0,0,0,0,0,0,0,0,3,1,1,0,0},
-			{0,0,0,0,0,0,0,0,0,3,1,0,0},
-			{0,0,0,0,0,0,0,0,0,0,3,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,3,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,3},
+			{1,0,0,0,0,0,0,1,1,1,0,0,0},
+			{0,0,0,0,0,0,0,0,1,1,1,0,0},
+			{0,0,0,0,0,0,0,0,0,1,1,0,0},
+			{0,0,0,0,0,0,0,0,0,0,1,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,1,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,1},
 			
 	};//button起手牌谱
+	private int[][] twoPlayersHoleCards={
+			{9,9,3,1,1,1,1,1,1,1,1,1,1},
+			{9,9,3,1,1,1,1,1,1,0,0,0,0},
+			{3,3,9,1,1,1,1,0,0,0,0,0,0},
+			{1,1,1,6,1,1,1,0,0,0,0,0,0},
+			{1,1,1,1,6,1,1,0,0,0,0,0,0},
+			{1,1,1,1,1,3,1,1,0,0,0,0,0},
+			{1,1,1,0,0,0,3,1,1,0,0,0,0},
+			{1,1,0,0,0,0,0,1,1,1,0,0,0},
+			{1,0,0,0,0,0,0,0,1,1,1,0,0},
+			{1,0,0,0,0,0,0,0,0,1,1,0,0},
+			{0,0,0,0,0,0,0,0,0,0,1,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,1,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,1},
+			
+	};//2人单挑
 	
 	private List<Card> holeCards=new ArrayList<Card>();
 	private int currentSeat;
@@ -73,100 +87,276 @@ public class preFlopAction {
 		// TODO Auto-generated method stub
 			/*if(currentSeat<=2) return betterSeatHoleCards[holeCards.get(0).number][holeCards.get(1).number];
 			else return worseSeatHoleCards[holeCards.get(0).number][holeCards.get(1).number];*/
-     /**
+		
+	/**
       *1. 牌力强度为9的 会一直raise到 allin
       *2. 为6的会 在前面都平跟或小raise时 进行再raise
       *3. 为3的 前面raise时 平跟 前面平跟时raise
       *4. 为1的 前面无人动作时 raise 有人动作时 fold
       */
-      int min=Math.min(holeCards.get(0).number, holeCards.get(1).number);
-      int max=Math.max(holeCards.get(0).number, holeCards.get(1).number);
-      int preFlopRank=0;
-      if(currentSeat==8||currentSeat==1||currentSeat==2){
-    	  if(holeCards.get(0).suit==holeCards.get(1).suit){
-    		  preFlopRank=buttonSeatHoleCards[14-min][14-max];	
+      if(playerJoinIn>=5){
+    	  return moreThan4Plyers();
+      }else{
+    	  if(playerJoinIn>2){
+    		  return moreThan2Players();
     	  }else{
-    		  preFlopRank=buttonSeatHoleCards[14-min][14-max];
+    		  return twoPlayers();
     	  }
-	  }else{
-		  if(currentSeat==7){
-			  if(holeCards.get(0).suit==holeCards.get(1).suit){
-	    		  preFlopRank=cutOffSeatHoleCards[14-min][14-max];	
-	    	  }else{
-	    		  preFlopRank=cutOffSeatHoleCards[14-min][14-max];
-	    	  }  
-		  }else{
-			  if(holeCards.get(0).suit==holeCards.get(1).suit){
-	    		  preFlopRank=MPSeatHoleCards[14-min][14-max];	
-	    	  }else{
-	    		  preFlopRank=MPSeatHoleCards[14-min][14-max];
-	    	  }
-		  }
-	  }
+      }
+	 }
+	public String moreThan4Plyers(){
+		int min = Math.min(holeCards.get(0).number, holeCards.get(1).number);
+		int max = Math.max(holeCards.get(0).number, holeCards.get(1).number);
+		int preFlopRank = 0;
+		if (currentSeat == 8 || currentSeat == 1) {
+			if (holeCards.get(0).suit == holeCards.get(1).suit) {
+				preFlopRank = buttonSeatHoleCards[14 - min][14 - max];
+			} else {
+				preFlopRank = buttonSeatHoleCards[14 - min][14 - max];
+			}
+		} else {
+			if (currentSeat == 7) {
+				if (holeCards.get(0).suit == holeCards.get(1).suit) {
+					preFlopRank = cutOffSeatHoleCards[14 - min][14 - max];
+				} else {
+					preFlopRank = cutOffSeatHoleCards[14 - min][14 - max];
+				}
+			} else {
+				if (holeCards.get(0).suit == holeCards.get(1).suit) {
+					preFlopRank = MPSeatHoleCards[14 - min][14 - max];
+				} else {
+					preFlopRank = MPSeatHoleCards[14 - min][14 - max];
+				}
+			}
+		}
 		switch (preFlopRank) {
 		case 9:
-			return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
+			return "raise " + Math.min(2 * BB + potSize * 1 / 2, myRestJetton);
 		case 6:
-			if(bet<=2*BB){
-				return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
-			}else{
-				if(currentSeat==2){
-					return "check";//大盲位check
-				}else{
-					return "call";//其他位置call
-				}		
+			if (bet <= 2 * BB) {
+				return "raise "
+						+ Math.min(2 * BB + potSize * 1 / 2, myRestJetton);
+			} else {
+				if (currentSeat == 2) {
+					return "check";// 大盲位check
+				} else {
+					return "call";// 其他位置call
+				}
 			}
 		case 3:
-			if(bet>BB){
-				if(bet>=4*BB&&myRestJetton<4*BB){
+			if (bet > BB) {
+				if (bet >= 4 * BB && myRestJetton < 4 * BB) {
 					return "fold";
-				}else
-				 return "call";
-			}else{
-				return 	"raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);	
+				} else
+					return "call";
+			} else {
+				return "raise "
+						+ Math.min(Math.min(3 * BB, 2 * BB + potSize * 1 / 2),
+								myRestJetton);
 			}
 		case 1:
-			if(bet<=BB){
-				return  "raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);
-			}else{
-				if(currentSeat==2){
-					if(myRestJetton<4*BB){
+			if (bet <= BB) {
+				return "raise "
+						+ Math.min(Math.min(3 * BB, 2 * BB + potSize * 1 / 2),
+								myRestJetton);
+			} else {
+				if (currentSeat == 2) {
+					if (myRestJetton < 4 * BB) {
 						return "all_in";
-					}else{
-						if(bet>=3*BB){
+					} else {
+						if (bet >= 3 * BB) {
 							return "fold";
-						}else{
-							return "check";//大盲位check
+						} else {
+							return "check";// 大盲位check
 						}
-					}				
-				}else{
-					if(myRestJetton<4*BB){
+					}
+				} else {
+					if (myRestJetton < 4 * BB) {
 						return "all_in";
-					}else{
-						if(bet>2*BB)
-							return "fold";//其他位置call
-							else 
+					} else {
+						if (bet > 2 * BB)
+							return "fold";// 其他位置call
+						else
 							return "call";
-					}				
+					}
 				}
 			}
 		case 0:
-			if(currentSeat==2){
-				if(myRestJetton<=2*BB){
+			if (currentSeat == 2) {
+				if (myRestJetton <= 2 * BB) {
 					return "all_in";
-				}else{
-					if(bet>BB){
+				} else {
+					if (bet > BB) {
 						return "fold";
-					}else{
-						return "check";//大盲位check
+					} else {
+						return "check";// 大盲位check
 					}
-				}		
-			}else{
-				return "fold";//其他位置call
-			}	
+				}
+			} else {
+				return "fold";// 其他位置call
+			}
 		default:
 			return "fold";
 		}
-
-	 }
+	}
+    public String moreThan2Players(){
+    	int min=Math.min(holeCards.get(0).number, holeCards.get(1).number);
+        int max=Math.max(holeCards.get(0).number, holeCards.get(1).number);
+        int preFlopRank=0;
+        if(currentSeat==8||currentSeat==1||currentSeat==2){
+      	  if(holeCards.get(0).suit==holeCards.get(1).suit){
+      		  preFlopRank=buttonSeatHoleCards[14-min][14-max];	
+      	  }else{
+      		  preFlopRank=buttonSeatHoleCards[14-min][14-max];
+      	  }
+  	  }else{
+  		  if(currentSeat==7){
+  			  if(holeCards.get(0).suit==holeCards.get(1).suit){
+  	    		  preFlopRank=cutOffSeatHoleCards[14-min][14-max];	
+  	    	  }else{
+  	    		  preFlopRank=cutOffSeatHoleCards[14-min][14-max];
+  	    	  }  
+  		  }else{
+  			  if(holeCards.get(0).suit==holeCards.get(1).suit){
+  	    		  preFlopRank=MPSeatHoleCards[14-min][14-max];	
+  	    	  }else{
+  	    		  preFlopRank=MPSeatHoleCards[14-min][14-max];
+  	    	  }
+  		  }
+  	  }
+  		switch (preFlopRank) {
+  		case 9:
+  			return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
+  		case 6:
+  			if(bet<=2*BB){
+  				return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
+  			}else{
+  				if(currentSeat==2){
+  					return "check";//大盲位check
+  				}else{
+  					return "call";//其他位置call
+  				}		
+  			}
+  		case 3:
+  			if(bet>BB){
+  				if(bet>=4*BB&&myRestJetton<4*BB){
+  					return "fold";
+  				}else
+  				 return "call";
+  			}else{
+  				return 	"raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);	
+  			}
+  		case 1:
+  			if(bet<=BB){
+  				return  "raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);
+  			}else{
+  				if(currentSeat==2){
+  					if(myRestJetton<4*BB){
+  						return "all_in";
+  					}else{
+  						if(bet>=3*BB){
+  							return "fold";
+  						}else{
+  							return "check";//大盲位check
+  						}
+  					}				
+  				}else{
+  					if(myRestJetton<4*BB){
+  						return "all_in";
+  					}else{
+  						if(bet>2*BB)
+  							return "fold";//其他位置call
+  							else 
+  							return "call";
+  					}				
+  				}
+  			}
+  		case 0:
+  			if(currentSeat==2){
+  				if(myRestJetton<=2*BB){
+  					return "all_in";
+  				}else{
+  					if(bet>BB){
+  						return "fold";
+  					}else{
+  						return "check";//大盲位check
+  					}
+  				}		
+  			}else{
+  				return "fold";//其他位置call
+  			}	
+  		default:
+  			return "fold";
+  		}
+	}
+    public String twoPlayers(){
+    	int min=Math.min(holeCards.get(0).number, holeCards.get(1).number);
+        int max=Math.max(holeCards.get(0).number, holeCards.get(1).number);
+        int preFlopRank=0;
+        preFlopRank=twoPlayersHoleCards[14-min][14-max];
+  		switch (preFlopRank) {
+  		case 9:
+  			return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
+  		case 6:
+  			if(bet<=2*BB){
+  				return "raise "+Math.min(2*BB+potSize*1/2, myRestJetton);
+  			}else{
+  				if(currentSeat==1){
+  					return "check";//大盲位check
+  				}else{
+  					return "call";//其他位置call
+  				}		
+  			}
+  		case 3:
+  			if(bet>2*BB){
+  				if(bet>=4*BB&&myRestJetton<4*BB){
+  					return "fold";
+  				}else
+  				 return "call";
+  			}else{
+  				return 	"raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);	
+  			}
+  		case 1:
+  			if(bet<=BB){
+  				return  "raise "+Math.min(Math.min(3*BB,2*BB+potSize*1/2), myRestJetton);
+  			}else{
+  				if(currentSeat==1){
+  					if(myRestJetton<4*BB){
+  						return "all_in";
+  					}else{
+  						if(bet>=3*BB){
+  							return "fold";
+  						}else{
+  							return "check";//大盲位check
+  						}
+  					}				
+  				}else{
+  					if(myRestJetton<4*BB){
+  						return "all_in";
+  					}else{
+  						if(bet>2*BB)
+  							return "fold";//其他位置call
+  							else 
+  							return "call";
+  					}				
+  				}
+  			}
+  		case 0:
+  			if(currentSeat==1){
+  				if(myRestJetton<=2*BB){
+  					return "all_in";
+  				}else{
+  					if(bet>BB){
+  						return "fold";
+  					}else{
+  						return "check";//大盲位check
+  					}
+  				}		
+  			}else{
+  				return "fold";//其他位置call
+  			}	
+  		default:
+  			return "fold";
+  		}
+	}
 }
