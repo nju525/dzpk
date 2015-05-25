@@ -55,12 +55,6 @@ public class Game {
 		dsnju.myport=new Integer(args[3]);
 		dsnju.mypid=new Integer(args[4]);
 		
-		/*dsnju.serverip="127.0.0.1";
-		dsnju.serverport=8888;
-		dsnju.myip="127.0.0.1";
-		dsnju.myport=4533;
-		dsnju.mypid=5555;*/
-		
 		dsnju.initialize();
 		//发送注册信息
 		dsnju.player2server.println("reg: "+dsnju.mypid+" DSNJU ");
@@ -87,7 +81,7 @@ public class Game {
 			if(!dsnju.player.isConnected())
 				dsnju.player.connect(new InetSocketAddress(dsnju.serverip, dsnju.serverport));//连接server
 			count++;
-			System.out.println(dsnju.mypid+"'s "+count+" round is over");
+			//System.out.println(dsnju.mypid+"'s "+count+" round is over");
 		}
 		dsnju.reader.close();
 		dsnju.player2server.close();
@@ -244,19 +238,6 @@ public class Game {
 		/*if(desk.getButton()==mypid)//
 			this.myorder=desk.playercount;*/
 		desk.setcardStatus(0);//设置牌局状态
-		/*System.out.println("button:"+desk.getButton()+",smallblind:"+desk.getSmallBlind()+",bigblind:"+desk.getBigBlind());
-		System.out.println("当前自己的筹码、金额及座次："+myjetton+","+mymoney+","+myorder);
-		System.out.println("当前牌手人数:"+desk.playercount);
-		System.out.println("已加入的行动顺序Map：");
-		for(Map.Entry<Integer, Integer> entry:desk.Order_Pid.entrySet()){    
-		     System.out.print(entry.getKey()+"-->"+entry.getValue()+" ");    
-		}*/
-		/*System.out.println("\n已加入的对手Map：");
-		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){
-		     System.out.println(entry.getKey()+"-->"+" "+entry.getValue().getJetton()+" "
-		    		 +entry.getValue().getMoney()+" "+entry.getValue().order);    
-		}
-		System.out.println("myorder="+myorder);*/
 	}
 	
 	private int setMyself(int pid,int jetton,int money,int linecount){
@@ -343,21 +324,6 @@ public class Game {
 				String action=splittemp[action_index];//获取动作
 				curRoundAction.append(action);//将已知动作加入buffer				
 				curRoundInquireMsg[linecount]=temp;
-				
-				/*if(!action.equals("blind")){//对盲注信息不处理					
-					Opponent opp=Pid_Opponent.get(pid);//获取相应对手对象
-					if(action.equals("raise"))
-						opp.raise_money=new Integer(splittemp[action_index-1]);//记录对手加注金额
-					if(!opp.action.containsKey(desk.getcardStatus())){//未对该状态记录
-						List<String> action_list=new ArrayList<String>();
-						action_list.add(action);
-						opp.action.put(desk.getcardStatus(), action_list);//将动作加入动作Map
-					}
-					else{
-						List<String> action_list=opp.action.get(desk.getcardStatus());//获取对应列表
-						action_list.add(action);//在列表中添加
-					}
-				}*/
 			}
 			else{
 				desk.totalpot=new Integer(splittemp[action_index]);
@@ -365,23 +331,16 @@ public class Game {
 			linecount++;
 		}
 		
-		/*System.out.println("当前总投注："+desk.totalpot);
-		System.out.println("前面玩家最大bet："+bet);
-		System.out.println("前面玩家行动消息："+curRoundAction.toString());
-		System.out.println("向sever发送自己的action……");*/
-		
 		bet=getbet(curRoundInquireMsg);
 		String myaction="noaction";
 		if(!isDiscard){//没有弃牌才发决策消息给server
 			if(desk.getcardStatus()==0){
-				System.out.println(mypid+" bet="+bet);
 				preFlopAction pre=new preFlopAction(holdCards, myorder, bet, desk.getBB(), 
 						desk.totalpot, desk.playercount, myjetton);
 				myaction=pre.preFlopDecision();
 				player2server.println(myaction);
 			}
 			else {
-				System.out.println(mypid+" bet="+bet);
 				actionDecision mActionDecision=new actionDecision(holdCards, desk.sharedCards, bet, 
 						desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton);
 				myaction=mActionDecision.actionSendToServer();			
@@ -399,11 +358,6 @@ public class Game {
 		else if(myaction.contains("raise")){//获取raise的值
 			mybet+=new Integer(myaction.split(" ")[1]);
 		}
-		System.out.println(mypid+"'s action="+myaction);
-		/*System.out.println("本轮个玩家bet_in:");
-		for(Map.Entry<Integer, Opponent> entry:Pid_Opponent.entrySet()){//获取每个对手对象  		
-			System.out.println(entry.getKey()+"-->"+entry.getValue().bet_in);			
-		}*/
 	}
 	//获得bet并更新每个对手的bet_in
 	private int getbet(String curRoundInquireMsg[]){//根据该pid对手的action决定bet——本轮前面玩家加入的最大筹码
@@ -512,9 +466,6 @@ public class Game {
 		}
 		desk.setcardStatus(2);
 		inquirecount=1;//新的牌局状态，询问次数重置
-		/*System.out.println("现有公共牌：");
-		for(Card c:desk.sharedCards)
-			System.out.println(c.getSuit()+","+c.getNumber());*/
 	}
 	
 	private void HandleRiver(BufferedReader reader, String head) throws IOException {
@@ -526,9 +477,6 @@ public class Game {
 		}
 		desk.setcardStatus(3);
 		inquirecount=1;//新的牌局状态，询问次数重置
-	/*	System.out.println("现有公共牌：");
-		for(Card c:desk.sharedCards)
-			System.out.println(c.getSuit()+","+c.getNumber());*/
 	}
 	/**
 	 * 摊牌
