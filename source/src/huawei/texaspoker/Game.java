@@ -89,10 +89,10 @@ public class Game {
 	}
 	private void initialize() throws UnknownHostException, IOException{
 		player = new Socket();
+		player.setReuseAddress(true);
 		player.bind(new InetSocketAddress(myip, myport));//绑定客户端到指定IP和端口号
-		if(!player.isConnected())
+		while(!player.isConnected())
 			player.connect(new InetSocketAddress(serverip, serverport));//连接server
-		
 		/*player=new Socket(serverip, serverport);*/
 		player2server=new PrintWriter(player.getOutputStream());
 		reader=new BufferedReader(new InputStreamReader(player.getInputStream()));
