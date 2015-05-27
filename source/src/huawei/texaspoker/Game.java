@@ -401,7 +401,13 @@ public class Game {
 	//获得bet并更新每个对手的bet_in
 	private int getbet(String curRoundInquireMsg[]){//根据该pid对手的action决定bet——本轮前面玩家加入的最大筹码
 		int result=0;
-		String myMsg=curRoundInquireMsg[curRoundInquireMsg.length-1];//获取最后一行信息
+		int lastline=curRoundInquireMsg.length-1;
+		String myMsg=curRoundInquireMsg[lastline];
+		//获取非null的最后一行信息（curRoundInquireMsg长度是牌手数，当第一次询问时发来的牌手数小于desk.playercount）
+		while(myMsg==null){
+			lastline--;
+			myMsg=curRoundInquireMsg[lastline];
+		}
 		String splitMsg[]=myMsg.split(" ");
 		if(splitMsg[0].equals(mypid+"")){//如果是自己的信息
 			mybet=new Integer(splitMsg[3]);//获取mybet
