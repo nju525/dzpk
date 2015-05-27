@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ·ÖÎöµ±Ç°ÊÖÅÆÓë¹«¹²ÅÆµÄ×éºÏµÄÅÆÁ¦ ·µ»ØÅÆÁ¦Ç¿ÈõÖµ0-n 0±íÊ¾×îÈõ
+ * åˆ†æå½“å‰æ‰‹ç‰Œä¸å…¬å…±ç‰Œçš„ç»„åˆçš„ç‰ŒåŠ› è¿”å›ç‰ŒåŠ›å¼ºå¼±å€¼0-n 0è¡¨ç¤ºæœ€å¼±
  */
 public class pokerPowerAnalysis {
 	private List<Card> holeCards=new ArrayList<Card>();
 	private List<Card> sharedCards=new ArrayList<Card>();
-	private List<Card> allCards=new ArrayList<Card>(); // È«²¿ÅÆ
-	//µ±Ç°×î´óÅÆĞÍ×éºÏ
+	private List<Card> allCards=new ArrayList<Card>(); // å…¨éƒ¨ç‰Œ
+	//å½“å‰æœ€å¤§ç‰Œå‹ç»„åˆ
 	public int[] currentMaxHand=new int[5];
 	public int[] longestStraight=new int[4];
 
 	/**
-	 * ¹¹Ôìº¯Êı ´«ÈëÊÖÅÆºÍ¹«¹²ÅÆ
+	 * æ„é€ å‡½æ•° ä¼ å…¥æ‰‹ç‰Œå’Œå…¬å…±ç‰Œ
 	 * 
 	 * @param holeCards
-	 *            ÊÖÅÆ
+	 *            æ‰‹ç‰Œ
 	 * @param sharedCards
-	 *            ¹«¹²ÅÆ
+	 *            å…¬å…±ç‰Œ
 	 */
 	public pokerPowerAnalysis(List<Card> holeCards, List<Card> sharedCards) {
 		this.holeCards = holeCards;
@@ -33,15 +33,15 @@ public class pokerPowerAnalysis {
 	}
 
 	/**
-	 * ¾ßÌåÖ´ĞĞÊÖÅÆ¹«¹²ÅÆ×éºÏµÄÅÆÁ¦·ÖÎö ·µ»Ø×îÇ¿ÅÆÁ¦Öµ
+	 * å…·ä½“æ‰§è¡Œæ‰‹ç‰Œå…¬å…±ç‰Œç»„åˆçš„ç‰ŒåŠ›åˆ†æ è¿”å›æœ€å¼ºç‰ŒåŠ›å€¼
 	 * 
 	 * @return
 	 */
 	public int pokerPowerRankValue() {
 		allCards.addAll(holeCards);
 		allCards.addAll(sharedCards);
-		Map<Integer, Integer> numberOfCards = getNumberOfCards(allCards);// »ñÈ¡ËùÓĞÅÆÖĞµÄ²»Í¬Êı×ÖÊıÁ¿
-		Map<Integer, Integer> suitOfCards = getSuitOfCards(allCards);// »ñÈ¡ËùÓĞÅÆÖĞµÄ»¨É«Êı
+		Map<Integer, Integer> numberOfCards = getNumberOfCards(allCards);// è·å–æ‰€æœ‰ç‰Œä¸­çš„ä¸åŒæ•°å­—æ•°é‡
+		Map<Integer, Integer> suitOfCards = getSuitOfCards(allCards);// è·å–æ‰€æœ‰ç‰Œä¸­çš„èŠ±è‰²æ•°
 		if(getFlushStraight(numberOfCards, suitOfCards)>0){
 			return getFlushStraight(numberOfCards, suitOfCards);
 		}
@@ -70,12 +70,12 @@ public class pokerPowerAnalysis {
 	}
 
 	/**
-	 * Í¬»¨Ë³
+	 * åŒèŠ±é¡º
 	 * @param suitOfCards 80-89
 	 * @return
 	 */
 	public int getFlushStraight(Map<Integer, Integer> numberOfCards,Map<Integer, Integer> suitOfCards ) {
-		int colorOfFlush=-1;//¼ÇÂ¼Í¬»¨µÄ»¨É«
+		int colorOfFlush=-1;//è®°å½•åŒèŠ±çš„èŠ±è‰²
 		for(Integer color:suitOfCards.keySet()){
 			if(suitOfCards.get(color)>=5){
 				colorOfFlush=color;
@@ -84,7 +84,7 @@ public class pokerPowerAnalysis {
 		}
 		Map<Integer,Integer> flushMap=new HashMap<Integer,Integer>();
 		if(colorOfFlush>=0){
-			//int[] flushComnbs=new int[7];//´æ´¢µ±Ç°×î´ó×éºÏµÄÍ¬»¨ÅÆ
+			//int[] flushComnbs=new int[7];//å­˜å‚¨å½“å‰æœ€å¤§ç»„åˆçš„åŒèŠ±ç‰Œ
 			int index=0;
 			for(Card card:allCards){
 				if(card.suit==colorOfFlush){
@@ -99,7 +99,7 @@ public class pokerPowerAnalysis {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÊÇ·ñ´æÔÚÕ¨µ¯  70-79
+	 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨ç‚¸å¼¹  70-79
 	 * @return
 	 */
 	public int getFourOfaKing(Map<Integer, Integer> numberOfCards) {
@@ -123,9 +123,9 @@ public class pokerPowerAnalysis {
 			fourOfaKingComnbs[0]=hignNumber;
 			currentMaxHand=fourOfaKingComnbs;
 		/**
-		 * ÅÆÁ¦·ÖÎö 
-		 * 1.ÊÖÅÆÓĞÒ»ÕÅ»òÁ½ÕÅ forNumberÅÆ ¡¾¸öÎ»ÖÃÎª9¡¿	 ÊÖÅÆÎŞ forNumberÅÆ  µ«ÊÇÓĞ¶¥¸ßÕÅ ¡¾¸öÎ»ÖÃÎª9¡¿
-		 * 2.ÈõÅÆ ¡¾¸öÎ»ÖÃÎª0¡¿
+		 * ç‰ŒåŠ›åˆ†æ 
+		 * 1.æ‰‹ç‰Œæœ‰ä¸€å¼ æˆ–ä¸¤å¼  forNumberç‰Œ ã€ä¸ªä½ç½®ä¸º9ã€‘	 æ‰‹ç‰Œæ—  forNumberç‰Œ  ä½†æ˜¯æœ‰é¡¶é«˜å¼  ã€ä¸ªä½ç½®ä¸º9ã€‘
+		 * 2.å¼±ç‰Œ ã€ä¸ªä½ç½®ä¸º0ã€‘
 		 */
 			if(holeCards.get(0).number==fourNumber||holeCards.get(1).number==fourNumber||hignNumber==14||(fourNumber==14&&hignNumber==13)){
 				return 79;
@@ -137,7 +137,7 @@ public class pokerPowerAnalysis {
 		
 	}
 	/**
-	 * ÅĞ¶ÏÊÇ·ñ´æÔÚºùÂ« 60-69
+	 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨è‘«èŠ¦ 60-69
 	 * @return
 	 */
 	public int getFullHouse(Map<Integer, Integer> numberOfCards) {
@@ -157,7 +157,7 @@ public class pokerPowerAnalysis {
 					if(number>triNumber){
 						int tmp=triNumber;
 						triNumber=number;
-						if(tmp>douNumber)douNumber=tmp;//±£´æ×î´óµÄ¶Ô×ÓºÍ2Ìõ
+						if(tmp>douNumber)douNumber=tmp;//ä¿å­˜æœ€å¤§çš„å¯¹å­å’Œ2æ¡
 					}
 					Flag_dou=true;
 				}
@@ -174,21 +174,21 @@ public class pokerPowerAnalysis {
 			}
 		}
 		/**
-		 * ´æÔÚºùÂ« Ôò´æ´¢µ±Ç°×î´ó×éºÏºùÂ«ÅÆ
-		 * 1.¹«¹²ÅÆÓĞ3ÕÅ  ³¬Ç¿ÅÆ  ÇÒÊÖÉÏ²»ÊÇ¹«¹²¶Ô¡¾¸öÎ»ÖÃÎª 9¡¿
-		 * 2.¹«¹²ÅÆÓĞ3ÕÅ   ÇÒÊÖ¶ÔÊÇ¶¥¶Ô ¡¾¸öÎ»ÖÃÎª6¡¿  ¹«¹²ÅÆÓĞ4ÕÅ Èô ÊÖÅÆ¶Ô×Ó´óÓÚ¸ßÅÆ ¡¾¸öÎ»ÖÃÎª 6¡¿ ·ñÔò ÈÏÎª´ÎÇ¿ÅÆ ¡¾¸öÎ»ÖÃÎª 3¡¿	
-		 * 3.¹«¹²ÅÆÓĞ5ÕÅ µ±Ç°ÊÖÅÆÎªÈõÅÆ ÖÃÎª0
+		 * å­˜åœ¨è‘«èŠ¦ åˆ™å­˜å‚¨å½“å‰æœ€å¤§ç»„åˆè‘«èŠ¦ç‰Œ
+		 * 1.å…¬å…±ç‰Œæœ‰3å¼   è¶…å¼ºç‰Œ  ä¸”æ‰‹ä¸Šä¸æ˜¯å…¬å…±å¯¹ã€ä¸ªä½ç½®ä¸º 9ã€‘
+		 * 2.å…¬å…±ç‰Œæœ‰3å¼    ä¸”æ‰‹å¯¹æ˜¯é¡¶å¯¹ ã€ä¸ªä½ç½®ä¸º6ã€‘  å…¬å…±ç‰Œæœ‰4å¼  è‹¥ æ‰‹ç‰Œå¯¹å­å¤§äºé«˜ç‰Œ ã€ä¸ªä½ç½®ä¸º 6ã€‘ å¦åˆ™ è®¤ä¸ºæ¬¡å¼ºç‰Œ ã€ä¸ªä½ç½®ä¸º 3ã€‘	
+		 * 3.å…¬å…±ç‰Œæœ‰5å¼  å½“å‰æ‰‹ç‰Œä¸ºå¼±ç‰Œ ç½®ä¸º0
 		 */
 		if(Flag_dou&&Flag_tri){
-			int[] fullHouseComnb=new int[5];//´æ´¢µ±Ç°×î´óÅÆĞÍ
+			int[] fullHouseComnb=new int[5];//å­˜å‚¨å½“å‰æœ€å¤§ç‰Œå‹
 			for(int i=0;i<3;i++){
 				fullHouseComnb[i]=triNumber;
 			}
 			for(int i=3;i<5;i++){
 				fullHouseComnb[i]=douNumber;
 			}
-			currentMaxHand=fullHouseComnb;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
-			if(findCardsInFullHouse(sharedCards, fullHouseComnb)==3&&holeCards.get(0).number!=holeCards.get(1).number){
+			currentMaxHand=fullHouseComnb;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
+			if(findCardsInFullHouse(sharedCards, fullHouseComnb)==3&&(holeCards.get(0).number==triNumber||holeCards.get(1).number==triNumber)){
 				return 69;
 			}else{				
 				if((findCardsInFullHouse(sharedCards, fullHouseComnb)==3)&&holeCards.get(0).number>highCardNumber||findCardsInFullHouse(sharedCards, fullHouseComnb)==4){
@@ -206,7 +206,7 @@ public class pokerPowerAnalysis {
 		return 0;
 	}
 	/**
-	 * ÅĞ¶ÏÊÇ·ñ´æÔÚË³×Ó 40-49
+	 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨é¡ºå­ 40-49
 	 * @return
 	 */
 	public  int getStraight(Map<Integer, Integer> numberOfCards) {
@@ -224,7 +224,7 @@ public class pokerPowerAnalysis {
 		Arrays.sort(aAsNormal);
 		int preNumber = aAsNormal[0];
 		int count = 0;
-		int Flag_end = 0;//ÓĞË³×ÓµÄ±êÖ¾ ´æ´¢Ë³×ÓµÄ×î´óÎ»ÖÃ
+		int Flag_end = 0;//æœ‰é¡ºå­çš„æ ‡å¿— å­˜å‚¨é¡ºå­çš„æœ€å¤§ä½ç½®
 		for (int i = 0; i < index; i++) {
 			if (aAsNormal[i] - preNumber == 1)
 				count++;
@@ -240,18 +240,18 @@ public class pokerPowerAnalysis {
 			preNumber = aAsNormal[i];
 		}
 		if (Flag_end != 0) {
-			int[] straightComnbs = new int[5];// ´æ´¢Ë³×ÓÅÆ
+			int[] straightComnbs = new int[5];// å­˜å‚¨é¡ºå­ç‰Œ
 			for (int i = 0; i < 5; i++) {
 				straightComnbs[i] = aAsNormal[Flag_end - 4+i];
 			}
-			currentMaxHand=straightComnbs;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
+			currentMaxHand=straightComnbs;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
 			/**
-			 * ·ÖÎöË³×ÓµÄÅÆÁ¦ 1.ÅÆÃæ3ÕÅ+ÊÖÅÆ2ÕÅ £¨³¬Ç¿ÅÆ£© ¡¾¸öÎ»ÖÃÎª 9¡¿ 2.ÅÆÃæ4ÕÅ+ÊÖÅÆ1ÕÅ a.ÉÏË³/¿¨Ë³
-			 * £¨Ç¿ÅÆ£©¡¾¸öÎ»ÖÃÎª6¡¿ b.ÏÂË³£¨´ÎÇ¿ÅÆ£©¡¾¸öÎ»ÖÃÎª3¡¿ 3.ÅÆÃæ5ÕÅ ÈõÅÆ¡¾ÅÆÁ¦ÖÃÎª0¡¿
+			 * åˆ†æé¡ºå­çš„ç‰ŒåŠ› 1.ç‰Œé¢3å¼ +æ‰‹ç‰Œ2å¼  ï¼ˆè¶…å¼ºç‰Œï¼‰ ã€ä¸ªä½ç½®ä¸º 9ã€‘ 2.ç‰Œé¢4å¼ +æ‰‹ç‰Œ1å¼  a.ä¸Šé¡º/å¡é¡º
+			 * ï¼ˆå¼ºç‰Œï¼‰ã€ä¸ªä½ç½®ä¸º6ã€‘ b.ä¸‹é¡ºï¼ˆæ¬¡å¼ºç‰Œï¼‰ã€ä¸ªä½ç½®ä¸º3ã€‘ 3.ç‰Œé¢5å¼  å¼±ç‰Œã€ç‰ŒåŠ›ç½®ä¸º0ã€‘
 			 */
-			if (findCardsInStraight(sharedCards, straightComnbs) == 3) {// ÅÆÃæ3ÕÅ
-																		// +ÊÖÅÆ2ÕÅ
-																		// ·µ»Ø 49
+			if (findCardsInStraight(sharedCards, straightComnbs) == 3) {// ç‰Œé¢3å¼ 
+																		// +æ‰‹ç‰Œ2å¼ 
+																		// è¿”å› 49
 				return 49;
 			} else {
 				if (findCardsInStraight(sharedCards, straightComnbs) == 4) {
@@ -259,16 +259,16 @@ public class pokerPowerAnalysis {
 							|| holeCards.get(1).number == straightComnbs[4]
 							|| (holeCards.get(0).number != straightComnbs[0] || holeCards
 									.get(1).number != straightComnbs[0])) {
-						return 46;// ¿¨Ë³ºÍÉÏË³ ·µ»Ø 46
+						return 46;// å¡é¡ºå’Œä¸Šé¡º è¿”å› 46
 					} else {
-						return 43;// ÏÂË³ ·µ»Ø 43
+						return 43;// ä¸‹é¡º è¿”å› 43
 					}
 				} else {
 					return 40;
 				}
 			}
 		}
-		// ÓĞAµÄÇé¿ö
+		// æœ‰Açš„æƒ…å†µ
 		if (hasAcard) {
 			int[] aAs1 = new int[7];
 			index = 0;
@@ -294,19 +294,19 @@ public class pokerPowerAnalysis {
 				
 			}
 			if (Flag_end != 0) {
-				int[] straightComnbs = new int[5];// ´æ´¢Ë³×ÓÅÆ
+				int[] straightComnbs = new int[5];// å­˜å‚¨é¡ºå­ç‰Œ
 				for (int i = 0; i < 5; i++) {
 					straightComnbs[i] = aAs1[Flag_end - 4+i];
 				}
-				currentMaxHand=straightComnbs;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
+				currentMaxHand=straightComnbs;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
 				/**
-				 * ·ÖÎöË³×ÓµÄÅÆÁ¦ 1.ÅÆÃæ3ÕÅ+ÊÖÅÆ2ÕÅ £¨³¬Ç¿ÅÆ£© ¡¾¸öÎ»ÖÃÎª 9¡¿ 2.ÅÆÃæ4ÕÅ+ÊÖÅÆ1ÕÅ a.ÉÏË³/¿¨Ë³
-				 * £¨Ç¿ÅÆ£©¡¾¸öÎ»ÖÃÎª6¡¿ b.ÏÂË³£¨´ÎÇ¿ÅÆ£©¡¾¸öÎ»ÖÃÎª3¡¿ 3.ÅÆÃæ5ÕÅ ÈõÅÆ¡¾ ÅÆÁ¦ÖÃÎª0¡¿
+				 * åˆ†æé¡ºå­çš„ç‰ŒåŠ› 1.ç‰Œé¢3å¼ +æ‰‹ç‰Œ2å¼  ï¼ˆè¶…å¼ºç‰Œï¼‰ ã€ä¸ªä½ç½®ä¸º 9ã€‘ 2.ç‰Œé¢4å¼ +æ‰‹ç‰Œ1å¼  a.ä¸Šé¡º/å¡é¡º
+				 * ï¼ˆå¼ºç‰Œï¼‰ã€ä¸ªä½ç½®ä¸º6ã€‘ b.ä¸‹é¡ºï¼ˆæ¬¡å¼ºç‰Œï¼‰ã€ä¸ªä½ç½®ä¸º3ã€‘ 3.ç‰Œé¢5å¼  å¼±ç‰Œã€ ç‰ŒåŠ›ç½®ä¸º0ã€‘
 				 */
 				
-				if (findCardsInStraight(sharedCards, straightComnbs) == 3) {// ÅÆÃæ3ÕÅ
-																			// +ÊÖÅÆ2ÕÅ
-																			// ·µ»Ø 49
+				if (findCardsInStraight(sharedCards, straightComnbs) == 3) {// ç‰Œé¢3å¼ 
+																			// +æ‰‹ç‰Œ2å¼ 
+																			// è¿”å› 49
 					return 49;
 				} else {
 					if (findCardsInStraight(sharedCards, straightComnbs) == 4) {
@@ -314,9 +314,9 @@ public class pokerPowerAnalysis {
 								|| holeCards.get(1).number == straightComnbs[4]
 								|| (holeCards.get(0).number != straightComnbs[0] || holeCards
 										.get(1).number != straightComnbs[0])) {
-							return 46;// ¿¨Ë³ºÍÉÏË³ ·µ»Ø 46
+							return 46;// å¡é¡ºå’Œä¸Šé¡º è¿”å› 46
 						} else {
-							return 43;// ÏÂË³ ·µ»Ø 43
+							return 43;// ä¸‹é¡º è¿”å› 43
 						}
 					} else {
 						return 40;
@@ -327,11 +327,11 @@ public class pokerPowerAnalysis {
 		return 0;
 	}
 	/**
-	 * ÅĞ¶ÏÊÇ·ñ´æÔÚÍ¬»¨ÅÆ 50-59
+	 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨åŒèŠ±ç‰Œ 50-59
 	 * @return
 	 */
 		public  int getFlush(Map<Integer, Integer> suitOfCards ){
-			int colorOfFlush=-1;//¼ÇÂ¼Í¬»¨µÄ»¨É«
+			int colorOfFlush=-1;//è®°å½•åŒèŠ±çš„èŠ±è‰²
 			for(Integer color:suitOfCards.keySet()){
 				if(suitOfCards.get(color)>=5){
 					colorOfFlush=color;
@@ -339,13 +339,13 @@ public class pokerPowerAnalysis {
 				}
 			}
 	/**
-	 * ´æÔÚÍ¬»¨ Ôò´æ´¢µ±Ç°×î´ó×éºÏµÄÍ¬»¨ÅÆ
-	 * 1.¹«¹²ÅÆÓĞ3ÕÅÍ¬É«  ³¬Ç¿ÅÆ ¡¾¸öÎ»ÖÃÎª 9¡¿
-	 * 2.¹«¹²ÅÆÓĞ4ÕÅÍ¬É« Èô ÊÖÅÆµÄ»¨É«Îªµ±Ç°ÄÜ»ñÈ¡µÄÍ¬É«ÅÆµÄÇ°2Î» Ôò ÈÏÎªÇ¿ÅÆ	¡¾¸öÎ»ÖÃÎª 6¡¿ ·ñÔò ÈÏÎªÈõÅÆ	¡¾¸öÎ»ÖÃÎª 3¡¿	
-	 * 3.¹«¹²ÅÆÓĞ5ÕÅ µ±Ç°ÊÖÅÆÎªÈõÅÆ ÖÃÎª0
+	 * å­˜åœ¨åŒèŠ± åˆ™å­˜å‚¨å½“å‰æœ€å¤§ç»„åˆçš„åŒèŠ±ç‰Œ
+	 * 1.å…¬å…±ç‰Œæœ‰3å¼ åŒè‰²  è¶…å¼ºç‰Œ ã€ä¸ªä½ç½®ä¸º 9ã€‘
+	 * 2.å…¬å…±ç‰Œæœ‰4å¼ åŒè‰² è‹¥ æ‰‹ç‰Œçš„èŠ±è‰²ä¸ºå½“å‰èƒ½è·å–çš„åŒè‰²ç‰Œçš„å‰2ä½ åˆ™ è®¤ä¸ºå¼ºç‰Œ	ã€ä¸ªä½ç½®ä¸º 6ã€‘ å¦åˆ™ è®¤ä¸ºå¼±ç‰Œ	ã€ä¸ªä½ç½®ä¸º 3ã€‘	
+	 * 3.å…¬å…±ç‰Œæœ‰5å¼  å½“å‰æ‰‹ç‰Œä¸ºå¼±ç‰Œ ç½®ä¸º0
 	 */
 			if(colorOfFlush>=0){
-				int[] flushComnbs=new int[5];//´æ´¢µ±Ç°×î´ó×éºÏµÄÍ¬»¨ÅÆ
+				int[] flushComnbs=new int[5];//å­˜å‚¨å½“å‰æœ€å¤§ç»„åˆçš„åŒèŠ±ç‰Œ
 				int index=0;
 				for(Card card:allCards){
 					if(card.suit==colorOfFlush){
@@ -363,7 +363,7 @@ public class pokerPowerAnalysis {
 					}
 				}
 				Arrays.sort(flushComnbs);
-				currentMaxHand=flushComnbs;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
+				currentMaxHand=flushComnbs;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
 				if(findCardsInFlush(sharedCards, flushComnbs, colorOfFlush)==3){
 					return 59;
 				}else{				
@@ -377,9 +377,9 @@ public class pokerPowerAnalysis {
 							holeNumber=holeCards.get(1).getNumber();
 						}
 						//if(holeNumber==1)holeNumber=14;
-						int count_biggerThanHole=0;//¼ÆÊı±Èµ±Ç°ÊÖÅÆÇ¿µÄÊÖÅÆÊı
+						int count_biggerThanHole=0;//è®¡æ•°æ¯”å½“å‰æ‰‹ç‰Œå¼ºçš„æ‰‹ç‰Œæ•°
 					    for(int i=holeNumber;i<15;i++){
-					    	boolean Flag_count=true;//µ±Ç°ÖµÊÇ·ñ¼ÆÊı
+					    	boolean Flag_count=true;//å½“å‰å€¼æ˜¯å¦è®¡æ•°
 					    	for(int j=0;j<5;j++){
 					    		if(flushComnbs[j]==i){
 					    			Flag_count=false;
@@ -398,7 +398,7 @@ public class pokerPowerAnalysis {
 			return 0;	
 		}
 		/**
-		 * ÅĞ¶ÏÊÇ·ñ´æÔÚÈıÌõ 30-39
+		 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨ä¸‰æ¡ 30-39
 		 * @return
 		 */
 		public  int getSet(Map<Integer, Integer> numberOfCards){
@@ -432,13 +432,13 @@ public class pokerPowerAnalysis {
 				setComnbs[2]=triNumber;
 				setComnbs[1]=highCardComnbs[1];
 				setComnbs[0]=highCardComnbs[0];
-				currentMaxHand=setComnbs;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
+				currentMaxHand=setComnbs;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
 			/**
-			 * setÅÆÁ¦·ÖÎö
-			 * 1.°µ3   ÊÖÅÆÁ½ÕÅ¶¼ÊÇtriNumber ¡¾¸öÎ»ÖÃÎª9¡¿
-			 * 2.Ã÷3   ÊÖÅÆÖ»ÓĞÒ»ÕÅÊÇ triNumber ¡¾¸öÎ»ÖÃÎª6¡¿
-			 * 3.Ãæ3   ¹«¹²ÅÆÊÇ3ÕÅ ÊÖÅÆÊÇ¸ßÅÆA  ¡¾¸öÎ»ÖÃÎª3¡¿
-			 * 4.Ãæhigh  ¡¾¸öÎ»ÖÃÎª1¡¿
+			 * setç‰ŒåŠ›åˆ†æ
+			 * 1.æš—3   æ‰‹ç‰Œä¸¤å¼ éƒ½æ˜¯triNumber ã€ä¸ªä½ç½®ä¸º9ã€‘
+			 * 2.æ˜3   æ‰‹ç‰Œåªæœ‰ä¸€å¼ æ˜¯ triNumber ã€ä¸ªä½ç½®ä¸º6ã€‘
+			 * 3.é¢3   å…¬å…±ç‰Œæ˜¯3å¼  æ‰‹ç‰Œæ˜¯é«˜ç‰ŒA  ã€ä¸ªä½ç½®ä¸º3ã€‘
+			 * 4.é¢high  ã€ä¸ªä½ç½®ä¸º1ã€‘
 			 */
 				Map<Integer, Integer> numbersOfSharedCrads=getNumberOfCards(sharedCards);
 				if(numbersOfSharedCrads.get(triNumber)==1){
@@ -460,13 +460,13 @@ public class pokerPowerAnalysis {
 		}
 		
 		/**
-		 * ÅĞ¶ÏÊÇ·ñ´æÔÚÁ½¶Ó 20-29
+		 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨ä¸¤é˜Ÿ 20-29
 		 * @return
 		 */
 		public  int getTwoPairs(Map<Integer, Integer> numberOfCards){
-			int firstPairNumber=0;//½Ï´óµÄ¶Ô×Ó
-			int secondPairNumber=0;//½ÏĞ¡µÄ¶Ô×Ó
-			int highCardNumber=0;//Á½¶ÓÍâµÄ¸ßÅÆ
+			int firstPairNumber=0;//è¾ƒå¤§çš„å¯¹å­
+			int secondPairNumber=0;//è¾ƒå°çš„å¯¹å­
+			int highCardNumber=0;//ä¸¤é˜Ÿå¤–çš„é«˜ç‰Œ
 			int count_numberOfPairs=0;
 			for(Integer number:numberOfCards.keySet()){
 				if(numberOfCards.get(number)==2){
@@ -499,14 +499,14 @@ public class pokerPowerAnalysis {
 				twoPairsComnbs[3]=twoPairsComnbs[4]=firstPairNumber;
 				twoPairsComnbs[1]=twoPairsComnbs[2]=secondPairNumber;
 				twoPairsComnbs[0]=highCardNumber;
-				currentMaxHand=twoPairsComnbs;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
+				currentMaxHand=twoPairsComnbs;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
 				/**
-				 * Á½¶ÓÅÆÁ¦Ëã·¨
-				 * 1.¹«¹²ÅÆÎŞ¶Ô×Ó ×Ô¼ºµÄÊÖÅÆÓë¹«¹²ÅÆ×é³É¶Ô×Ó ¡¾¸öÎ»ÖÃÎª9¡¿
-				 * 2.×Ô¼ºÊÖÉÏÊÇ¶Ô×ÓÇÒ¸Ã¶Ô×Ó±È¸ßÅÆ´ó¡¾¸öÎ»ÖÃÎª6¡¿ ÊÖÉÏÊÇ¶Ô×Óµ«±È¸ßÅÆĞ¡»òÕßÊÖÉÏÃ»¶Ô×Ó µ«ÊÇÓĞA¡¾¸öÎ»ÖÃÎª3¡¿
-				 * 3.Á½¶ÓºÍ¸ßÅÆ¶¼ÊÇ¹«¹²Ãæ£¨Ãæhigh£©
+				 * ä¸¤é˜Ÿç‰ŒåŠ›ç®—æ³•
+				 * 1.å…¬å…±ç‰Œæ— å¯¹å­ è‡ªå·±çš„æ‰‹ç‰Œä¸å…¬å…±ç‰Œç»„æˆå¯¹å­ ã€ä¸ªä½ç½®ä¸º9ã€‘
+				 * 2.è‡ªå·±æ‰‹ä¸Šæ˜¯å¯¹å­ä¸”è¯¥å¯¹å­æ¯”é«˜ç‰Œå¤§ã€ä¸ªä½ç½®ä¸º6ã€‘ æ‰‹ä¸Šæ˜¯å¯¹å­ä½†æ¯”é«˜ç‰Œå°æˆ–è€…æ‰‹ä¸Šæ²¡å¯¹å­ ä½†æ˜¯æœ‰Aã€ä¸ªä½ç½®ä¸º3ã€‘
+				 * 3.ä¸¤é˜Ÿå’Œé«˜ç‰Œéƒ½æ˜¯å…¬å…±é¢ï¼ˆé¢highï¼‰
 				 */
-				int numberOfAllCardsSameSuit=0;//Í¬»¨É«
+				int numberOfAllCardsSameSuit=0;//åŒèŠ±è‰²
 				int colorOfsuit=-1;
 				Map<Integer, Integer> suitOfCards = getSuitOfCards(allCards);
 				for(Integer number:suitOfCards.keySet()){
@@ -516,15 +516,15 @@ public class pokerPowerAnalysis {
 						break;
 					}
 				}
-				//Ìı»¨
-				int maxSharedCardsNumber=0;//¹«¹²ÃæµÄ¸ßÅÆ
+				//å¬èŠ±
+				int maxSharedCardsNumber=0;//å…¬å…±é¢çš„é«˜ç‰Œ
 				for(Card card:sharedCards){
 					if(card.number>maxSharedCardsNumber)maxSharedCardsNumber=card.number;
 				}
-				if((holeCards.get(0).number==firstPairNumber&&holeCards.get(1).number==secondPairNumber)||(holeCards.get(1).number==firstPairNumber&&holeCards.get(0).number==secondPairNumber)||(numberOfAllCardsSameSuit==4&&holeCards.get(0).suit==colorOfsuit&&holeCards.get(1).suit==colorOfsuit&&sharedCards.size()<5)){
+				if((holeCards.get(0).number==firstPairNumber&&holeCards.get(1).number==secondPairNumber)||(holeCards.get(1).number==firstPairNumber&&holeCards.get(0).number==secondPairNumber)){
 					return 29;
 				}else{
-					if((holeCards.get(0).number==holeCards.get(1).number&&firstPairNumber>=maxSharedCardsNumber)||((holeCards.get(0).number==firstPairNumber||holeCards.get(1).number==firstPairNumber)&&firstPairNumber>=maxSharedCardsNumber)){
+					if((holeCards.get(0).number==holeCards.get(1).number&&firstPairNumber>=maxSharedCardsNumber)||((holeCards.get(0).number==firstPairNumber||holeCards.get(1).number==firstPairNumber)&&firstPairNumber>=maxSharedCardsNumber)||(numberOfAllCardsSameSuit==4&&holeCards.get(0).suit==colorOfsuit&&holeCards.get(1).suit==colorOfsuit&&sharedCards.size()<5)){
 						return 26;
 					}else{
 						if(holeCards.get(0).number==secondPairNumber||holeCards.get(1).number==secondPairNumber||holeCards.get(0).number==firstPairNumber||holeCards.get(1).number==firstPairNumber){
@@ -548,7 +548,7 @@ public class pokerPowerAnalysis {
 			return 0;		
 		}
 		/**
-		 * ÅĞ¶ÏÊÇ·ñ´æÔÚµ¥¶Ô 10-19
+		 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨å•å¯¹ 10-19
 		 * @return
 		 */
 	public  int getSinglePair(Map<Integer, Integer> numberOfCards){
@@ -582,8 +582,8 @@ public class pokerPowerAnalysis {
 			singlePairComnbs[2]=highCardComnbs[2];
 			singlePairComnbs[1]=highCardComnbs[1];
 			singlePairComnbs[0]=highCardComnbs[0];
-			currentMaxHand=singlePairComnbs;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
-			int numberOfAllCardsSameSuit=0;//Í¬»¨É«
+			currentMaxHand=singlePairComnbs;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
+			int numberOfAllCardsSameSuit=0;//åŒèŠ±è‰²
 			int colorOfsuit=-1;
 			Map<Integer, Integer> suitOfCards = getSuitOfCards(allCards);
 			for(Integer number:suitOfCards.keySet()){
@@ -594,13 +594,13 @@ public class pokerPowerAnalysis {
 				}
 			}
 			/**
-			 * µ¥¶ÔÅÆÁ¦·ÖÎö
-			 * 1.³¬¶Ô  ×Ô¼ºÊÖÅÆÊÇ¶Ô×Ó ²¢ÇÒ´óÓÚ×î´óµÄ¸ßÅÆ ¡¾¸öÎ»ÖÃÎª9¡¿
-			 * 2.¶¥¶Ô  ×Ô¼ºÊÖÅÆÓĞÒ»ÕÅ¶ÔÅÆ ÇĞ¶ÔÅÆ´óÓÚ¸ßÅÆ   ¡¾¸öÎ»ÖÃÎª6¡¿
-			 * 3.ÖĞ¶Ô/µ×¶Ô  ¶Ô×ÓÅÆĞ¡ÓÚ¸ßÅÆ  ¡¾¸öÎ»ÖÃÎª3¡¿
-			 * 4.¶Ô×ÓÊÇ¹«¹²¶Ô   ¡¾¸öÎ»ÖÃÎª0¡¿
+			 * å•å¯¹ç‰ŒåŠ›åˆ†æ
+			 * 1.è¶…å¯¹  è‡ªå·±æ‰‹ç‰Œæ˜¯å¯¹å­ å¹¶ä¸”å¤§äºæœ€å¤§çš„é«˜ç‰Œ ã€ä¸ªä½ç½®ä¸º9ã€‘
+			 * 2.é¡¶å¯¹  è‡ªå·±æ‰‹ç‰Œæœ‰ä¸€å¼ å¯¹ç‰Œ åˆ‡å¯¹ç‰Œå¤§äºé«˜ç‰Œ   ã€ä¸ªä½ç½®ä¸º6ã€‘
+			 * 3.ä¸­å¯¹/åº•å¯¹  å¯¹å­ç‰Œå°äºé«˜ç‰Œ  ã€ä¸ªä½ç½®ä¸º3ã€‘
+			 * 4.å¯¹å­æ˜¯å…¬å…±å¯¹   ã€ä¸ªä½ç½®ä¸º0ã€‘
 			 */
-			//ÌıË³ 
+			//å¬é¡º 
 			Map<Integer, Integer> numberOfSharedCards = getNumberOfCards(sharedCards);
 			int count=0;
 			if(getStraightNumber(numberOfCards)==44){
@@ -615,10 +615,10 @@ public class pokerPowerAnalysis {
 				if(card.number>maxSharedCardsNumber)maxSharedCardsNumber=card.number;
 			}
 			Map<Integer, Integer> numbersOfSharedCrads=getNumberOfCards(sharedCards);
-			if((!numbersOfSharedCrads.containsKey(douNumber))&&douNumber>=maxSharedCardsNumber||(numberOfAllCardsSameSuit==4&&holeCards.get(0).suit==colorOfsuit&&holeCards.get(1).suit==colorOfsuit&&sharedCards.size()<5)||((holeCards.get(0).number==douNumber||holeCards.get(1).number==douNumber)&&count==2&&sharedCards.size()<5)){
+			if((!numbersOfSharedCrads.containsKey(douNumber))&&douNumber>=maxSharedCardsNumber){
 				return 19;
 			}else{
-				if(douNumber==maxSharedCardsNumber&&numbersOfSharedCrads.get(douNumber)==1){
+				if(douNumber==maxSharedCardsNumber&&numbersOfSharedCrads.get(douNumber)==1||(numberOfAllCardsSameSuit==4&&holeCards.get(0).suit==colorOfsuit&&holeCards.get(1).suit==colorOfsuit&&sharedCards.size()<5)||((holeCards.get(0).number==douNumber||holeCards.get(1).number==douNumber)&&count==2&&sharedCards.size()<5)){
 					return 16;
 				}else{
 					if(!numberOfSharedCards.containsKey(douNumber)||(numberOfSharedCards.containsKey(douNumber)&&numbersOfSharedCrads.get(douNumber)!=2)){
@@ -632,8 +632,8 @@ public class pokerPowerAnalysis {
 		return 0;	
 	}
 		/**
-		 * ÅĞ¶ÏÊÇ·ñ´æÔÚ¸ßÅÆ
-		 * ÎŞÅÆÁ¦·ÖÎö
+		 * åˆ¤æ–­æ˜¯å¦å­˜åœ¨é«˜ç‰Œ
+		 * æ— ç‰ŒåŠ›åˆ†æ
 		 * @param numberOfCards
 		 * @return
 		 */
@@ -653,9 +653,9 @@ public class pokerPowerAnalysis {
 			index++;
 		}
 		Arrays.sort(highCardComnbs);
-		currentMaxHand=highCardComnbs;//´æ´¢½«µ±Ç°×î´óÅÆĞÍ
+		currentMaxHand=highCardComnbs;//å­˜å‚¨å°†å½“å‰æœ€å¤§ç‰Œå‹
 		
-		int numberOfAllCardsSameSuit=0;//Í¬»¨É«
+		int numberOfAllCardsSameSuit=0;//åŒèŠ±è‰²
 		int colorOfsuit=-1;
 		Map<Integer, Integer> suitOfCards = getSuitOfCards(allCards);
 		for(Integer number:suitOfCards.keySet()){
@@ -665,7 +665,7 @@ public class pokerPowerAnalysis {
 				break;
 			}
 		}
-		//ÌıË³ 
+		//å¬é¡º 
 		Map<Integer, Integer> numberOfSharedCards = getNumberOfCards(allCards);
 		int count=0;
 		if(getStraightNumber(numberOfSharedCards)==44){
@@ -689,11 +689,11 @@ public class pokerPowerAnalysis {
 		
 		return 0;			
 	}	
-	//»ñÈ¡µ±Ç°×î´óÅÆĞÍ ×÷Îª±È½ÏÊ¹ÓÃ
+	//è·å–å½“å‰æœ€å¤§ç‰Œå‹ ä½œä¸ºæ¯”è¾ƒä½¿ç”¨
 	public  int[]  getCurrentMaxHand() {
 		return currentMaxHand;
 	}
-	//Ñ°ÕÒ×î´óÁ¬ĞøÊı
+	//å¯»æ‰¾æœ€å¤§è¿ç»­æ•°
 	public int getStraightNumber(Map<Integer, Integer> numberOfCards) {
 		if (numberOfCards.size() < 4)
 			return 0;
@@ -709,7 +709,7 @@ public class pokerPowerAnalysis {
 		Arrays.sort(aAsNormal);
 		int preNumber = aAsNormal[0];
 		int count = 0;
-		int Flag_end = 0;// ÓĞË³×ÓµÄ±êÖ¾ ´æ´¢Ë³×ÓµÄ×î´óÎ»ÖÃ
+		int Flag_end = 0;// æœ‰é¡ºå­çš„æ ‡å¿— å­˜å‚¨é¡ºå­çš„æœ€å¤§ä½ç½®
 		for (int i = 1; i < index; i++) {
 			if (aAsNormal[i] - preNumber == 1)
 				count++;
@@ -725,14 +725,14 @@ public class pokerPowerAnalysis {
 			preNumber = aAsNormal[i];
 		}
 		if (Flag_end != 0) {
-			int[] straightComnbs = new int[4];// ´æ´¢Ë³×ÓÅÆ
+			int[] straightComnbs = new int[4];// å­˜å‚¨é¡ºå­ç‰Œ
 			for (int i = 0; i < 4; i++) {
 				straightComnbs[i] = aAsNormal[Flag_end - 3+i];
 			}
 			longestStraight=straightComnbs;
 			return 44;
 		}
-		// ÓĞAµÄÇé¿ö
+		// æœ‰Açš„æƒ…å†µ
 		if (hasAcard) {
 			int[] aAs1 = new int[7];
 			index = 0;
@@ -760,7 +760,7 @@ public class pokerPowerAnalysis {
 
 			}
 			if (Flag_end != 0) {
-				int[] straightComnbs = new int[4];// ´æ´¢Ë³×ÓÅÆ
+				int[] straightComnbs = new int[4];// å­˜å‚¨é¡ºå­ç‰Œ
 				for (int i = 0; i < 4; i++) {
 					straightComnbs[i] = aAsNormal[Flag_end - 3+i];
 				}
