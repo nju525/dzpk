@@ -1,7 +1,7 @@
 
 
 ===VERSION 1.26===
----GAME START @ 2015-5-28-20-50-14---
+---GAME START @ 2015-5-28-22-6-42---
 
 wait registration for 30 seconds
 close registration
