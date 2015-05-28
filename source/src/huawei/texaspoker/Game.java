@@ -377,14 +377,14 @@ public class Game {
 			if(desk.getcardStatus()==0){
 				System.out.println(mypid+" bet="+bet);
 				preFlopAction pre=new preFlopAction(holdCards, myorder, bet, desk.getBB(), 
-						desk.totalpot, desk.playercount, myjetton,inquirecount);
+						desk.totalpot, desk.playercount, myjetton);
 				myaction=pre.preFlopDecision();
 				player2server.println(myaction);
 			}
 			else {
 				System.out.println(mypid+" bet="+bet+",轮数="+inquirecount);
 				actionDecision mActionDecision=new actionDecision(holdCards, desk.sharedCards, bet, 
-						desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton,inquirecount);
+						desk.getBB(), getOpponentAction(curRoundAction.toString()), desk.totalpot, myjetton);
 				myaction=mActionDecision.actionSendToServer();			
 				player2server.println(myaction);
 			}
