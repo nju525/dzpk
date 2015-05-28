@@ -1,9 +1,9 @@
 Pid, Money, HandNum, ShowDownNum, NetWin, NutHand, Rank, Status
-1111, 3410, 600, 1, -590, ONE_PAIR, 6, NORMAL
-2222, 5300, 600, 3, 1300, TWO_PAIR, 2, NORMAL
-3333, 1900, 600, 1, -2100, ONE_PAIR, 8, NORMAL
-4444, 5800, 600, 1, 1800, ONE_PAIR, 1, NORMAL
-5555, 3867, 600, 3, -133, TWO_PAIR, 5, NORMAL
-6666, 2700, 600, 3, -1300, TWO_PAIR, 7, NORMAL
-7777, 4280, 600, 1, 280, ONE_PAIR, 4, NORMAL
-8888, 4743, 600, 2, 743, TWO_PAIR, 3, NORMAL
+1111, -, -, -, -, -, -, UNCONNECTED
+2222, -, -, -, -, -, -, UNCONNECTED
+3333, -, -, -, -, -, -, UNCONNECTED
+4444, -, -, -, -, -, -, UNCONNECTED
+5555, -, -, -, -, -, -, UNCONNECTED
+6666, -, -, -, -, -, -, UNCONNECTED
+7777, -, -, -, -, -, -, UNCONNECTED
+8888, -, -, -, -, -, -, UNCONNECTED
